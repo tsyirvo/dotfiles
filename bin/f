@@ -1,0 +1,5 @@
+#!/bin/sh
+#
+# Quick shortcut to an editor.
+#
+open .
