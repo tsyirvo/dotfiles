@@ -13,6 +13,7 @@ brew 'node'
 brew 'yarn'
 brew 'bat'
 brew 'coreutils'
+brew 'findutils', args: ['with-default-names']
 brew 'git'
 brew "git-extras"
 brew 'gnupg2'
