@@ -68,6 +68,7 @@ cask 'sip'
 cask 'windscribe'
 cask 'microsoft-office'
 cask 'steam'
+cask 'Spark'
 
 # Dev apps
 cask 'java8'
