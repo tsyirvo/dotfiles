@@ -69,6 +69,9 @@ cask 'windscribe'
 cask 'microsoft-office'
 cask 'steam'
 cask 'Spark'
+cask 'bettertouchtool'
+cask 'logitech-options'
+cask 'onyx'
 
 # Dev apps
 cask 'java8'
@@ -110,3 +113,8 @@ cask 'font-open-sans'
 cask 'font-hack'
 cask 'font-roboto'
 cask 'font-roboto-mono'
+
+# Mac App Store
+mas 'Xcode', id: 497799835
+mas 'Magnet', id: 441258766
+mas 'Adafruit Bluefruit LE Connect', id: 1082414600
