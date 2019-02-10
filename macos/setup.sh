@@ -1,8 +1,6 @@
 #! /usr/bin/env bash
 
-. ../scripts/functions.sh
-
-info "Setting macOS defaults..."
+echo "Setting macOS defaults..."
 
 # Close any open System Preferences panes, to prevent them from overriding
 # settings we’re about to change
@@ -234,4 +232,4 @@ defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
 # Don’t display the annoying prompt when quitting iTerm
 defaults write com.googlecode.iterm2 PromptOnQuit -bool false
 
-success "FInished setting macOS defaults. Note that some of these changes require a logout/restart to take effect."
+echo "FInished setting macOS defaults. Note that some of these changes require a logout/restart to take effect."
