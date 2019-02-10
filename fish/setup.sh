@@ -41,8 +41,8 @@ set_fish_shell() {
             substep_error "Failed changing shell to fish"
             return 2
         fi
-        substep_info "Running fish initial setup"
-        fish -c "setup"
+        substep_info "Running fisher initial setup"
+        fish -c "fisher"
     fi
 }
 

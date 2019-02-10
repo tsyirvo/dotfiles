@@ -9,7 +9,7 @@ cask_args appdir: '/Applications'
 
 # Binaries
 brew 'fish'
-brew 'node'
+brew 'node@8'
 brew 'yarn'
 brew 'bat'
 brew 'coreutils'
@@ -23,6 +23,7 @@ brew 'mas'
 brew 'ack'
 brew 'grc'
 brew 'openssl'
+cask 'java8' # Needed for some of the rest
 brew 'gradle'
 brew 'watchman'
 brew 'cocoapods'
@@ -73,7 +74,6 @@ cask 'logitech-options'
 cask 'onyx'
 
 # Dev apps
-cask 'java8'
 cask 'iterm2'
 cask 'genymotion'
 cask 'gitkraken'
@@ -102,7 +102,6 @@ cask 'qlmarkdown'
 cask 'quicklook-json'
 cask 'quicklook-csv'
 cask 'qlstephen'
-cask "qlimagesize"
 cask "qlvideo"
 cask "quicklookase"
 
@@ -114,7 +113,6 @@ cask 'font-roboto'
 cask 'font-roboto-mono'
 
 # Mac App Store
-mas 'Xcode', id: 497799835
 mas 'Magnet', id: 441258766
 mas 'Adafruit Bluefruit LE Connect', id: 1082414600
 mas 'Spark', id: 1176895641

@@ -1,5 +1,7 @@
 #! /usr/bin/env bash
 
+. ../scripts/functions.sh
+
 info "Setting macOS defaults..."
 
 # Close any open System Preferences panes, to prevent them from overriding
