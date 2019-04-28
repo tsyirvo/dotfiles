@@ -13,7 +13,7 @@ brew 'node@8'
 brew 'yarn'
 brew 'bat'
 brew 'coreutils'
-brew 'findutils', args: ['with-default-names']
+brew 'findutils'
 brew 'git'
 brew "git-extras"
 brew 'gnupg2'
@@ -23,7 +23,7 @@ brew 'mas'
 brew 'ack'
 brew 'grc'
 brew 'openssl'
-cask 'java8' # Needed for some of the rest
+cask 'adoptopenjdk'
 brew 'gradle'
 brew 'watchman'
 brew 'cocoapods'
@@ -70,7 +70,6 @@ cask 'windscribe'
 cask 'microsoft-office'
 cask 'steam'
 cask 'bettertouchtool'
-cask 'logitech-options'
 cask 'onyx'
 
 # Dev apps
@@ -90,7 +89,6 @@ cask 'docker'
 cask 'android-studio'
 cask 'android-platform-tools'
 cask 'androidtool'
-cask 'android-ndk'
 cask 'android-sdk'
 cask 'fastlane'
 cask "expo-xde"

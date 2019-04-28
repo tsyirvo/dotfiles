@@ -18,3 +18,6 @@ set -x -g PATH ~/bin $PATH /usr/local/sbin
 
 # Globals
 set -gx EDITOR code
+
+set SPACEFISH_PACKAGE_SHOW false
+set SPACEFISH_GIT_SYMBOL :
