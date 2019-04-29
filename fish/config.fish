@@ -21,3 +21,6 @@ set -gx EDITOR code
 
 set SPACEFISH_PACKAGE_SHOW false
 set SPACEFISH_GIT_SYMBOL :
+
+# Fastlane bin
+set -x PATH $HOME/.fastlane/bin $PATH

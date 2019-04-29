@@ -71,6 +71,7 @@ cask 'microsoft-office'
 cask 'steam'
 cask 'bettertouchtool'
 cask 'onyx'
+cask 'dash'
 
 # Dev apps
 cask 'iterm2'
