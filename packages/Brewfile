@@ -3,7 +3,8 @@ tap 'caskroom/cask'
 tap 'caskroom/versions'
 tap 'caskroom/fonts'
 tap 'homebrew/bundle'
-tap "wix/brew"
+tap 'wix/brew'
+tap 'heroku/brew'
 
 cask_args appdir: '/Applications'
 
@@ -38,6 +39,7 @@ brew "redis"
 brew "travis"
 brew "wix/brew/applesimutils"
 brew 'maven'
+brew 'heroku'
 
 # General apps
 cask 'firefox'
