@@ -4,6 +4,7 @@
 [core]
 	excludesfile = ~/.gitignore_global
 	editor = nano
+  ignorecase = false
 [mergetool]
   keepBackup = false
 [difftool]
