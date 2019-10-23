@@ -5,6 +5,7 @@ tap 'homebrew/cask-fonts'
 tap 'homebrew/bundle'
 tap 'wix/brew'
 tap 'heroku/brew'
+tap 'adoptopenjdk/openjdk'
 
 cask_args appdir: '/Applications'
 
@@ -40,8 +41,10 @@ brew "travis"
 brew "wix/brew/applesimutils"
 brew 'maven'
 brew 'heroku'
+brew 'tophat/bar/yvm'
 
 # General apps
+cask 'adoptopenjdk/openjdk/adoptopenjdk8'
 cask 'firefox'
 cask 'google-chrome'
 cask 'opera'

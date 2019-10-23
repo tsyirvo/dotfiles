@@ -62,5 +62,6 @@
     "[javascript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "editor.gotoLocation.multiple": "goto"
+    "editor.gotoLocation.multiple": "goto",
+    "editor.tabCompletion": "on"
 }
