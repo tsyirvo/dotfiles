@@ -14,7 +14,6 @@
     "editor.tabSize": 2,
     "prettier.trailingComma": "es5",
     "prettier.singleQuote": true,
-    "prettier.eslintIntegration": true,
     "window.zoomLevel": 0,
     "explorer.autoReveal": true,
     "atomKeymap.promptV3Features": true,
@@ -49,7 +48,7 @@
     "explorer.confirmDelete": false,
     "explorer.confirmDragAndDrop": false,
     "discord.detailsEditing": "Doing some code",
-    "javascript.updateImportsOnFileMove.enabled": "always",
+    "javascript.updateImportsOnFileMove.enabled": "never",
     "sync.autoUpload": true,
     "sync.quietSync": true,
     "react-native-storybooks.port": 7007,
@@ -63,5 +62,7 @@
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "editor.gotoLocation.multiple": "goto",
-    "editor.tabCompletion": "on"
+    "editor.tabCompletion": "on",
+    "typescript.updateImportsOnFileMove.enabled": "never",
+    "oneDarkPro.editorTheme": "Onedark Pro"
 }
