@@ -15,7 +15,8 @@ alias ga='git add -A'
 alias gs='git status -sb' # upgrade your git if -sb breaks for you. it's fun.
 alias gac='git add -A && git commit -m'
 alias gcb='git checkout -b $1'
-alias greb='git checkout develop && git pull origin develop && git checkout - && git rebase develop'
+alias grebd='git checkout develop && git pull origin develop && git checkout - && git rebase develop --rebase-merges'
+alias grebm='git checkout master && git pull origin master && git checkout - && git rebase master --rebase-merges'
 alias gsc='git stash && git stash clear'
 
 # System
