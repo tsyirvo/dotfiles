@@ -25,5 +25,7 @@ set SPACEFISH_GIT_SYMBOL :
 # Fastlane bin
 set -x PATH $HOME/.fastlane/bin $PATH
 
-# set -x YVM_DIR /usr/local/opt/yvm
+# set -x YVM_DIR /Users/tsyirvo/.yvm
 # . $YVM_DIR/yvm.fish
+
+# set -x PATH $HOME/.cargo/bin
