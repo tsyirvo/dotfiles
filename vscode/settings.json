@@ -18,7 +18,6 @@
     "explorer.autoReveal": true,
     "atomKeymap.promptV3Features": true,
     "editor.multiCursorModifier": "ctrlCmd",
-    "editor.formatOnPaste": true,
     "prettier.disableLanguages": [],
     "explorer.openEditors.visible": 0,
     "editor.smoothScrolling": false,
@@ -64,5 +63,11 @@
     "editor.gotoLocation.multiple": "goto",
     "editor.tabCompletion": "on",
     "typescript.updateImportsOnFileMove.enabled": "never",
-    "oneDarkPro.editorTheme": "Onedark Pro"
+    "oneDarkPro.editorTheme": "Onedark Pro",
+    "path-intellisense.autoSlashAfterDirectory": true,
+    "editor.wordBasedSuggestions": false,
+    "editor.suggestSelection": "recentlyUsed",
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
 }
