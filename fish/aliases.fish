@@ -28,3 +28,6 @@ alias watchos="open /Applications/Xcode.app/Contents/Developer/Applications/Simu
 
 # Kubectl
 alias k="kubectl"
+
+# Neovim
+alias v="nvim"
