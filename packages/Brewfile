@@ -43,6 +43,7 @@ brew 'maven'
 brew 'heroku'
 brew 'tophat/bar/yvm'
 brew 'kubectl'
+brew 'ripgrep'
 
 # General apps
 cask 'adoptopenjdk/openjdk/adoptopenjdk8'
