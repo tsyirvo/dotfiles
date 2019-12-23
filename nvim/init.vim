@@ -132,6 +132,9 @@ colorscheme onedark
     " Exit the terminal
     tnoremap <Esc> <C-\><C-n>
 
+    " Remap Esc for easier access
+     nnoremap <C-c> <Esc>
+
     " shortcut to save
     nmap <leader>, :w<cr>
 
