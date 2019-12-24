@@ -13,7 +13,7 @@ info "Configuraing neovim..."
 substep_info "Creating nvim folder folder..."
 mkdir -p "$DESTINATION"
 
-find . -name "*.vim" | while read fn; do
+find . -name "*.vim" -o -name "coc-settings.json" | while read fn; do
     symlink "$SOURCE/$fn" "$DESTINATION/$fn"
 done
 
