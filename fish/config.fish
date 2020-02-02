@@ -23,7 +23,7 @@ set SPACEFISH_PACKAGE_SHOW false
 set SPACEFISH_GIT_SYMBOL :
 
 # Fastlane bin
-set -x PATH $HOME/.fastlane/bin $PATH
+set -x -g PATH (brew --prefix fastlane)/bin $PATH
 
 # set -x YVM_DIR /Users/tsyirvo/.yvm
 # . $YVM_DIR/yvm.fish
