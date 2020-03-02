@@ -70,4 +70,6 @@
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": true
     },
+    "vsicons.dontShowNewVersionMessage": true,
+    "files.autoSave": "off",
 }
