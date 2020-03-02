@@ -96,7 +96,6 @@ cask 'android-platform-tools'
 cask 'androidtool'
 cask 'android-sdk'
 cask 'fastlane'
-cask "expo-xde"
 cask "reactotron"
 
 # Quicklook
