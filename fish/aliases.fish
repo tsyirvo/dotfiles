@@ -18,6 +18,9 @@ alias gcb='git checkout -b $1'
 alias grebd='git checkout develop && git pull origin develop && git checkout - && git rebase develop --rebase-merges'
 alias grebm='git checkout master && git pull origin master && git checkout - && git rebase master --rebase-merges'
 alias gsc='git stash && git stash clear'
+alias ghide='git update-index --assume-unchanged'
+alias gunhide='git update-index --no-assume-unchanged'
+alias ghidden='! git ls-files -v | grep '^h' | cut -c3-'
 
 # System
 alias ls="exa -la"
