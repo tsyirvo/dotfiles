@@ -21,6 +21,7 @@ alias gsc='git stash && git stash clear'
 alias ghide='git update-index --assume-unchanged'
 alias gunhide='git update-index --no-assume-unchanged'
 alias ghidden='! git ls-files -v | grep '^h' | cut -c3-'
+alias gpf='git push origin HEAD -f --force-with-lease'
 
 # System
 alias ls="exa -la"
