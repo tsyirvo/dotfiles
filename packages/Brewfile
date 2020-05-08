@@ -118,4 +118,3 @@ cask 'font-roboto-mono'
 # Mac App Store
 mas 'Magnet', id: 441258766
 mas 'Adafruit Bluefruit LE Connect', id: 1082414600
-mas 'Spark', id: 1176895641
