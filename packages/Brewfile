@@ -45,9 +45,9 @@ brew 'tophat/bar/yvm'
 brew 'kubectl'
 brew 'ripgrep'
 brew 'cmake'
+brew 'pkgconfig'
 
 # General apps
-cask 'adoptopenjdk/openjdk/adoptopenjdk8'
 cask 'firefox'
 cask 'google-chrome'
 cask 'opera'
@@ -60,7 +60,6 @@ cask 'avast-security'
 cask 'beardedspice'
 cask 'calibre'
 cask 'caption'
-cask 'ccleaner'
 cask 'dropbox'
 cask 'evernote'
 cask 'flux'
@@ -77,11 +76,10 @@ cask 'microsoft-office'
 cask 'steam'
 cask 'bettertouchtool'
 cask 'onyx'
-cask 'dash'
 
 # Dev apps
+cask 'adoptopenjdk12'
 cask 'iterm2'
-cask 'genymotion'
 cask 'gitkraken'
 cask 'imageoptim'
 cask 'macdown'
@@ -98,6 +96,8 @@ cask 'androidtool'
 cask 'android-sdk'
 cask 'fastlane'
 cask "reactotron"
+cask "flipper"
+cask 'dash'
 
 # Quicklook
 cask 'qlcolorcode'
