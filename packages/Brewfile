@@ -44,6 +44,7 @@ brew 'heroku'
 brew 'tophat/bar/yvm'
 brew 'kubectl'
 brew 'ripgrep'
+brew 'cmake'
 
 # General apps
 cask 'adoptopenjdk/openjdk/adoptopenjdk8'
