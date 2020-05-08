@@ -1,5 +1,4 @@
 {
-    "eslint.autoFixOnSave": true,
     "editor.formatOnSave": true,
     "workbench.colorTheme": "One Dark Pro",
     "editor.fontFamily": "Operator Mono",
@@ -72,4 +71,5 @@
     },
     "vsicons.dontShowNewVersionMessage": true,
     "files.autoSave": "off",
+    "java.requirements.JDK11Warning": false,
 }

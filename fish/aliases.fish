@@ -35,3 +35,9 @@ alias k="kubectl"
 
 # Neovim
 alias v="nvim"
+
+# Tmux
+alias t="tmux"
+alias ta="tmux a -t"
+alias tls="tmux ls"
+alias tn="tmux new -s"
