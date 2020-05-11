@@ -72,4 +72,5 @@
     "vsicons.dontShowNewVersionMessage": true,
     "files.autoSave": "off",
     "java.requirements.JDK11Warning": false,
+    "explorer.compactFolders": false,
 }
