@@ -1,7 +1,6 @@
 @storybook/cli
 appcenter-cli
 create-react-native-app
-eslint
 exp
 forever
 gatsby-cli
@@ -17,3 +16,4 @@ ntl
 detox-cli
 neovim
 expo-cli
+serve
