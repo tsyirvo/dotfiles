@@ -23,10 +23,6 @@ else
     error "Failed to install XCode command line tools."
 fi
 
-info "Overwriting /etc/hosts with the ad-blocking hosts file from someonewhocares.org..."
-sudo cp /etc/hosts /etc/hosts.backup
-sudo cp ./configs/hosts /etc/hosts
-
 info "Checking for the Homebrew install..."
 brew_bin=$(which brew) 2>&1 > /dev/null
 if [[ $? != 0 ]]; then
