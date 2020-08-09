@@ -77,7 +77,6 @@ cask 'notion'
 cask 'obsidian'
 cask 'setapp'
 cask 'native-access'
-cask 'edison-mail'
 
 # Dev apps
 cask 'adoptopenjdk12'
@@ -93,10 +92,10 @@ cask 'sequel-pro'
 cask 'visual-studio-code'
 cask 'docker'
 cask 'android-studio'
-cask 'android-platform-tools'
+# cask 'android-platform-tools'
 cask 'androidtool'
 cask 'android-sdk'
-cask 'fastlane'
+brew 'fastlane'
 cask "reactotron"
 cask "flipper"
 # cask 'dash'
@@ -120,3 +119,4 @@ cask 'font-roboto-mono'
 # Mac App Store
 mas 'Magnet', id: 441258766
 mas 'Adafruit Bluefruit LE Connect', id: 1082414600
+mas 'Email - Edison Mail', id: 1489591003
