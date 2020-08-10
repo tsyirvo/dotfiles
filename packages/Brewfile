@@ -97,6 +97,7 @@ cask 'androidtool'
 cask 'android-sdk'
 brew 'fastlane'
 brew 'tmux'
+brew 'fzf'
 cask "reactotron"
 cask "flipper"
 # cask 'dash'
