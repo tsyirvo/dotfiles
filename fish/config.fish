@@ -25,6 +25,12 @@ set SPACEFISH_GIT_SYMBOL :
 # Fastlane bin
 set -x -g PATH (brew --prefix fastlane)/bin $PATH
 
+# Android ADB
+set -x -g PATH ~/Library/Android/sdk/platform-tools $PATH
+
+# Java version
+set -x JAVA_HOME (/usr/libexec/java_home -d64 -v11.0.8)
+
 # set -x YVM_DIR /Users/tsyirvo/.yvm
 # . $YVM_DIR/yvm.fish
 
