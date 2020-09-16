@@ -41,3 +41,9 @@ alias t="tmux"
 alias ta="tmux a -t"
 alias tls="tmux ls"
 alias tn="tmux new -s"
+
+# Docker
+alias d="docker"
+alias dc="docker container"
+alias dcr="docker container run"
+alias dcs="docker container stop"
