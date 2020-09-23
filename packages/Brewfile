@@ -6,6 +6,7 @@ tap 'homebrew/bundle'
 tap 'wix/brew'
 tap 'heroku/brew'
 tap 'adoptopenjdk/openjdk'
+tap 'facebook/fb'
 
 cask_args appdir: '/Applications'
 
@@ -102,6 +103,7 @@ brew 'ctop'
 cask "reactotron"
 cask "flipper"
 # cask 'dash'
+brew 'idb-companion'
 
 # Quicklook
 cask 'qlcolorcode'
