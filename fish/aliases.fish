@@ -23,7 +23,7 @@ alias gpt='git push --follow-tags'
 alias gft='git fetch --tags'
 
 alias gco='git checkout origin HEAD'
-alias gcb='git copy-branch-name'
+alias gcb='git checkout -b $1'
 alias gb='git branch'
 alias gt='git tag'
 
@@ -56,3 +56,5 @@ alias dc="docker container"
 alias dcr="docker container run"
 alias dcs="docker container stop"
 alias dn="docker network"
+alias di="docker image"
+alias dv="docker volume"
