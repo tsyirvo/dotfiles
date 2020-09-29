@@ -1,5 +1,4 @@
 # Taps
-tap 'homebrew/cask-cask'
 tap 'homebrew/cask-versions'
 tap 'homebrew/cask-fonts'
 tap 'homebrew/bundle'
@@ -7,6 +6,7 @@ tap 'wix/brew'
 tap 'heroku/brew'
 tap 'adoptopenjdk/openjdk'
 tap 'facebook/fb'
+tap 'cjbassi/gotop'
 
 cask_args appdir: '/Applications'
 
@@ -56,31 +56,29 @@ cask 'discord'
 cask 'dashlane'
 cask 'vlc'
 cask 'appcleaner'
-# cask 'avast-security'
-# cask 'beardedspice'
 cask 'calibre'
 cask 'caption'
 cask 'dropbox'
-# cask 'flux'
 cask 'molotov'
-# cask 'muzzle'
 cask 'sabnzbd'
 cask 'figma'
 cask 'spotify'
 cask 'the-unarchiver'
 cask 'whatsapp'
-# cask 'windscribe'
 cask 'microsoft-office'
-# cask 'steam'
 cask 'bettertouchtool'
 cask 'onyx'
 cask 'notion'
 cask 'obsidian'
 cask 'setapp'
 cask 'native-access'
+# cask 'steam'
+# cask 'windscribe'
+# cask 'beardedspice'
+# cask 'flux'
+# cask 'muzzle'
 
 # Dev apps
-cask 'adoptopenjdk12'
 cask 'iterm2'
 cask 'gitkraken'
 cask 'imageoptim'
@@ -89,11 +87,9 @@ cask 'ndm'
 cask 'postman'
 cask 'react-native-debugger'
 cask 'sequel-pro'
-# cask 'transmit'
 cask 'visual-studio-code'
 cask 'docker'
 cask 'android-studio'
-# cask 'android-platform-tools'
 cask 'androidtool'
 cask 'android-sdk'
 brew 'fastlane'
@@ -102,8 +98,8 @@ brew 'fzf'
 brew 'ctop'
 cask "reactotron"
 cask "flipper"
-# cask 'dash'
 brew 'idb-companion'
+brew 'gotop'
 
 # Quicklook
 cask 'qlcolorcode'
@@ -116,10 +112,7 @@ cask "quicklookase"
 
 # Fonts
 cask 'font-lato'
-cask 'font-open-sans'
 cask 'font-hack'
-cask 'font-roboto'
-cask 'font-roboto-mono'
 
 # Mac App Store
 mas 'Magnet', id: 441258766
