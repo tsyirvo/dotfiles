@@ -1,7 +1,6 @@
 {
     "editor.formatOnSave": true,
-    "workbench.colorTheme": "One Dark Pro",
-    "editor.fontFamily": "Operator Mono",
+    "editor.fontFamily": "Hack",
     "editor.fontSize": 13,
     "gitProjectManager.baseProjectsFolders": [
         "/Users/tsyirvo/Documents/Code"
@@ -73,4 +72,10 @@
     "files.autoSave": "off",
     "java.requirements.JDK11Warning": false,
     "explorer.compactFolders": false,
+    "workbench.startupEditor": "welcomePage",
+    "workbench.colorTheme": "Nord",
+    "tabnine.experimentalAutoImports": true,
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
 }
