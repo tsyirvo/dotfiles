@@ -44,6 +44,10 @@ defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool
 defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 
+# Trackpad: allow dragging with three fingers
+defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerDrag -bool true
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerDrag -bool true
+
 # Increase sound quality for Bluetooth headphones/headsets
 defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 40
 
@@ -143,8 +147,20 @@ defaults write com.apple.dock dashboard-in-overlay -bool false
 # Automatically hide and show the Dock
 defaults write com.apple.dock autohide -bool true
 
+# Duration of the animation to reveal the icons after hide
+defaults write com.apple.dock autohide-time-modifier -float 0.75
+
+# Show the icon instantly after hovering the bottom of the screen
+defaults write com.apple.dock autohide-delay -float 0
+
 # Don’t show recent applications in Dock
 defaults write com.apple.dock show-recents -bool false
+
+# Set the dock icons sizes
+defaults write com.apple.dock tilesize -int 30
+
+# Set the layout of the date in the status bar
+defaults write com.apple.menuextra.clock DateFormat -string "EEE d MMM HH:mm:ss"
 
 ###############################################################################
 # Safari & WebKit                                                             #
@@ -231,5 +247,12 @@ defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
 
 # Don’t display the annoying prompt when quitting iTerm
 defaults write com.googlecode.iterm2 PromptOnQuit -bool false
+
+###############################################################################
+# Xcode                                                                       #
+###############################################################################
+
+# Show the build duration
+defaults write com.apple.dt.Xcode ShowBuildOperationDuration -bool true
 
 echo "FInished setting macOS defaults. Note that some of these changes require a logout/restart to take effect."
