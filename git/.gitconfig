@@ -4,24 +4,24 @@
 [core]
 	excludesfile = ~/.gitignore_global
 	editor = nano
-  ignorecase = false
+	ignorecase = false
 [mergetool]
-  keepBackup = false
+	keepBackup = false
 [difftool]
-  prompt = false
+	prompt = false
 [push]
 	default = simple
 [pull]
 	rebase = false
 [color]
-  diff = auto
-  status = auto
-  branch = auto
-  ui = true
+	diff = auto
+	status = auto
+	branch = auto
+	ui = true
 [apply]
-  whitespace = nowarn
+	whitespace = nowarn
 [help]
-  autocorrect = 1
+	autocorrect = 1
 [filter "lfs"]
 	required = true
 	clean = git-lfs clean -- %f
