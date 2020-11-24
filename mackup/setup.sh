@@ -8,10 +8,11 @@ cd "$DIR"
 SOURCE="$(realpath .)"
 DESTINATION="$(realpath ~)"
 
-info "Restoring Mackup configs..."
+info "Setting up Mackup"
 
-find * -name ".mackup*" | while read fn; do
+find . -name ".mackup*" | while read fn; do
+    fn=$(basename $fn)
     symlink "$SOURCE/$fn" "$DESTINATION/$fn"
 done
 
-success "Finished restoring Mackup configs."
+success "Successfully set up Mackup."
