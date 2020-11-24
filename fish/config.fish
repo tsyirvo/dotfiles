@@ -26,7 +26,7 @@ set SPACEFISH_GIT_SYMBOL :
 set -x -g PATH (brew --prefix fastlane)/bin $PATH
 
 # Java version
-set -x JAVA_HOME (/usr/libexec/java_home -d64 -v11.0.8)
+set -x JAVA_HOME (/usr/libexec/java_home -v11.0.9)
 
 # Android
 set -x ANDROID_HOME ~/Library/Android/sdk
