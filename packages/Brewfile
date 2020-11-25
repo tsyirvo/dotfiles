@@ -70,8 +70,8 @@ cask 'notion'
 cask 'setapp'
 cask 'native-access'
 cask 'flux'
+cask 'beardedspice'
 # cask 'windscribe'
-# cask 'beardedspice'
 # cask 'muzzle'
 
 # Dev apps
