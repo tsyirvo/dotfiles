@@ -19,9 +19,6 @@ set -x -g PATH ~/bin $PATH /usr/local/sbin
 # Globals
 set -gx EDITOR code
 
-set SPACEFISH_PACKAGE_SHOW false
-set SPACEFISH_GIT_SYMBOL :
-
 # Fastlane bin
 set -x -g PATH (brew --prefix fastlane)/bin $PATH
 
@@ -38,4 +35,7 @@ set -x -g PATH $ANDROID_HOME/platform-tools $PATH
 set -x -g PATH $ANDROID_HOME/tools $PATH
 set -x -g PATH $ANDROID_HOME/emulator $PATH
 
-# set -x PATH $HOME/.cargo/bin
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/tsyirvo/google-cloud-sdk/path.fish.inc' ]; . '/Users/tsyirvo/google-cloud-sdk/path.fish.inc'; end
+
+starship init fish | source

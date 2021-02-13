@@ -13,7 +13,8 @@ cask_args appdir: '/Applications'
 
 # Binaries
 brew 'fish'
-brew 'node@12'
+brew 'starship'
+# brew 'node@12'
 brew 'yarn'
 brew 'bat'
 brew 'coreutils'
@@ -94,6 +95,8 @@ cask "reactotron"
 cask "flipper"
 brew 'idb-companion'
 brew 'gotop'
+brew 'kops'
+brew 'helm'
 
 # Quicklook
 cask 'qlcolorcode'
