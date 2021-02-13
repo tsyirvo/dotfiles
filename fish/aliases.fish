@@ -60,3 +60,12 @@ alias di="docker image"
 alias dv="docker volume"
 alias dcp="docker-compose"
 alias ds="docker service"
+
+### Bundler ###
+alias be="bundle exec"
+
+### Fastlane ###
+alias fa="bundle exec fastlane"
+
+### NPM ###
+alias nr="npm run"
