@@ -62,6 +62,9 @@ format = "via [🐋 $context](blue bold)"
 [aws]
 disabled = true
 
+[ruby]
+disabled = true
+
 [gcloud]
 disabled = true
 [gcloud.region_aliases]
