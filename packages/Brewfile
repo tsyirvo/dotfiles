@@ -1,4 +1,4 @@
-# Taps
+## Taps
 tap 'homebrew/cask'
 tap 'homebrew/cask-versions'
 tap 'homebrew/cask-fonts'
@@ -11,10 +11,8 @@ tap 'cjbassi/gotop'
 
 cask_args appdir: '/Applications'
 
-# Binaries
-brew 'fish'
+## Binaries
 brew 'starship'
-# brew 'node@12'
 brew 'yarn'
 brew 'bat'
 brew 'coreutils'
@@ -23,12 +21,10 @@ brew 'git'
 brew "git-extras"
 brew 'gnupg2'
 brew 'grep'
-brew 'mackup'
 brew 'mas'
 brew 'ack'
 brew 'grc'
 brew 'openssl'
-cask 'adoptopenjdk11'
 brew 'gradle'
 brew 'watchman'
 brew 'cocoapods'
@@ -46,59 +42,70 @@ brew 'kubectl'
 brew 'ripgrep'
 brew 'cmake'
 brew 'pkgconfig'
+brew 'fastlane'
+brew 'ctop'
+brew 'idb-companion'
+brew 'gotop'
+brew 'kops'
+brew 'helm'
+brew 'tmux'
 
-# General apps
-cask 'firefox'
-cask 'google-chrome'
-cask 'opera'
-cask 'slack'
-cask 'discord'
-cask 'dashlane'
-cask 'vlc'
-cask 'appcleaner'
-cask 'calibre'
-cask 'caption'
-cask 'dropbox'
-cask 'molotov'
-cask 'sabnzbd'
-cask 'figma'
-cask 'spotify'
-cask 'the-unarchiver'
-cask 'microsoft-office'
-cask 'bettertouchtool'
-cask 'onyx'
-cask 'notion'
-cask 'setapp'
-cask 'native-access'
-cask 'flux'
-cask 'beardedspice'
-# cask 'windscribe'
-# cask 'muzzle'
-
-# Dev apps
-cask 'iterm2'
-cask 'gitkraken'
-cask 'imageoptim'
-cask 'macdown'
+## Dev
+cask 'adoptopenjdk11'
 cask 'ndm'
 cask 'postman'
 cask 'react-native-debugger'
 cask 'sequel-pro'
 cask 'visual-studio-code'
-cask 'docker'
+cask 'iterm2'
+cask 'gitkraken'
+cask 'android-sdk'
 cask 'android-studio'
 cask 'androidtool'
-cask 'android-sdk'
-brew 'fastlane'
-brew 'ctop'
-cask "reactotron"
+cask 'docker'
 cask "flipper"
-brew 'idb-companion'
-brew 'gotop'
-brew 'kops'
-brew 'helm'
 
-# Quicklook
+## Browsers
+cask 'firefox'
+cask 'google-chrome'
+cask 'brave-browser'
+cask 'opera'
+
+## Business
+cask 'slack'
+cask 'discord'
+cask 'fasntastical'
+cask 'rescuetime'
+cask 'dropbox'
+cask 'notion'
+cask 'figma'
+
+## Office
+cask 'microsoft-office'
+
+## Multimedia
+cask 'vlc'
+cask 'molotov'
+cask 'spotify'
+
+## Utilities
+cask 'appcleaner'
+cask 'cloudflare-warp'
+cask 'calibre'
+cask 'sip'
+cask 'caption'
+cask 'bartender'
+cask 'via'
+cask 'alfred'
+cask 'pixelsnap'
+cask 'the-unarchiver'
+cask 'onyx'
+cask 'beardedspice'
+cask 'muzzle'
+cask 'imageoptim'
+cask 'macdown'
+
+## Quicklook
 cask 'qlcolorcode'
 cask 'qlmarkdown'
 cask 'quicklook-json'
@@ -107,11 +114,11 @@ cask 'qlstephen'
 cask "qlvideo"
 cask "quicklookase"
 
-# Fonts
+## Fonts
 cask 'font-lato'
 cask 'font-hack'
 
-# Mac App Store
+## Mac App Store
 mas 'Magnet', id: 441258766
 mas 'Adafruit Bluefruit LE Connect', id: 1082414600
 mas 'Email - Edison Mail', id: 1489591003

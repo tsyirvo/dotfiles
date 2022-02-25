@@ -41,9 +41,6 @@ alias watchos="open /Applications/Xcode.app/Contents/Developer/Applications/Simu
 ### Kubectl ###
 alias k="kubectl"
 
-### Neovim ###
-alias v="nvim"
-
 ### Tmux ###
 alias t="tmux"
 alias ta="tmux a -t"
@@ -66,6 +63,3 @@ alias be="bundle exec"
 
 ### Fastlane ###
 alias fa="bundle exec fastlane"
-
-### NPM ###
-alias nr="npm run"

@@ -27,9 +27,9 @@ info "Checking for the Homebrew install..."
 brew_bin=$(which brew) 2>&1 > /dev/null
 if [[ $? != 0 ]]; then
     substep_info "Installing homebrew."
-    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh | bash
     if [[ $? != 0 ]]; then
-        error "Unable to install Uomebrew, script $0 abort!"
+        error "Unable to install Homebrew, script $0 abort!"
         exit 2
     else
         success "Finished installing homebrew."
@@ -43,10 +43,6 @@ fi
 
 info "Installing all packages..."
 ./packages/setup.sh
-
-# info "Setting Fish as the default shell..."
-# echo "/usr/local/bin/fish" | sudo tee -a /etc/shells
-# chsh -s /usr/local/bin/fish
 
 info "Default to always pin yarn & npm versions"
 yarn config set save-prefix false
