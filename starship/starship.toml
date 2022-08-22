@@ -62,10 +62,26 @@ format = "via [🐋 $context](blue bold)"
 [aws]
 disabled = true
 
+[gcloud]
+disabled = true
+
+[package]
+disable = true
+
 [ruby]
 disabled = true
 
-[gcloud]
+[swift]
 disabled = true
-[gcloud.region_aliases]
-europe-west2 = "w2"
+
+[python]
+disabled = true
+
+[ruby]
+disabled = true
+
+[kotlin]
+disabled = true
+
+[java]
+disabled = true
