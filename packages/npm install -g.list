@@ -1,9 +1,9 @@
+yarn
 appcenter-cli
 forever
 gtop
 nodemon
 trash-cli
-react-native-rename
 detox-cli
 expo-cli
 serve

@@ -12,8 +12,10 @@ tap 'cjbassi/gotop'
 cask_args appdir: '/Applications'
 
 ## Binaries
+brew 'coreutils'
+brew 'findutils'
+brew 'openssl'
 brew 'starship'
-brew 'yarn'
 brew 'bat'
 brew 'git'
 brew "git-extras"
