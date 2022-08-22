@@ -15,16 +15,12 @@ cask_args appdir: '/Applications'
 brew 'starship'
 brew 'yarn'
 brew 'bat'
-brew 'coreutils'
-brew 'findutils'
 brew 'git'
 brew "git-extras"
-brew 'gnupg2'
 brew 'grep'
 brew 'mas'
 brew 'ack'
 brew 'grc'
-brew 'openssl'
 brew 'gradle'
 brew 'watchman'
 brew 'cocoapods'
@@ -34,7 +30,6 @@ brew "htop"
 brew "tldr"
 brew "dfu-util"
 brew "git-lfs"
-brew "imagemagick"
 brew "wix/brew/applesimutils"
 brew 'maven'
 brew 'heroku'
@@ -49,6 +44,7 @@ brew 'gotop'
 brew 'kops'
 brew 'helm'
 brew 'tmux'
+brew 'bitrise'
 
 ## Dev
 cask 'adoptopenjdk11'
@@ -80,9 +76,6 @@ cask 'dropbox'
 cask 'notion'
 cask 'figma'
 
-## Office
-cask 'microsoft-office'
-
 ## Multimedia
 cask 'vlc'
 cask 'molotov'
@@ -104,6 +97,8 @@ cask 'beardedspice'
 cask 'muzzle'
 cask 'imageoptim'
 cask 'macdown'
+cask 'microsoft-office'
+cask 'cakebrew'
 
 ## Quicklook
 cask 'qlcolorcode'
