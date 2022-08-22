@@ -6,26 +6,27 @@ cd "$DIR"
 . ../scripts/functions.sh
 
 SOURCE="$(realpath .)"
-DESTINATION="$(realpath ~/)"
+DESTINATION="$(realpath ~)"
+CONFIGDEST="$(realpath ~/.config/tmux)"
 
-info "Configuraing Tmux..."
+info "Setting up Tmux..."
 
-substep_info "Creating Tmux plugins folder..."
-mkdir -p "$DESTINATION/.tmux/plugins/tpm"
+git clone --progress --verbose https://github.com/tmux-plugins/tpm "$CONFIGDEST/plugins/tpm"
 
-find -name ".tmux.conf" | while read fn; do
+find . -name ".tmux.conf" | while read fn; do
+    fn=$(basename $fn)
     symlink "$SOURCE/$fn" "$DESTINATION/$fn"
 done
 
-setup_plugins() {
-  git clone https://github.com/tmux-plugins/tpm "$DESTINATION/.tmux/plugins/tpm"
-}
+# Install TPM plugins.
+# TPM requires running tmux server, as soon as `tmux start-server` does not work
+# create dump __noop session in detached mode, and kill it when plugins are installed
+info  "Setting up TPM plugins\n"
+tmux new -d -s __noop >/dev/null 2>&1 || true
+tmux set-environment -g TMUX_PLUGIN_MANAGER_PATH "~/.config/tmux/plugins"
+"$CONFIGDEST"/plugins/tpm/bin/install_plugins || true
+tmux kill-session -t __noop >/dev/null 2>&1 || true
 
-if setup_plugins; then
-    success "Successfully set up plugins manager."
-else
-    error "Failed setting up plugins manager."
-fi
+clear_broken_symlinks "$CONFIGDEST"
 
-
-success "Finished configuring Tmux"
+success "Successfully set up Tmux"
