@@ -6,13 +6,13 @@ cd "$DIR"
 . ../scripts/functions.sh
 
 SOURCE="$(realpath .)"
-DESTINATION="$(realpath ~)"
+GIT_PATH="$(realpath ~)"
 
-info "Configuraing git..."
+info "Setting up git..."
 
 find . -name ".git*" | while read fn; do
     fn=$(basename $fn)
-    symlink "$SOURCE/$fn" "$DESTINATION/$fn"
+    symlink "$SOURCE/$fn" "$GIT_PATH/$fn"
 done
 
-success "Finished configuring git."
+success "Successfully set up git."

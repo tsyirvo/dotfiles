@@ -1,29 +1,46 @@
 [user]
 	name = tsyirvo
 	email = gabriel.hofman.00@gmail.com
+
 [core]
 	excludesfile = ~/.gitignore_global
 	editor = nano
 	ignorecase = false
-[mergetool]
-	keepBackup = false
-[difftool]
-	prompt = false
-[push]
-	default = simple
-[pull]
-	rebase = false
+
+[credential]
+  helper = osxkeychain
+
 [color]
 	diff = auto
 	status = auto
 	branch = auto
 	ui = true
+
+[mergetool]
+	keepBackup = false
+
+[diff]
+  tool = vscode
+
+[difftool "vscode"]
+  cmd = code --wait --diff $LOCAL $REMOTE
+
+[merge]
+  tool = code
+  log = true
+
+[mergetool "code"]
+  cmd = code --wait $MERGED
+
+[push]
+	default = matching
+  followTags = true
+
+[pull]
+	rebase = false
+
 [apply]
-	whitespace = nowarn
-[help]
-	autocorrect = 1
-[filter "lfs"]
-	required = true
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
+	whitespace = fix
+
+[init]
+  defaultBranch = master
