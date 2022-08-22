@@ -23,24 +23,7 @@ else
     error "Failed to install XCode command line tools."
 fi
 
-info "Checking for the Homebrew install..."
-brew_bin=$(which brew) 2>&1 > /dev/null
-if [[ $? != 0 ]]; then
-    substep_info "Installing homebrew."
-    curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh | bash
-    if [[ $? != 0 ]]; then
-        error "Unable to install Homebrew, script $0 abort!"
-        exit 2
-    else
-        success "Finished installing homebrew."
-    fi
-else
-    substep_info "Updating homebrew."
-    brew update
-    brew upgrade
-    success "Brews updated."
-fi
-
+# Package control must be executed first in order for the rest to work
 info "Installing all packages..."
 ./packages/setup.sh
 
@@ -52,4 +35,4 @@ find * -name "setup.sh" -not -wholename "packages*" | while read setup; do
     ./$setup
 done
 
-success "Finished installing all Dotfiles 🎉"
+success "Finished setting up all Dotfiles 🎉"
