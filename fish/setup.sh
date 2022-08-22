@@ -6,18 +6,19 @@ cd "$DIR"
 . ../scripts/functions.sh
 
 SOURCE="$(realpath .)"
-DESTINATION="$(realpath ~/.config/fish)"
+FISH_PATH="$(realpath ~/.config/fish)"
 
 info "Setting up fish shell..."
 
 substep_info "Creating fish config folders..."
-mkdir -p "$DESTINATION/functions"
-mkdir -p "$DESTINATION/completions"
+mkdir -p "$FISH_PATH/functions"
+mkdir -p "$FISH_PATH/conf.d"
 
-find * -name "*.fish" -o -name "fishfile" | while read fn; do
-    symlink "$SOURCE/$fn" "$DESTINATION/$fn"
+find * -name "*fish*" | while read fn; do
+    symlink "$SOURCE/$fn" "$FISH_PATH/$fn"
 done
-clear_broken_symlinks "$DESTINATION"
+
+clear_broken_symlinks "$FISH_PATH"
 
 set_fish_shell() {
     if grep --quiet fish <<< "$SHELL"; then
@@ -35,19 +36,19 @@ set_fish_shell() {
             fi
         fi
         substep_info "Changing shell to fish"
-        if chsh -s `which fish`; then
+        if chsh -s /usr/local/bin/fish; then
             substep_success "Changed shell to fish"
         else
             substep_error "Failed changing shell to fish"
             return 2
         fi
-        substep_info "Running fisher initial setup"
-        fish -c "fisher"
+        substep_info "Running fish initial setup"
+        fish -c "setup"
     fi
 }
 
 if set_fish_shell; then
-    success "Successfully set up fish shell."
+    success "Successfully set up fish shell. Make sure you run Fisher manually"
 else
     error "Failed setting up fish shell."
 fi
