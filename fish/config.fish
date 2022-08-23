@@ -20,6 +20,9 @@ set -g fish_user_paths "/opt/homebrew/bin" $fish_user_paths # homebrew ARM
 # User bin folder
 set -g fish_user_paths ~/bin $fish_user_paths
 
+# Python bin folder
+set -g fish_user_paths /Users/tsyirvo/Library/Python/3.10/bin $fish_user_paths
+
 # Volta
 set -x VOLTA_HOME $HOME/.volta
 set -gx PATH $VOLTA_HOME/bin $PATH
