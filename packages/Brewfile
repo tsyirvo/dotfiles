@@ -12,6 +12,7 @@ tap 'cjbassi/gotop'
 cask_args appdir: '/Applications'
 
 ## Binaries
+brew 'fish'
 brew 'coreutils'
 brew 'findutils'
 brew 'openssl'
@@ -47,9 +48,13 @@ brew 'kops'
 brew 'helm'
 brew 'tmux'
 brew 'bitrise'
+cask 'adoptopenjdk11'
+cask 'android-sdk'
+brew 'python'
+brew 'python3'
+cask 'pyenv'
 
 ## Dev
-cask 'adoptopenjdk11'
 cask 'ndm'
 cask 'postman'
 cask 'react-native-debugger'
@@ -57,7 +62,6 @@ cask 'sequel-pro'
 cask 'visual-studio-code'
 cask 'iterm2'
 cask 'gitkraken'
-cask 'android-sdk'
 cask 'android-studio'
 cask 'androidtool'
 cask 'docker'
@@ -72,7 +76,7 @@ cask 'opera'
 ## Business
 cask 'slack'
 cask 'discord'
-cask 'fasntastical'
+cask 'fantastical'
 cask 'rescuetime'
 cask 'dropbox'
 cask 'notion'
@@ -101,6 +105,8 @@ cask 'imageoptim'
 cask 'macdown'
 cask 'microsoft-office'
 cask 'cakebrew'
+cask 'carbon-copy-cloner'
+cask 'istat-menus'
 
 ## Quicklook
 cask 'qlcolorcode'
@@ -114,6 +120,10 @@ cask "quicklookase"
 ## Fonts
 cask 'font-lato'
 cask 'font-hack'
+cask 'font-open-sans'
+cask 'font-roboto'
+cask 'font-fira-code-nerd-font'
+cask 'font-jetbrains-mono-nerd-font'
 
 ## Mac App Store
 mas 'Magnet', id: 441258766
