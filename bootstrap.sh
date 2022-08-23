@@ -27,12 +27,12 @@ fi
 info "Installing all packages..."
 ./packages/setup.sh
 
-info "Default to always pin yarn & npm versions"
-yarn config set save-prefix false
-npm config set save-exact true
-
 find * -name "setup.sh" -not -wholename "packages*" | while read setup; do
     ./$setup
 done
+
+info "Default to always pin yarn & npm versions"
+yarn config set save-prefix false
+npm config set save-exact true
 
 success "Finished setting up all Dotfiles 🎉"
