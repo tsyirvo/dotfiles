@@ -18,22 +18,20 @@ sudo -v
 # # Keep-alive: update existing `sudo` time stamp until `.osx` has finished
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
-
 # Set computer name
-sudo scutil --set ComputerName "MacDaddyO"
-sudo scutil --set LocalHostName "MacDaddyO"
-sudo scutil --set HostName "MacDaddyO"
-sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "MacDaddyO"
-
+sudo scutil --set ComputerName "TsyirvoMac"
+sudo scutil --set LocalHostName "TsyirvoMac"
+sudo scutil --set HostName "TsyirvoMac"
+sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "TsyirvoMac"
 
 # System Preferences
-source $DIR/_01-general.sh
-source $DIR/_02-desktop_screensaver.sh
-source $DIR/_03-dock.sh
-source $DIR/_04-spotlight.sh
-source $DIR/_05-apps.sh
-source $DIR/_06-screen.sh
-source $DIR/_07-energy.sh
-source $DIR/_08-inputs.sh
+source ./_01-general.sh
+source ./_02-desktop_screensaver.sh
+source ./_03-dock.sh
+source ./_04-spotlight.sh
+source ./_05-apps.sh
+source ./_06-screen.sh
+source ./_07-energy.sh
+source ./_08-inputs.sh
 
 success "Successfully set up macOS Defaults. Note that some of these changes require a logout/restart to take effect."

@@ -9,10 +9,13 @@ defaults write com.apple.dock mouse-over-hilite-stack -bool true
 defaults write com.apple.dock tilesize -int 32
 
 # Change minimize/maximize window effect - genie, suck, or scale
-defaults write com.apple.dock mineffect -string "suck"
+defaults write com.apple.dock mineffect -string "genie"
 
 # Dock magnification
-defaults write com.apple.dock magnification -bool false
+defaults write com.apple.dock magnification -bool true
+
+# Set the dock magnification icon size to 50 pixels
+defaults write com.apple.dock largesize -int 50
 
 # Position on screen: 'left', 'bottom', 'right'
 defaults write com.apple.dock orientation -string "bottom"

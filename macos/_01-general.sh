@@ -32,7 +32,7 @@ defaults write NSGlobalDomain AppleHighlightColor -string '0.847059 0.847059 0.8
 # Small  : 1
 # Medium : 2 (default)
 # Large  : 3
-defaults write NSGlobalDomain NSTableViewDefaultSizeMode -int 1
+defaults write NSGlobalDomain NSTableViewDefaultSizeMode -int 2
 
 # Show scroll bars
 # Automatically based on mouse or trackpad : `Automatic`
