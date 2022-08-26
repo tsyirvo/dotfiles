@@ -38,6 +38,9 @@ alias ls="exa -la"
 alias ios="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app"
 alias watchos="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator\ \(Watch\).app"
 
+### Android Studio ###
+alias pixel_5_31="/Users/tsyirvo/Library/Android/sdk/emulator/emulator @Pixel_5_API_31 &"
+
 ### Kubectl ###
 alias k="kubectl"
 
