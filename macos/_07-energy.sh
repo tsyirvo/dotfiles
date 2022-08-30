@@ -31,3 +31,19 @@ sudo systemsetup -setcomputersleep Off > /dev/null
 # 3: Copy RAM to disk so the system state can still be restored in case of a
 #    power failure.
 sudo pmset -a hibernatemode 0
+
+# Disable autopoweroff: This is a form of hibernation
+sudo pmset autopoweroff 0
+
+# Disable powernap: Used to periodically wake the machine for network, and updates(but not the display)
+sudo pmset powernap 0
+
+# Disable standby: Used as a time period between sleep and going into hibernation
+sudo pmset standby 0
+
+# Disable wake from iPhone/Watch: Specifically when your iPhone or Apple Watch come near, the machine will wake
+sudo pmset proximitywake 0
+
+# Disable TCP Keep Alive mechanism to prevent wake ups every 2 hours
+# Should be kept disabled only on my iMac
+# sudo pmset tcpkeepalive 0
