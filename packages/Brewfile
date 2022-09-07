@@ -89,10 +89,8 @@ cask 'spotify'
 
 ## Utilities
 cask 'appcleaner'
-cask 'cloudflare-warp'
 cask 'calibre'
 cask 'sip'
-cask 'caption'
 cask 'bartender'
 cask 'via'
 cask 'alfred'
@@ -100,7 +98,6 @@ cask 'pixelsnap'
 cask 'the-unarchiver'
 cask 'onyx'
 cask 'beardedspice'
-cask 'muzzle'
 cask 'imageoptim'
 cask 'macdown'
 cask 'microsoft-office'
@@ -109,13 +106,13 @@ cask 'carbon-copy-cloner'
 cask 'istat-menus'
 
 ## Quicklook
-cask 'qlcolorcode'
-cask 'qlmarkdown'
-cask 'quicklook-json'
-cask 'quicklook-csv'
-cask 'qlstephen'
-cask "qlvideo"
-cask "quicklookase"
+# cask 'qlcolorcode'
+# cask 'qlmarkdown'
+# cask 'quicklook-json'
+# cask 'quicklook-csv'
+# cask 'qlstephen'
+# cask "qlvideo"
+# cask "quicklookase"
 
 ## Fonts
 cask 'font-lato'
@@ -127,5 +124,5 @@ cask 'font-jetbrains-mono-nerd-font'
 
 ## Mac App Store
 mas 'Magnet', id: 441258766
-mas 'Adafruit Bluefruit LE Connect', id: 1082414600
+# mas 'Adafruit Bluefruit LE Connect', id: 1082414600
 mas 'Email - Edison Mail', id: 1489591003
