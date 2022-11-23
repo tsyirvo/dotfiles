@@ -22,7 +22,7 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 sudo scutil --set ComputerName "TsyirvoMac"
 sudo scutil --set LocalHostName "TsyirvoMac"
 sudo scutil --set HostName "TsyirvoMac"
-sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "TsyirvoMac"
+sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "TsyirvoMacBook"
 
 # System Preferences
 source ./_01-general.sh

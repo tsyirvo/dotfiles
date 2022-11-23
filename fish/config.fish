@@ -24,8 +24,8 @@ set -g fish_user_paths ~/bin $fish_user_paths
 set -g fish_user_paths /Users/tsyirvo/Library/Python/3.10/bin $fish_user_paths
 
 # Volta (disabled for now in favor of nvm)
-# set -x VOLTA_HOME $HOME/.volta
-# set -gx PATH $VOLTA_HOME/bin $PATH
+set -x VOLTA_HOME $HOME/.volta
+set -gx PATH $VOLTA_HOME/bin $PATH
 
 # Java
 set -x JAVA_HOME (/usr/libexec/java_home -V)

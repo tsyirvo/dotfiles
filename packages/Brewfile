@@ -5,7 +5,6 @@ tap 'homebrew/cask-fonts'
 tap 'homebrew/bundle'
 tap 'wix/brew'
 tap 'heroku/brew'
-tap 'adoptopenjdk/openjdk'
 tap 'facebook/fb'
 tap 'cjbassi/gotop'
 
@@ -48,11 +47,12 @@ brew 'kops'
 brew 'helm'
 brew 'tmux'
 brew 'bitrise'
-cask 'adoptopenjdk11'
+cask 'temurin'
+cask 'temurin18'
 cask 'android-sdk'
 brew 'python'
 brew 'python3'
-cask 'pyenv'
+brew 'pyenv'
 
 ## Dev
 cask 'ndm'
@@ -81,11 +81,13 @@ cask 'rescuetime'
 cask 'dropbox'
 cask 'notion'
 cask 'figma'
+cask 'protonmail-bridge'
 
 ## Multimedia
 cask 'vlc'
 cask 'molotov'
 cask 'spotify'
+cask 'steam'
 
 ## Utilities
 cask 'appcleaner'
@@ -104,6 +106,7 @@ cask 'microsoft-office'
 cask 'cakebrew'
 cask 'carbon-copy-cloner'
 cask 'istat-menus'
+cask 'cleanmymac'
 
 ## Quicklook
 # cask 'qlcolorcode'
@@ -126,3 +129,4 @@ cask 'font-jetbrains-mono-nerd-font'
 mas 'Magnet', id: 441258766
 # mas 'Adafruit Bluefruit LE Connect', id: 1082414600
 mas 'Email - Edison Mail', id: 1489591003
+mas 'Yubico Authenticator', id: 1497506650

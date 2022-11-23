@@ -3,7 +3,7 @@
 ###############################################################################
 
 # Store Identities in the KeyChain
-sudo ssh-add -K
+sudo ssh-add --apple-use-keychain
 
 # Disable gatekeeper - Security for Installing apps
 sudo spctl --master-disable
