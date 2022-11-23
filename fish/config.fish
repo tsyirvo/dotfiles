@@ -28,7 +28,7 @@ set -x VOLTA_HOME $HOME/.volta
 set -gx PATH $VOLTA_HOME/bin $PATH
 
 # Java
-set -x JAVA_HOME (/usr/libexec/java_home -V)
+set -x JAVA_HOME (/usr/libexec/java_home -v 17)
 
 # Android
 set -x ANDROID_HOME ~/Library/Android/sdk
