@@ -2,6 +2,7 @@
 tap 'homebrew/cask'
 tap 'homebrew/cask-versions'
 tap 'homebrew/cask-fonts'
+tap 'homebrew/cask-drivers'
 tap 'homebrew/bundle'
 tap 'wix/brew'
 tap 'heroku/brew'
@@ -52,6 +53,7 @@ cask 'android-sdk'
 brew 'python'
 brew 'python3'
 brew 'pyenv'
+brew 'pipenv'
 
 ## Dev
 cask 'ndm'
@@ -76,7 +78,6 @@ cask 'opera'
 cask 'slack'
 cask 'discord'
 cask 'fantastical'
-cask 'rescuetime'
 cask 'dropbox'
 cask 'notion'
 cask 'figma'
@@ -106,15 +107,20 @@ cask 'cakebrew'
 cask 'carbon-copy-cloner'
 cask 'istat-menus'
 cask 'cleanmymac'
+cask 'pika'
+cask 'elgato-camera-hub'
+cask 'elgato-stream-deck'
+cask 'elgato-wave-link'
+cask 'logi-options-plus'
 
 ## Quicklook
-# cask 'qlcolorcode'
-# cask 'qlmarkdown'
-# cask 'quicklook-json'
-# cask 'quicklook-csv'
-# cask 'qlstephen'
-# cask "qlvideo"
-# cask "quicklookase"
+cask 'qlcolorcode'
+cask 'qlmarkdown'
+cask 'quicklook-json'
+cask 'quicklook-csv'
+cask 'qlstephen'
+cask "qlvideo"
+cask "quicklookase"
 
 ## Fonts
 cask 'font-lato'
@@ -129,3 +135,4 @@ mas 'Magnet', id: 441258766
 # mas 'Adafruit Bluefruit LE Connect', id: 1082414600
 mas 'Email - Edison Mail', id: 1489591003
 mas 'Yubico Authenticator', id: 1497506650
+mas 'Moom', id: 419330170
