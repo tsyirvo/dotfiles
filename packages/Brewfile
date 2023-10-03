@@ -8,6 +8,7 @@ tap 'wix/brew'
 tap 'heroku/brew'
 tap 'facebook/fb'
 tap 'cjbassi/gotop'
+tap 'thought-machine/please'
 
 cask_args appdir: '/Applications'
 
@@ -54,6 +55,8 @@ brew 'python'
 brew 'python3'
 brew 'pyenv'
 brew 'pipenv'
+brew 'scrcpy'
+brew 'please'
 
 ## Dev
 cask 'ndm'
