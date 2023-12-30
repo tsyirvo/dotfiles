@@ -5,12 +5,12 @@ cd "$DIR"
 
 . ../scripts/functions.sh
 
-SOURCE="$(realpath .)"
-CONFIG_PATH="$(realpath ~/.config)"
+SOURCE="$(grealpath .)"
+CONFIG_PATH="$(grealpath ~/.config)"
 
 info "Setting up starship..."
 
-find * -name "*.toml*" | while read fn; do
+find . -name "starship.toml" | while read fn; do
     symlink "$SOURCE/$fn" "$CONFIG_PATH/$fn"
 done
 

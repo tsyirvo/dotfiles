@@ -37,7 +37,7 @@ brew "git-lfs"
 brew "wix/brew/applesimutils"
 brew 'maven'
 brew 'heroku'
-# brew 'kubectl'
+brew 'kubectl'
 brew 'ripgrep'
 brew 'cmake'
 brew 'pkgconfig'
@@ -50,11 +50,9 @@ brew 'helm'
 brew 'tmux'
 cask 'temurin21'
 cask 'android-sdk'
-brew 'python3'
 brew 'scrcpy'
 brew 'please'
 brew 'protobuf'
-brew 'rbenv'
 brew 'ruby-build'
 
 ## Dev

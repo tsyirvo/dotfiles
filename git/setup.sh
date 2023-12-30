@@ -5,8 +5,8 @@ cd "$DIR"
 
 . ../scripts/functions.sh
 
-SOURCE="$(realpath .)"
-GIT_PATH="$(realpath ~)"
+SOURCE="$(grealpath .)"
+GIT_PATH="$(grealpath ~)"
 
 info "Setting up git..."
 

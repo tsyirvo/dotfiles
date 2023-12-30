@@ -5,9 +5,9 @@ cd "$DIR"
 
 . ../scripts/functions.sh
 
-SOURCE="$(realpath .)"
-DESTINATION="$(realpath ~)"
-CONFIGDEST="$(realpath ~/.config/tmux)"
+SOURCE="$(grealpath .)"
+DESTINATION="$(grealpath ~)"
+CONFIGDEST="$(grealpath ~/.config/tmux)"
 
 info "Setting up Tmux..."
 
