@@ -48,20 +48,18 @@ brew 'gotop'
 brew 'kops'
 brew 'helm'
 brew 'tmux'
-brew 'bitrise'
-cask 'temurin17'
+cask 'temurin21'
 cask 'android-sdk'
-brew 'python'
 brew 'python3'
-brew 'pyenv'
-brew 'pipenv'
 brew 'scrcpy'
 brew 'please'
+brew 'protobuf'
+brew 'rbenv'
+brew 'ruby-build'
 
 ## Dev
 cask 'ndm'
 cask 'postman'
-cask 'react-native-debugger'
 cask 'sequel-pro'
 cask 'visual-studio-code'
 cask 'iterm2'
@@ -70,8 +68,11 @@ cask 'android-studio'
 cask 'androidtool'
 cask 'docker'
 cask "flipper"
+cask "insomnia"
+cask "genymotion"
 
 ## Browsers
+cask 'arc'
 cask 'firefox'
 cask 'google-chrome'
 cask 'brave-browser'
@@ -85,6 +86,7 @@ cask 'dropbox'
 cask 'notion'
 cask 'figma'
 cask 'protonmail-bridge'
+cask 'proton-drive'
 
 ## Multimedia
 cask 'vlc'
@@ -115,6 +117,16 @@ cask 'elgato-camera-hub'
 cask 'elgato-stream-deck'
 cask 'elgato-wave-link'
 cask 'logi-options-plus'
+cask 'protonvpn'
+cask 'aldente'
+cask 'cleanshot'
+cask 'coconutbattery'
+
+# Downloads
+cask 'sabnzbd'
+cask 'radarr'
+cask 'sonarr'
+cask 'soulseek'
 
 ## Quicklook
 cask 'qlcolorcode'
@@ -135,7 +147,12 @@ cask 'font-jetbrains-mono-nerd-font'
 
 ## Mac App Store
 mas 'Magnet', id: 441258766
-# mas 'Adafruit Bluefruit LE Connect', id: 1082414600
 mas 'Email - Edison Mail', id: 1489591003
 mas 'Yubico Authenticator', id: 1497506650
 mas 'Moom', id: 419330170
+mas 'Gifsky', id: 1351639930
+mas 'Mactracker', id: 430255202
+mas 'Transporter', id: 1450874784
+mas 'Endel: Focus, Sleep, Relax', id: 1346247457
+mas 'RocketSim for Xcode Simulator', id: 1504940162
+mas 'Ledger Live: Crypto & NFT App', id: 1361671700

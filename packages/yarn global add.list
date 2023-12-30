@@ -1,11 +1,10 @@
 yarn
-appcenter-cli
 gtop
 nodemon
 trash-cli
 detox-cli
-expo-cli
 eas-cli
 serve
 npkill
 spoof
+corepack
