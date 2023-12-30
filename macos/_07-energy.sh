@@ -2,6 +2,7 @@
 # Energy saving                                                               #
 ###############################################################################
 
+# TODO(env): check based on target machine (MacBook vs Desktop)
 # Enable lid wakeup
 sudo pmset -a lidwake 1
 
