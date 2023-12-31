@@ -54,6 +54,8 @@ brew 'scrcpy'
 brew 'please'
 brew 'protobuf'
 brew 'ruby-build'
+brew "gnupg"
+brew "dopplerhq/cli/doppler"
 
 ## Dev
 cask 'ndm'
