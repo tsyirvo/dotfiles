@@ -20,17 +20,16 @@
 	keepBackup = false
 
 [diff]
-  tool = vscode
+	tool = difftastic
 
-[difftool "vscode"]
-  cmd = code --wait --diff $LOCAL $REMOTE
+[difftool]
+	prompt = false
 
-[merge]
-  tool = code
-  log = true
+[difftool "difftastic"]
+	cmd = difft --context 5 --skip-unchanged --strip-cr --display inline --background light "$LOCAL" "$REMOTE"
 
-[mergetool "code"]
-  cmd = code --wait $MERGED
+[pager]
+	difftool = true
 
 [push]
 	default = matching

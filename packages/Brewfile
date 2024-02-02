@@ -56,6 +56,8 @@ brew 'protobuf'
 brew 'ruby-build'
 brew "gnupg"
 brew "dopplerhq/cli/doppler"
+brew 'ios-deploy'
+brew 'difftastic'
 
 ## Dev
 cask 'ndm'
