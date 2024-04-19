@@ -58,6 +58,7 @@ brew "gnupg"
 brew "dopplerhq/cli/doppler"
 brew 'ios-deploy'
 brew 'difftastic'
+brew 'blueutil'
 
 ## Dev
 cask 'ndm'
@@ -102,7 +103,8 @@ cask 'calibre'
 cask 'sip'
 cask 'bartender'
 cask 'via'
-cask 'alfred'
+# cask 'alfred'
+cask 'raycast'
 cask 'pixelsnap'
 cask 'the-unarchiver'
 cask 'onyx'

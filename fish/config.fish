@@ -20,6 +20,9 @@ set -g fish_user_paths "/opt/homebrew/bin" $fish_user_paths
 # Flutter
 set -g fish_user_paths ~/tools/flutter/bin $fish_user_paths
 
+# Maestro
+set -g fish_user_paths $HOME/.maestro/bin $fish_user_paths
+
 # User bin folder
 set -g fish_user_paths ~/bin $fish_user_paths
 
