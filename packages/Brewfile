@@ -17,10 +17,10 @@ brew 'cmake'
 
 ## Terminal tools
 brew 'fish'
+brew 'tmux'
 brew 'mise'
 brew 'starship'
 brew 'bat'
-brew 'tmux'
 brew 'ack'
 brew 'difftastic'
 brew 'eza'
