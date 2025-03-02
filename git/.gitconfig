@@ -26,7 +26,7 @@
 	prompt = false
 
 [difftool "difftastic"]
-	cmd = difft --context 5 --skip-unchanged --strip-cr --display inline --background light "$LOCAL" "$REMOTE"
+	cmd = difft --context 5 --skip-unchanged --display inline --background light "$LOCAL" "$REMOTE"
 
 [pager]
 	difftool = true

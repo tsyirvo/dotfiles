@@ -8,77 +8,83 @@ $git_branch\
 $git_commit\
 $git_state\
 $git_status\
-$hg_branch\
-$docker_context\
-$kubernetes\
-$package\
-$cmake\
+$fill\
+$nodejs\
+$python\
+$swift\
 $dart\
-$dotnet\
-$elixir\
-$elm\
-$erlang\
+$rust\
 $golang\
 $helm\
-$java\
-$julia\
-$kotlin\
-$nim\
-$nodejs\
-$ocaml\
-$perl\
-$php\
-$purescript\
-$python\
-$ruby\
-$rust\
-$swift\
 $terraform\
-$vagrant\
-$zig\
 $nix_shell\
-$conda\
-$memory_usage\
+$docker_context\
+$kubernetes\
 $aws\
 $gcloud\
-$openstack\
-$env_var\
-$crystal\
-$custom\
 $cmd_duration\
 $line_break\
-$jobs\
-$time\
-$status\
 $character"""
 
-[kubernetes]
-format = 'on [⛵ $context \($namespace\)](dimmed green) '
-disabled = false
+palette = "catppuccin_mocha"
 
-[docker_context]
-format = "via [🐋 $context](blue bold)"
+[fill]
+symbol = " "
 
-[aws]
-disabled = true
+[cmd_duration]
+min_time = 500
+style = 'fg:subtext1'
+format = '[$duration]($style)'
 
-[gcloud]
-disabled = true
+[directory]
+style = 'bold fg:blue'
+format = '[$path ]($style)'
+truncation_length = 3
+truncation_symbol = '…/'
+truncate_to_repo = false
 
-[package]
-disabled = true
+[git_branch]
+style = 'fg:green'
+symbol = ' '
+format = '[on](subtext1) [$symbol$branch ]($style)'
 
-[ruby]
-disabled = true
+[git_status]
+style = 'fg:green'
+format = '([$all_status$ahead_behind]($style) )'
 
-[swift]
-disabled = true
+[nodejs]
+style = 'blue'
 
-[python]
-disabled = true
+[golang]
+style = 'blue'
 
-[kotlin]
-disabled = true
+[rust]
+style = 'peach'
 
-[java]
-disabled = true
+[palettes.catppuccin_mocha]
+rosewater = "#f5e0dc"
+flamingo = "#f2cdcd"
+pink = "#f5c2e7"
+mauve = "#cba6f7"
+red = "#f38ba8"
+maroon = "#eba0ac"
+peach = "#fab387"
+yellow = "#f9e2af"
+green = "#a6e3a1"
+teal = "#94e2d5"
+sky = "#89dceb"
+sapphire = "#74c7ec"
+blue = "#89b4fa"
+lavender = "#b4befe"
+text = "#cdd6f4"
+subtext1 = "#bac2de"
+subtext0 = "#a6adc8"
+overlay2 = "#9399b2"
+overlay1 = "#7f849c"
+overlay0 = "#6c7086"
+surface2 = "#585b70"
+surface1 = "#45475a"
+surface0 = "#313244"
+base = "#1e1e2e"
+mantle = "#181825"
+crust = "#11111b"

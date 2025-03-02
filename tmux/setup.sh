@@ -14,7 +14,7 @@ info "Setting up Tmux..."
 mkdir -p "$CONFIGDEST"
 git clone --progress --verbose https://github.com/tmux-plugins/tpm "$CONFIGDEST/plugins/tpm"
 
-find . -name ".tmux.conf" | while read fn; do
+find . -name ".*.conf" | while read fn; do
     fn=$(basename $fn)
     symlink "$SOURCE/$fn" "$DESTINATION/$fn"
 done

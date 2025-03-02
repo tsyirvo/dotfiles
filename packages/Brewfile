@@ -1,95 +1,122 @@
 ## Taps
 tap 'homebrew/cask'
-tap 'homebrew/cask-versions'
-tap 'homebrew/cask-fonts'
-tap 'homebrew/cask-drivers'
 tap 'homebrew/bundle'
-tap 'wix/brew'
-tap 'heroku/brew'
-tap 'facebook/fb'
-tap 'cjbassi/gotop'
-tap 'thought-machine/please'
+tap 'FelixKratz/formulae' # JankyBorders
 
 cask_args appdir: '/Applications'
 
-## Binaries
-brew 'fish'
-brew 'coreutils'
-brew 'findutils'
+######### Binaries #########
+
+# Core
+brew 'stow'
 brew 'openssl'
+brew "gnupg"
+brew 'cmake'
+# brew 'coreutils'
+# brew 'findutils'
+
+## Terminal tools
+brew 'fish'
+brew 'mise'
 brew 'starship'
 brew 'bat'
+brew 'tmux'
+brew 'ack'
+brew 'difftastic'
+brew 'eza'
+brew 'zoxide'
+brew 'fd'
+
+## Git tools
 brew 'git'
 brew "git-extras"
-brew 'grep'
-brew 'mas'
-brew 'ack'
-brew 'grc'
+brew "git-lfs"
+brew 'jesseduffield/lazygit/lazygit'
+brew 'withgraphite/tap/graphite'
+
+## Mobile dev tools
 brew 'gradle'
 brew 'watchman'
 brew 'cocoapods'
-brew 'exa'
-brew 'nmap'
-brew "htop"
-brew "tldr"
-brew "dfu-util"
-brew "git-lfs"
-brew "wix/brew/applesimutils"
 brew 'maven'
-brew 'heroku'
-brew 'kubectl'
-brew 'ripgrep'
-brew 'cmake'
-brew 'pkgconfig'
-brew 'fastlane'
-brew 'ctop'
-brew 'idb-companion'
-brew 'gotop'
-brew 'kops'
-brew 'helm'
-brew 'tmux'
 cask 'temurin17'
-cask 'android-sdk'
 brew 'scrcpy'
-brew 'please'
-brew 'protobuf'
-brew 'ruby-build'
-brew "gnupg"
-brew "dopplerhq/cli/doppler"
-brew 'ios-deploy'
-brew 'difftastic'
-brew 'blueutil'
+brew 'expo-orbit'
+# cask 'android-sdk'
+# brew 'ios-deploy'
+# brew 'fastlane'
 
-## Dev
-cask 'ndm'
-cask 'postman'
-cask 'sequel-pro'
+## Deployment tools
+brew 'ctop'
+# brew 'kubectl'
+# brew 'kops'
+# brew 'helm'
+
+## Misc
+brew 'mas'
+brew "dopplerhq/cli/doppler"
+brew 'blueutil'
+brew 'borders'
+
+## Project UQ Learn
+brew 'mkcert'
+brew 'nss'
+
+######### Apps #########
+
+## IDEs
 cask 'visual-studio-code'
-cask 'iterm2'
-cask 'gitkraken'
+cask 'cursor'
 cask 'android-studio'
+
+## Terminals
+cask 'iterm2'
+cask "ghostty"
+
+## Mobile dev tools
 cask 'androidtool'
-cask 'docker'
-cask "flipper"
-cask "insomnia"
 cask "genymotion"
+
+##  API Clients
+cask "insomnia"
+cask 'postman'
+cask 'proxyman'
+
+## Containers
+cask 'docker'
 
 ## Browsers
 cask 'arc'
 cask 'firefox'
 cask 'google-chrome'
-cask 'brave-browser'
-cask 'opera'
 
-## Business
+## Communication
 cask 'slack'
 cask 'discord'
-cask 'fantastical'
-cask 'dropbox'
+
+## Productivity
 cask 'notion'
+cask 'notion-calendar'
+cask 'obsidian'
+# cask 'microsoft-office'
+
+## Design & UI
 cask 'figma'
+cask 'pixelsnap'
+cask 'pika'
+cask 'imageoptim'
+cask 'clop'
+
+## Proton tools
 cask 'protonmail-bridge'
 cask 'proton-drive'
+cask 'protonvpn'
+cask 'protonmail'
+
+## Elgato tools
+cask 'elgato-camera-hub'
+cask 'elgato-stream-deck'
+cask 'elgato-wave-link'
 
 ## Multimedia
 cask 'vlc'
@@ -97,49 +124,46 @@ cask 'molotov'
 cask 'spotify'
 cask 'steam'
 
-## Utilities
-cask 'appcleaner'
-cask 'calibre'
-cask 'sip'
-cask 'bartender'
-cask 'via'
-# cask 'alfred'
-cask 'raycast'
-cask 'pixelsnap'
-cask 'the-unarchiver'
-cask 'onyx'
-cask 'beardedspice'
-cask 'imageoptim'
-cask 'macdown'
-cask 'microsoft-office'
+## Versionning
 cask 'cakebrew'
-cask 'carbon-copy-cloner'
-cask 'istat-menus'
-cask 'cleanmymac'
-cask 'pika'
-cask 'elgato-camera-hub'
-cask 'elgato-stream-deck'
-cask 'elgato-wave-link'
-cask 'logi-options-plus'
-cask 'protonvpn'
-cask 'aldente'
-cask 'cleanshot'
-cask 'coconutbattery'
+cask 'ndm'
+cask 'gitkraken'
 
-# Downloads
-cask 'sabnzbd'
-cask 'radarr'
-cask 'sonarr'
+## Mac utilities
+cask 'coconutbattery'
+cask 'aldente'
+cask 'istat-menus'
+cask 'onyx'
+cask 'appcleaner'
+cask 'latest'
+cask 'bartender'
+cask 'raycast'
+cask 'nikitabobko/tap/aerospace'
+cask 'the-unarchiver'
+cask 'cleanshot'
+# cask 'cleanmymac'
+
+## LLMs
+cask 'ollama'
+cask 'superwhisper'
+
+## Misc
+cask 'logi-options-plus'
+cask 'via'
+cask 'calibre'
+cask 'macdown'
+cask 'carbon-copy-cloner'
 cask 'soulseek'
+cask 'rocket'
+cask 'tailscale'
+cask 'transnomino'
 
 ## Quicklook
 cask 'qlcolorcode'
 cask 'qlmarkdown'
 cask 'quicklook-json'
 cask 'quicklook-csv'
-cask 'qlstephen'
 cask "qlvideo"
-cask "quicklookase"
 
 ## Fonts
 cask 'font-lato'
@@ -150,13 +174,12 @@ cask 'font-fira-code-nerd-font'
 cask 'font-jetbrains-mono-nerd-font'
 
 ## Mac App Store
-mas 'Magnet', id: 441258766
+
 mas 'Email - Edison Mail', id: 1489591003
 mas 'Yubico Authenticator', id: 1497506650
-mas 'Moom', id: 419330170
 mas 'Gifsky', id: 1351639930
-mas 'Mactracker', id: 430255202
 mas 'Transporter', id: 1450874784
-mas 'Endel: Focus, Sleep, Relax', id: 1346247457
 mas 'RocketSim for Xcode Simulator', id: 1504940162
-mas 'Ledger Live: Crypto & NFT App', id: 1361671700
+mas 'Infuse', id: 1136220934
+# mas 'Moom', id: 419330170
+# mas 'Magnet', id: 441258766

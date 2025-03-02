@@ -19,26 +19,22 @@ alias gpf='git push origin HEAD -f --force-with-lease'
 alias gpt='git push --follow-tags'
 alias gft='git fetch --tags'
 
-alias gb='git branch'
-alias gt='git tag'
-
 alias ghide='git update-index --assume-unchanged'
 alias gunhide='git update-index --no-assume-unchanged'
 alias ghidden='! git ls-files -v | grep '^h' | cut -c3-'
 
+alias lgit="lazygit"
+
 ### System ###
-alias ls="exa -la"
+alias ls="eza --color=always --long --git --icons=always --no-time --no-user"
+alias lst="eza --color=always --long --git --icons=always --no-time --no-user --tree --level=2 --ignore-glob=\"node_modules|.git\""
 
 ### XCode ###
 alias ios="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app"
 alias watchos="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator\ \(Watch\).app"
 
-# TODO(env): check based on target machine (emulators might be different)
-### Android Studio ###
-alias pixel_5_31="/Users/tsyirvo/Library/Android/sdk/emulator/emulator @Pixel_5_API_31 &"
-
 ### Kubectl ###
-alias k="kubectl"
+# alias k="kubectl"
 
 ### Tmux ###
 alias t="tmux"
@@ -56,9 +52,3 @@ alias di="docker image"
 alias dv="docker volume"
 alias dcp="docker-compose"
 alias ds="docker service"
-
-### Bundler ###
-alias be="bundle exec"
-
-### Fastlane ###
-alias fa="bundle exec fastlane"

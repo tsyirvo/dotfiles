@@ -253,6 +253,8 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+# Aider
+.aider*
 
-
-
+# Cursor
+.cursorrules
