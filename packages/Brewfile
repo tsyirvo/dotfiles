@@ -26,6 +26,7 @@ brew 'difftastic'
 brew 'eza'
 brew 'zoxide'
 brew 'fd'
+brew 'atuin'
 
 ## Git tools
 brew 'git'

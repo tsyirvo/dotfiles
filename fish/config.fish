@@ -92,3 +92,6 @@ zoxide init fish | source
 
 # Set up fzf key bindings
 fzf --fish | source
+
+# Set up atuin
+atuin init fish | source
