@@ -17,6 +17,7 @@ brew 'cmake'
 
 ## Terminal tools
 brew 'fish'
+brew 'stow'
 brew 'tmux'
 brew 'mise'
 brew 'starship'
@@ -58,6 +59,7 @@ brew 'mas'
 brew "dopplerhq/cli/doppler"
 brew 'blueutil'
 brew 'borders'
+brew 'btop'
 
 ## Project UQ Learn
 brew 'mkcert'

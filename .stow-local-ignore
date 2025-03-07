@@ -1,0 +1,11 @@
+.git
+README.md
+
+.stowrc
+
+scripts/*
+
+packages/*
+macos/*
+
+DS_Store

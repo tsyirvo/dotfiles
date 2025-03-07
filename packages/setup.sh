@@ -7,22 +7,15 @@ cd "$DIR"
 
 COMMENT=\#*
 
-sudo -v
+info "Prompting for sudo password..."
+if sudo -v; then
+    # Keep-alive: update existing `sudo` time stamp until `setup.sh` has finished
+    while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+    success "Sudo credentials updated."
+else
+    error "Failed to obtain sudo credentials."
+fi
 
 info "Installing Brewfile packages..."
 brew bundle
 success "Successfully installed Brewfile packages."
-
-find * -name "*.list" | while read fn; do
-    cmd="${fn%.*}"
-    set -- $cmd
-    info "Installing $1 packages..."
-    while read package; do
-        if [[ $package == $COMMENT ]];
-        then continue
-        fi
-        substep_info "Installing $package..."
-        $cmd $package
-    done < "$fn"
-    success "Successfully installed $1 packages."
-done
