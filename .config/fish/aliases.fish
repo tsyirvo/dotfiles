@@ -29,6 +29,8 @@ alias lgit="lazygit"
 alias ls="eza --color=always --long --git --icons=always --no-time --no-user"
 alias lst="eza --color=always --long --git --icons=always --no-time --no-user --tree --level=2 --ignore-glob=\"node_modules|.git\""
 
+# alias fzf="fzf --preview=\"bat --color=always {}\" | xargs -r cursor"
+
 ### XCode ###
 alias ios="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app"
 alias watchos="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator\ \(Watch\).app"

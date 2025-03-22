@@ -1,6 +1,4 @@
 ## Taps
-tap 'homebrew/cask'
-tap 'homebrew/bundle'
 tap 'FelixKratz/formulae' # JankyBorders
 
 cask_args appdir: '/Applications'
@@ -17,7 +15,6 @@ brew 'cmake'
 
 ## Terminal tools
 brew 'fish'
-brew 'stow'
 brew 'tmux'
 brew 'mise'
 brew 'starship'
@@ -27,13 +24,14 @@ brew 'difftastic'
 brew 'eza'
 brew 'zoxide'
 brew 'fd'
+brew 'fzf'
 brew 'atuin'
 
 ## Git tools
 brew 'git'
 brew "git-extras"
 brew "git-lfs"
-brew 'jesseduffield/lazygit/lazygit'
+brew 'lazygit'
 brew 'withgraphite/tap/graphite'
 
 ## Mobile dev tools
@@ -41,10 +39,8 @@ brew 'gradle'
 brew 'watchman'
 brew 'cocoapods'
 brew 'maven'
-cask 'temurin17'
 brew 'scrcpy'
 brew 'expo-orbit'
-# cask 'android-sdk'
 # brew 'ios-deploy'
 # brew 'fastlane'
 
@@ -91,7 +87,6 @@ cask 'docker'
 ## Browsers
 cask 'arc'
 cask 'firefox'
-cask 'google-chrome'
 
 ## Communication
 cask 'slack'
@@ -101,7 +96,6 @@ cask 'discord'
 cask 'notion'
 cask 'notion-calendar'
 cask 'obsidian'
-# cask 'microsoft-office'
 
 ## Design & UI
 cask 'figma'
@@ -114,7 +108,7 @@ cask 'clop'
 cask 'protonmail-bridge'
 cask 'proton-drive'
 cask 'protonvpn'
-cask 'protonmail'
+cask 'proton-mail'
 
 ## Elgato tools
 cask 'elgato-camera-hub'
@@ -128,8 +122,8 @@ cask 'spotify'
 cask 'steam'
 
 ## Versionning
-cask 'cakebrew'
-cask 'ndm'
+# cask 'cakebrew'
+# cask 'ndm'
 cask 'gitkraken'
 
 ## Mac utilities
@@ -177,12 +171,9 @@ cask 'font-fira-code-nerd-font'
 cask 'font-jetbrains-mono-nerd-font'
 
 ## Mac App Store
-
 mas 'Email - Edison Mail', id: 1489591003
 mas 'Yubico Authenticator', id: 1497506650
 mas 'Gifsky', id: 1351639930
 mas 'Transporter', id: 1450874784
 mas 'RocketSim for Xcode Simulator', id: 1504940162
 mas 'Infuse', id: 1136220934
-# mas 'Moom', id: 419330170
-# mas 'Magnet', id: 441258766

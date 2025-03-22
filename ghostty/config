@@ -1,4 +1,0 @@
-theme = catppuccin-mocha
-font-family = "JetBrains Mono Regular"
-shell-integration = fish
-keybind = cmd+shift+space=toggle_quick_terminal
