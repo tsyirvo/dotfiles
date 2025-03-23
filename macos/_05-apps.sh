@@ -210,7 +210,7 @@ defaults write com.apple.ActivityMonitor SortDirection -int 0
 ###############################################################################
 
 # Disable the automatic update check
-defaults write com.apple.SoftwareUpdate AutomaticCheckEnabled -bool false
+# defaults write com.apple.SoftwareUpdate AutomaticCheckEnabled -bool false
 
 # Check for software updates daily, not just once per week
 defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
