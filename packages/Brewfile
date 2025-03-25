@@ -41,8 +41,8 @@ brew 'cocoapods'
 brew 'maven'
 brew 'scrcpy'
 brew 'expo-orbit'
+brew 'fastlane'
 # brew 'ios-deploy'
-# brew 'fastlane'
 
 ## Deployment tools
 brew 'ctop'
@@ -177,3 +177,4 @@ mas 'Gifsky', id: 1351639930
 mas 'Transporter', id: 1450874784
 mas 'RocketSim for Xcode Simulator', id: 1504940162
 mas 'Infuse', id: 1136220934
+mas 'Pure Paste', id: 1611378436
