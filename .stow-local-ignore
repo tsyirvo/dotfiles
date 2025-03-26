@@ -1,12 +1,10 @@
 .git
 .gitignore
 README.md
-
 .stowrc
+DS_Store
 
 scripts/*
-
 packages/*
 macos/*
 
-DS_Store
