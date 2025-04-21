@@ -26,6 +26,8 @@ brew 'zoxide'
 brew 'fd'
 brew 'fzf'
 brew 'atuin'
+brew 'sshs'
+brew 'sshpass'
 
 ## Git tools
 brew 'git'
