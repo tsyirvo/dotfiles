@@ -75,6 +75,7 @@ cask "ghostty"
 ## Mobile dev tools
 cask 'androidtool'
 cask "genymotion"
+cask 'android-platform-tools'
 
 ##  API Clients
 cask "insomnia"
