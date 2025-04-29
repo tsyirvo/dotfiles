@@ -69,7 +69,7 @@
 (deflayer layer1
   XX    XX    XX    XX    XX    XX    XX    XX    XX    XX    XX    XX    XX
         [     ]     @{    @}
-  XX    XX    XX    XX    XX    XX    XX    XX    XX    XX    XX
+  XX    lctl    lalt    lmet    lsft  XX    XX    rsft  rmet  ralt  rctl
      XX    XX                                    XX    XX
 )
 
