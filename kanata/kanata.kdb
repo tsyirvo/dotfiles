@@ -40,18 +40,18 @@
   cap (tap-hold $tap-time $hold-time caps esc)
 
   a (tap-hold $tap-time 250 a lctl)
-  s (tap-hold $tap-time $hold-time s lalt)
-  d (tap-hold $tap-time $hold-time d lmet)
-  f (tap-hold $tap-time $hold-time f lsft)
-  j (tap-hold $tap-time $hold-time j rsft)
-  k (tap-hold $tap-time $hold-time k rmet)
-  l (tap-hold $tap-time $hold-time l ralt)
+  s (tap-hold $tap-time 250 s lsft)
+  d (tap-hold $tap-time 250 d lalt)
+  f (tap-hold $tap-time $hold-time f lmet)
+  j (tap-hold $tap-time $hold-time j rmet)
+  k (tap-hold $tap-time $hold-time k ralt)
+  l (tap-hold $tap-time $hold-time l rsft)
   ; (tap-hold $tap-time 250 ; rctl)
 
   lalt (tap-hold $tap-time $hold-time tab @meh)
-  lmet (tap-hold $tap-time $hold-time bspc (layer-while-held layer2))
+  lmet (tap-hold $tap-time $hold-time ret (layer-while-held layer2))
   rmet (tap-hold $tap-time $hold-time spc (layer-while-held layer1))
-  ralt (tap-hold $tap-time $hold-time ret @hyper)
+  ralt (tap-hold $tap-time $hold-time bspc @hyper)
 
   la (tap-hold $tap-time $hold-time ◀ lctl)
   ls (tap-hold $tap-time $hold-time ▶▶ lalt)
@@ -60,6 +60,10 @@
 
   { (multi lsft {)
   } (multi lsft })
+)
+
+(defchords combos 200
+  (f j) esc
 )
 
 (deflayer base

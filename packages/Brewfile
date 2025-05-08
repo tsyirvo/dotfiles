@@ -58,6 +58,7 @@ brew "dopplerhq/cli/doppler"
 brew 'blueutil'
 brew 'borders'
 brew 'btop'
+brew 'kanata'
 
 ## Project UQ Learn
 brew 'mkcert'
