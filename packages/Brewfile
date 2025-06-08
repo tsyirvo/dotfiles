@@ -60,10 +60,6 @@ brew 'borders'
 brew 'btop'
 brew 'kanata'
 
-## Project UQ Learn
-brew 'mkcert'
-brew 'nss'
-
 ######### Apps #########
 
 ## IDEs
@@ -134,7 +130,6 @@ cask 'gitkraken'
 cask 'coconutbattery'
 cask 'aldente'
 cask 'istat-menus'
-cask 'onyx'
 cask 'appcleaner'
 cask 'latest'
 cask 'bartender'
@@ -142,7 +137,6 @@ cask 'raycast'
 cask 'nikitabobko/tap/aerospace'
 cask 'the-unarchiver'
 cask 'cleanshot'
-# cask 'cleanmymac'
 
 ## LLMs
 cask 'ollama'
