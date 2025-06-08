@@ -25,6 +25,12 @@ alias ghidden='! git ls-files -v | grep '^h' | cut -c3-'
 
 alias lgit="lazygit"
 
+### Package managers ###
+alias p="pnpm"
+alias y="yarn"
+alias n="npm"
+alias b="bun"
+
 ### System ###
 alias ls="eza --color=always --long --git --icons=always --no-time --no-user"
 alias lst="eza --color=always --long --git --icons=always --no-time --no-user --tree --level=2 --ignore-glob=\"node_modules|.git\""
