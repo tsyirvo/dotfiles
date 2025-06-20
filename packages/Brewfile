@@ -1,5 +1,6 @@
 ## Taps
 tap 'FelixKratz/formulae' # JankyBorders
+tap 'mobile-dev-inc/tap' # Maestro
 
 cask_args appdir: '/Applications'
 
@@ -44,6 +45,7 @@ brew 'maven'
 brew 'scrcpy'
 brew 'expo-orbit'
 brew 'fastlane'
+brew 'maestro'e2e
 # brew 'ios-deploy'
 
 ## Deployment tools
