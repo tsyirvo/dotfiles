@@ -84,7 +84,7 @@ cask 'postman'
 cask 'proxyman'
 
 ## Containers
-cask 'docker'
+cask 'docker-app'
 
 ## Browsers
 cask 'arc'
@@ -141,7 +141,7 @@ cask 'the-unarchiver'
 cask 'cleanshot'
 
 ## LLMs
-cask 'ollama'
+cask 'ollama-app'
 cask 'superwhisper'
 
 ## Misc
@@ -152,7 +152,7 @@ cask 'macdown'
 cask 'carbon-copy-cloner'
 cask 'soulseek'
 cask 'rocket'
-cask 'tailscale'
+cask 'tailscale-app'
 cask 'transnomino'
 
 ## Quicklook
