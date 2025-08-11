@@ -209,8 +209,17 @@ alt-shift-l = ['join-with right', 'mode main']
 # up = 'volume up'
 # shift-down = ['volume set 0', 'mode main']
 
+# Workspace 1
 [[on-window-detected]]
 if.app-id = 'com.edisonmail.edisonmail'
+run = 'move-node-to-workspace 1'
+
+[[on-window-detected]]
+if.app-id = 'ch.protonmail.desktop'
+run = 'move-node-to-workspace 1'
+
+[[on-window-detected]]
+if.app-id = 'com.superhuman.electron'
 run = 'move-node-to-workspace 1'
 
 [[on-window-detected]]
@@ -218,6 +227,13 @@ if.app-id = 'com.spotify.client'
 run = 'move-node-to-workspace 1'
 
 
+# Workspace W
+[[on-window-detected]]
+if.app-id = 'com.cron.electron'
+run = 'move-node-to-workspace W'
+
+
+# Workspace Q
 [[on-window-detected]]
 if.app-id = 'md.obsidian'
 run = 'move-node-to-workspace Q'
@@ -227,11 +243,13 @@ if.app-id = 'notion.id'
 run = 'move-node-to-workspace Q'
 
 
+# Workspace A
 [[on-window-detected]]
 if.app-id = 'company.thebrowser.Browser'
 run = 'move-node-to-workspace A'
 
 
+# Workspace X
 [[on-window-detected]]
 if.app-id = 'com.microsoft.VSCode'
 run = 'move-node-to-workspace X'
@@ -240,7 +258,12 @@ run = 'move-node-to-workspace X'
 if.app-id = 'com.todesktop.230313mzl4w4u92'
 run = 'move-node-to-workspace X'
 
+[[on-window-detected]]
+if.app-id = 'com.apple.iphonesimulator'
+run = 'layout tiling; move-node-to-workspace X'
 
+
+# Workspace S
 [[on-window-detected]]
 if.app-id = 'com.googlecode.iterm2'
 run = 'move-node-to-workspace S'
@@ -250,6 +273,7 @@ if.app-id = 'com.mitchellh.ghostty'
 run = 'move-node-to-workspace S'
 
 
+# Workspace D
 [[on-window-detected]]
 if.app-id = 'com.microsoft.teams2'
 run = 'move-node-to-workspace D'
@@ -259,6 +283,7 @@ if.app-id = 'com.tinyspeck.slackmacgap'
 run = 'move-node-to-workspace D'
 
 
+# Floating
 [[on-window-detected]]
 if.app-id = 'com.apple.finder'
 run = 'layout floating'
