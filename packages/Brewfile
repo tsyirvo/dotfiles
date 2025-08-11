@@ -29,6 +29,7 @@ brew 'fzf'
 brew 'atuin'
 brew 'sshs'
 brew 'sshpass'
+brew 'gh'
 
 ## Git tools
 brew 'git'

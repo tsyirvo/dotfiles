@@ -1,0 +1,3 @@
+#!/bin/sh
+
+comm -23 (git branch | sed 's/^\*//' | awk '{print $1}' | sort | psub) (git branch -r | sed 's/.*origin\///' | sort | psub) | grep -v -E "^(master|main|develop)\$"
