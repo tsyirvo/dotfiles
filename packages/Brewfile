@@ -30,6 +30,7 @@ brew 'atuin'
 brew 'sshs'
 brew 'sshpass'
 brew 'gh'
+brew 'supabase/tap/supabase'
 
 ## Git tools
 brew 'git'
@@ -61,7 +62,6 @@ brew "dopplerhq/cli/doppler"
 brew 'blueutil'
 brew 'borders'
 brew 'btop'
-brew 'kanata'
 
 ######### Apps #########
 
@@ -143,7 +143,6 @@ cask 'cleanshot'
 
 ## LLMs
 cask 'ollama-app'
-cask 'superwhisper'
 
 ## Misc
 cask 'logi-options-plus'
