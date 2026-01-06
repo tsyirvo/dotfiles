@@ -248,6 +248,10 @@ run = 'move-node-to-workspace Q'
 if.app-id = 'company.thebrowser.Browser'
 run = 'move-node-to-workspace A'
 
+[[on-window-detected]]
+if.app-id = 'company.thebrowser.dia'
+run = 'move-node-to-workspace A'
+
 
 # Workspace X
 [[on-window-detected]]
@@ -260,7 +264,13 @@ run = 'move-node-to-workspace X'
 
 [[on-window-detected]]
 if.app-id = 'com.apple.iphonesimulator'
-run = 'layout tiling; move-node-to-workspace X'
+run = ['layout tiling', 'move-node-to-workspace X']
+
+
+# Workspace Z
+[[on-window-detected]]
+if.app-id = 'com.linear'
+run = 'move-node-to-workspace Z'
 
 
 # Workspace S
