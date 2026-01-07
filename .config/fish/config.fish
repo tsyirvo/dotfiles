@@ -78,8 +78,7 @@ fzf --fish | source
 # Set up atuin
 atuin init fish | source
 
-# amp
-set --export PATH "~/.local/bin" $PATH
+fish_add_path ~/.local/bin
 
 # Added by OrbStack: command-line tools and integration
 # This won't be added again if you remove it.
