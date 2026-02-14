@@ -142,7 +142,7 @@ alt-q = 'workspace Q'
 alt-s = 'workspace S'
 # alt-t = 'workspace T'
 # alt-u = 'workspace U'
-# alt-v = 'workspace V'
+alt-v = 'workspace V'
 alt-w = 'workspace W'
 alt-x = 'workspace X'
 # alt-y = 'workspace Y'
@@ -175,7 +175,7 @@ alt-shift-q = 'move-node-to-workspace Q'
 alt-shift-s = 'move-node-to-workspace S'
 # alt-shift-t = 'move-node-to-workspace T'
 # alt-shift-u = 'move-node-to-workspace U'
-# alt-shift-v = 'move-node-to-workspace V'
+alt-shift-v = 'move-node-to-workspace V'
 alt-shift-w = 'move-node-to-workspace W'
 alt-shift-x = 'move-node-to-workspace X'
 # alt-shift-y = 'move-node-to-workspace Y'
@@ -291,6 +291,12 @@ run = 'move-node-to-workspace D'
 [[on-window-detected]]
 if.app-id = 'com.tinyspeck.slackmacgap'
 run = 'move-node-to-workspace D'
+
+
+# Workspace V
+[[on-window-detected]]
+if.app-id = 'com.conductor.app'
+run = 'move-node-to-workspace V'
 
 
 # Floating
