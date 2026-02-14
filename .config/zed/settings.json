@@ -1,0 +1,150 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "edit_predictions": {
+    "ollama": {
+      "model": "codestral:latest"
+    },
+    "provider": "zed",
+    "codestral": {
+      "max_tokens": 151
+    },
+    "mode": "eager"
+  },
+  "context_servers": {
+    "mcp-server-context7": {
+      "enabled": true,
+      "settings": {
+        "context7_api_key": ""
+      }
+    }
+  },
+  "icon_theme": "Catppuccin Mocha",
+  "inlay_hints": {
+    "enabled": false,
+    "show_value_hints": true,
+    "show_type_hints": true,
+    "show_parameter_hints": true,
+    "show_other_hints": true,
+    "show_background": false,
+    "edit_debounce_ms": 700,
+    "scroll_debounce_ms": 50,
+    "toggle_on_modifiers_press": {
+      "control": false,
+      "alt": false,
+      "shift": false,
+      "platform": false,
+      "function": false
+    }
+  },
+  "indent_guides": {
+    "coloring": "indent_aware"
+  },
+  "buffer_font_features": {
+    "calt": 1
+  },
+  "ui_font_family": "JetBrainsMono Nerd Font",
+  "file_types": {
+    "bat": [".tmux.reset.conf"]
+  },
+  "auto_indent_on_paste": false,
+  "show_whitespaces": "all",
+  "show_edit_predictions": true,
+  "soft_wrap": "editor_width",
+  "tab_size": 2,
+  "project_panel": {
+    "auto_fold_dirs": false,
+    "auto_reveal_entries": true,
+    "indent_size": 10
+  },
+  "autosave": "off",
+  "node": {
+    "npm_path": "yarn"
+  },
+  "multi_cursor_modifier": "cmd_or_ctrl",
+  "minimap": {
+    "show": "never"
+  },
+  "base_keymap": "Atom",
+  "ui_font_size": 14,
+  "buffer_font_size": 13.0,
+  "theme": {
+    "mode": "system",
+    "light": "One Light",
+    "dark": "Catppuccin Mocha"
+  },
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  },
+  "agent": {
+    "inline_assistant_model": {
+      "provider": "openrouter",
+      "model": "qwen/qwen3-coder-next"
+    },
+    "default_model": {
+      "provider": "anthropic",
+      "model": "claude-opus-4-6-latest"
+    },
+    "use_modifier_to_send": true,
+    "play_sound_when_agent_done": true
+  },
+  "tab_bar": {
+    "show_nav_history_buttons": false
+  },
+  "tabs": {
+    "show_diagnostics": "errors",
+    "file_icons": true,
+    "git_status": true
+  },
+  "diagnostics": {
+    "button": true,
+    "include_warnings": true,
+    "lsp_pull_diagnostics": {
+      "enabled": true,
+      "debounce_ms": 50
+    },
+    "inline": {
+      "enabled": true,
+      "update_debounce_ms": 150,
+      "padding": 4,
+      "min_column": 0,
+      "max_severity": null
+    }
+  },
+  "collaboration_panel": {
+    "button": false
+  },
+  "max_tabs": 10,
+  "languages": {
+    "TypeScript": {
+      "code_actions_on_format": {
+        "source.organizeImports": true,
+        "source.removeUnusedImports": true,
+        "source.fixAll.eslint": true
+      },
+      "prettier": {
+        "singleQuote": true,
+        "allowed": true
+      },
+      "formatter": "auto"
+    },
+    "TSX": {
+      "code_actions_on_format": {
+        "source.organizeImports": true,
+        "source.fixAll.eslint": true
+      },
+      "prettier": {
+        "singleQuote": true,
+        "allowed": true
+      },
+      "formatter": "auto"
+    }
+  }
+}

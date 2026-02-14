@@ -1,0 +1,8 @@
+[
+  {
+    "context": "!ContextEditor > (Editor && mode == full)",
+    "bindings": {
+      "cmd-k": "assistant::InlineAssist"
+    }
+  }
+]
