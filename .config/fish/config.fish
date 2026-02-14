@@ -24,18 +24,13 @@ set -g fish_user_paths "/opt/homebrew/sbin" $fish_user_paths
 # Stop brew install from updating everything
 set -x HOMEBREW_NO_AUTO_UPDATE 1
 
-######### Projects Config #########
-
-# UQ Learn config
-# set -x CAROOT /Users/tsyirvo/Projects/Clients/uq-learn/certs
-
 ######### Tools Config #########
 
 # Flutter
 # set -g fish_user_paths ~/tools/flutter/bin $fish_user_paths
 
 # Maestro
-# set -g fish_user_paths $HOME/.maestro/bin $fish_user_paths
+set -g fish_user_paths $HOME/.maestro/bin $fish_user_paths
 
 # pnpm
 set -gx PNPM_HOME "/Users/tsyirvo/Library/pnpm"
@@ -80,10 +75,5 @@ atuin init fish | source
 
 fish_add_path ~/.local/bin
 
-# Added by OrbStack: command-line tools and integration
-# This won't be added again if you remove it.
+# OrbStack: command-line tools and integration
 source ~/.orbstack/shell/init2.fish 2>/dev/null || :
-
-# omnara
-set --export OMNARA_INSTALL "$HOME/.omnara"
-set --export PATH $OMNARA_INSTALL/bin $PATH
