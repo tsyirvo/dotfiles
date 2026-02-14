@@ -30,14 +30,14 @@ brew 'atuin'
 brew 'sshs'
 brew 'sshpass'
 brew 'gh'
-brew 'supabase/tap/supabase'
+brew 'ripgrep'
 
 ## Git tools
 brew 'git'
 brew "git-extras"
 brew "git-lfs"
-brew 'lazygit'
-brew 'withgraphite/tap/graphite'
+# brew 'lazygit'
+# brew 'withgraphite/tap/graphite'
 
 ## Mobile dev tools
 brew 'gradle'
@@ -47,8 +47,13 @@ brew 'maven'
 brew 'scrcpy'
 brew 'expo-orbit'
 brew 'fastlane'
-brew 'maestro'e2e
+brew 'maestro'
 # brew 'ios-deploy'
+
+## Dev tools
+brew 'supabase/tap/supabase'
+brew "dopplerhq/cli/doppler"
+brew 'oven-sh/bun/bun'
 
 ## Deployment tools
 brew 'ctop'
@@ -58,47 +63,61 @@ brew 'ctop'
 
 ## Misc
 brew 'mas'
-brew "dopplerhq/cli/doppler"
-brew 'blueutil'
+# brew 'blueutil'
 brew 'borders'
 brew 'btop'
+brew 'mole'
+brew 'terminal-notifier'
+
+## LLMS / AI
+brew 'ollama'
+brew 'voiceink'
 
 ######### Apps #########
 
 ## IDEs
 cask 'visual-studio-code'
 cask 'cursor'
+cask 'zed'
+cask 'antigravity'
 cask 'android-studio'
 
 ## Terminals
-cask 'iterm2'
+# cask 'iterm2'
 cask "ghostty"
 
 ## Mobile dev tools
 cask 'androidtool'
 cask "genymotion"
 cask 'android-platform-tools'
+cask 'ngrok'
 
 ##  API Clients
 cask "insomnia"
 cask 'postman'
 cask 'proxyman'
+cask 'yaak'
 
 ## Containers
 cask 'docker-app'
+cask 'orbstack'
 
 ## Browsers
-cask 'arc'
+cask 'thebrowsercompany-dia'
+cask 'chrome'
 cask 'firefox'
 
 ## Communication
 cask 'slack'
 cask 'discord'
+cask 'superhuman'
 
 ## Productivity
 cask 'notion'
 cask 'notion-calendar'
 cask 'obsidian'
+cask 'linear'
+cask 'rescuetime'
 
 ## Design & UI
 cask 'figma'
@@ -106,9 +125,11 @@ cask 'pixelsnap'
 cask 'pika'
 cask 'imageoptim'
 cask 'clop'
+cask 'rotato'
+cask 'capcut'
 
 ## Proton tools
-cask 'protonmail-bridge'
+# cask 'protonmail-bridge'
 cask 'proton-drive'
 cask 'protonvpn'
 cask 'proton-mail'
@@ -120,9 +141,12 @@ cask 'elgato-wave-link'
 
 ## Multimedia
 cask 'vlc'
-cask 'molotov'
+# cask 'molotov'
 cask 'spotify'
 cask 'steam'
+cask 'reflex-app'
+cask 'soulseek'
+cask 'calibre'
 
 ## Versionning
 # cask 'cakebrew'
@@ -140,20 +164,29 @@ cask 'raycast'
 cask 'nikitabobko/tap/aerospace'
 cask 'the-unarchiver'
 cask 'cleanshot'
+cask 'lookaway'
+cask 'flux-app'
 
-## LLMs
+## LLMs / AI
 cask 'ollama-app'
+cask 'claude'
+cask 'chatgpt'
+cask 'conductor'
+
+## Keyboards & Peripherals
+# cask 'logi-options-plus'
+cask 'logitech-g-hub'
+cask 'via'
+cask 'homerow'
+
+## 3D Tooling
+cask 'bambu-studio'
 
 ## Misc
-cask 'logi-options-plus'
-cask 'via'
-cask 'calibre'
 cask 'macdown'
 cask 'carbon-copy-cloner'
-cask 'soulseek'
 cask 'rocket'
 cask 'tailscale-app'
-cask 'transnomino'
 
 ## Quicklook
 cask 'qlcolorcode'
@@ -178,3 +211,5 @@ mas 'Transporter', id: 1450874784
 mas 'RocketSim for Xcode Simulator', id: 1504940162
 mas 'Infuse', id: 1136220934
 mas 'Pure Paste', id: 1611378436
+mas 'Brother iPrint$Scan', id: 1193539993
+mas 'Todoist', id: 585829637
