@@ -19,10 +19,10 @@ sudo -v
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 # Set computer name
-sudo scutil --set ComputerName "Tsyirvo_MacBookPro"
-sudo scutil --set LocalHostName "Tsyirvo_MacBookPro"
-sudo scutil --set HostName "Tsyirvo_MacBookPro"
-sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "Tsyirvo_MacBookPro"
+sudo scutil --set ComputerName "Tsyirvo-MacBookPro"
+sudo scutil --set LocalHostName "Tsyirvo-MacBookPro"
+sudo scutil --set HostName "Tsyirvo-MacBookPro"
+sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "Tsyirvo-MacBookPro"
 
 # System Preferences
 source ./_01-general.sh

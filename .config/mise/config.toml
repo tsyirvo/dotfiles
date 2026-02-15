@@ -1,8 +1,8 @@
 [tools]
 bun = "latest"
-java = "temurin-17"
+java = "17"
 node = "22"
 pnpm = "latest"
-python = "3.13"
-ruby = "3.4"
+python = "3.14"
+ruby = "3"
 uv = "latest"

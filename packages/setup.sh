@@ -17,5 +17,5 @@ else
 fi
 
 info "Installing Brewfile packages..."
-brew bundle
+brew bundle --verbose
 success "Successfully installed Brewfile packages."

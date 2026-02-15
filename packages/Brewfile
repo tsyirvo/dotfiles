@@ -11,8 +11,6 @@ brew 'stow'
 brew 'openssl'
 brew "gnupg"
 brew 'cmake'
-# brew 'coreutils'
-# brew 'findutils'
 
 ## Terminal tools
 brew 'fish'
@@ -45,21 +43,18 @@ brew 'watchman'
 brew 'cocoapods'
 brew 'maven'
 brew 'scrcpy'
-brew 'expo-orbit'
 brew 'fastlane'
-brew 'maestro'
+brew 'mobile-dev-inc/tap/maestro'
 # brew 'ios-deploy'
+brew 'expo-orbit' 
 
 ## Dev tools
-brew 'supabase/tap/supabase'
+brew 'supabase'
 brew "dopplerhq/cli/doppler"
-brew 'oven-sh/bun/bun'
+brew 'docker'
 
 ## Deployment tools
 brew 'ctop'
-# brew 'kubectl'
-# brew 'kops'
-# brew 'helm'
 
 ## Misc
 brew 'mas'
@@ -71,7 +66,6 @@ brew 'terminal-notifier'
 
 ## LLMS / AI
 brew 'ollama'
-brew 'voiceink'
 
 ######### Apps #########
 
@@ -99,12 +93,11 @@ cask 'proxyman'
 cask 'yaak'
 
 ## Containers
-cask 'docker-app'
 cask 'orbstack'
 
 ## Browsers
 cask 'thebrowsercompany-dia'
-cask 'chrome'
+cask 'google-chrome'
 cask 'firefox'
 
 ## Communication
@@ -116,7 +109,7 @@ cask 'superhuman'
 cask 'notion'
 cask 'notion-calendar'
 cask 'obsidian'
-cask 'linear'
+cask 'linear-linear'
 cask 'rescuetime'
 
 ## Design & UI
@@ -172,6 +165,7 @@ cask 'ollama-app'
 cask 'claude'
 cask 'chatgpt'
 cask 'conductor'
+cask 'voiceink'
 
 ## Keyboards & Peripherals
 # cask 'logi-options-plus'
@@ -191,7 +185,6 @@ cask 'tailscale-app'
 ## Quicklook
 cask 'qlcolorcode'
 cask 'qlmarkdown'
-cask 'quicklook-json'
 cask 'quicklook-csv'
 cask "qlvideo"
 
@@ -204,7 +197,7 @@ cask 'font-fira-code-nerd-font'
 cask 'font-jetbrains-mono-nerd-font'
 
 ## Mac App Store
-mas 'Email - Edison Mail', id: 1489591003
+mas 'Email - Edison Mail', id: 922793622
 mas 'Yubico Authenticator', id: 1497506650
 mas 'Gifsky', id: 1351639930
 mas 'Transporter', id: 1450874784
