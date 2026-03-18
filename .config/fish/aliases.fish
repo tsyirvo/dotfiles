@@ -25,6 +25,8 @@ alias ghidden='! git ls-files -v | grep '^h' | cut -c3-'
 
 alias lgit="lazygit"
 
+alias ghpr="gh pr create --title"
+
 ### Package managers ###
 alias p="pnpm"
 alias y="yarn"

@@ -1,14 +1,15 @@
 !.config
 
 .config/tmux/plugins/
-
 .config/fish/completions
 .config/fish/fish_variables
 .config/fish/functions
 .config/fish/themes
-
 .config/raycast
-
 .config/zed/conversations
 .config/zed/prompts
 .config/zed/themes
+.config/goose
+.config/ngrok
+.config/opencode
+.serena
