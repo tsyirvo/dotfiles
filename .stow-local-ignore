@@ -1,9 +1,11 @@
 .git
-.gitignore
-README.md
-.stowrc
 DS_Store
 
-scripts/*
-packages/*
+.conductor
+.serena
 macos/*
+packages/*
+scripts/*
+.gitignore
+.stowrc
+README.md

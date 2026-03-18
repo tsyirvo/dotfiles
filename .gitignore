@@ -13,3 +13,5 @@
 .config/ngrok
 .config/opencode
 .serena
+ai-tools/.claude/hooks/rtk-rewrite.sh
+ai-tools/.claude/hooks/.rtk-hook.sha256
