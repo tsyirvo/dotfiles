@@ -18,8 +18,13 @@ model_name=$(echo "$input" | jq -r '.model.display_name // empty')
 current_dir=$(echo "$input" | jq -r '.workspace.current_dir // empty')
 cwd=$(echo "$input" | jq -r '.cwd // empty')
 
-# Extract context window percentage from Claude Code input (global percentage including skills, MCP tools, etc.)
-context_percentage=$(echo "$input" | jq -r '.context_window.used_percentage // 0')
+# Extract context window token counts from Claude Code input
+context_window_size=$(echo "$input" | jq -r '.context_window.context_window_size // 200000')
+context_used_tokens=$(echo "$input" | jq -r '
+  (.context_window.current_usage.input_tokens // 0) +
+  (.context_window.current_usage.cache_creation_input_tokens // 0) +
+  (.context_window.current_usage.cache_read_input_tokens // 0)
+')
 
 # Get current git branch with error handling
 if git rev-parse --git-dir >/dev/null 2>&1; then
@@ -89,21 +94,34 @@ format_time() {
     fi
 }
 
-format_context_percentage() {
-    local pct=$1
-    # Remove decimal for integer comparison
-    local pct_int=${pct%.*}
-    # Handle empty or invalid values
-    if [ -z "$pct_int" ] || [ "$pct_int" = "0" ]; then
-        pct_int=0
-    fi
-    
-    if [ "$pct_int" -lt 50 ]; then
-        printf "${GREEN}%.0f%%${RESET}" "$pct"
-    elif [ "$pct_int" -lt 80 ]; then
-        printf "${YELLOW}%.0f%%${RESET}" "$pct"
+format_tokens() {
+    local tokens=$1
+    if [ "$tokens" -ge 1000000 ]; then
+        awk "BEGIN {printf \"%.1fM\", $tokens/1000000}"
+    elif [ "$tokens" -ge 1000 ]; then
+        awk "BEGIN {printf \"%.0fK\", $tokens/1000}"
     else
-        printf "${RED}%.0f%%${RESET}" "$pct"
+        printf "%d" "$tokens"
+    fi
+}
+
+format_context_info() {
+    local used_tokens=$1
+    local total_tokens=$2
+    local pct=0
+    if [ "$total_tokens" -gt 0 ]; then
+        pct=$(awk "BEGIN {printf \"%.0f\", $used_tokens * 100 / $total_tokens}")
+    fi
+    local used_fmt
+    local total_fmt
+    used_fmt=$(format_tokens "$used_tokens")
+    total_fmt=$(format_tokens "$total_tokens")
+    if [ "$pct" -lt 50 ]; then
+        printf "${GREEN}${used_fmt}/${total_fmt} (${pct}%%)${RESET}"
+    elif [ "$pct" -lt 80 ]; then
+        printf "${YELLOW}${used_fmt}/${total_fmt} (${pct}%%)${RESET}"
+    else
+        printf "${RED}${used_fmt}/${total_fmt} (${pct}%%)${RESET}"
     fi
 }
 
@@ -171,10 +189,10 @@ fi
 formatted_session_cost=$(format_cost "$session_cost")
 formatted_daily_cost=$(format_cost "$daily_cost")
 formatted_block_cost=$(format_cost "$block_cost")
-formatted_context_pct=$(format_context_percentage "$context_percentage")
+formatted_context_info=$(format_context_info "$context_used_tokens" "$context_window_size")
 
 # Build the status line with colors (light gray as default)
-status_line="${LIGHT_GRAY}🌿 $branch ${GRAY}|${LIGHT_GRAY} 📁 $dir_name ${GRAY}|${LIGHT_GRAY} 🤖 $model_name ${GRAY}|${LIGHT_GRAY} 🧠 ${formatted_context_pct}${RESET}\n💰 \$$formatted_session_cost ${GRAY}/${LIGHT_GRAY} 📅 \$$formatted_daily_cost ${GRAY}/${LIGHT_GRAY} 🧊 \$$formatted_block_cost"
+status_line="${LIGHT_GRAY}🌿 $branch ${GRAY}|${LIGHT_GRAY} 📁 $dir_name ${GRAY}|${LIGHT_GRAY} 🤖 $model_name ${GRAY}|${LIGHT_GRAY} 🧠 ${formatted_context_info}${RESET}\n💰 \$$formatted_session_cost ${GRAY}/${LIGHT_GRAY} 📅 \$$formatted_daily_cost ${GRAY}/${LIGHT_GRAY} 🧊 \$$formatted_block_cost"
 
 
 if [ "$remaining_time" != "N/A" ]; then

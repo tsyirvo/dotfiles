@@ -85,6 +85,9 @@
       "mcp__supabase__get_project_url",
       "mcp__supabase__list_edge_functions",
       "mcp__supabase__list_extensions",
+      "mcp__sentry__get_issue_details",
+      "mcp__sentry__search_events",
+      "mcp__sentry__search_issues",
       "mcp__pencil"
     ],
     "deny": [],
@@ -136,7 +139,7 @@
     "supabase@claude-plugins-official": false,
     "explanatory-output-style@claude-plugins-official": true,
     "learning-output-style@claude-plugins-official": true,
-    "postgres-best-practices@supabase-agent-skills": true,
+    "postgres-best-practices@supabase-agent-skills": false,
     "react-native-best-practices@callstack-agent-skills": true,
     "claude-code-wakatime@wakatime": true,
     "claude-mem@thedotmack": true,
