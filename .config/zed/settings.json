@@ -134,7 +134,7 @@
     "ollama": {
       "model": "qwen3.5:9b",
     },
-    "provider": "codestral",
+    "provider": "zed",
     "codestral": {
       "max_tokens": 151,
     },
