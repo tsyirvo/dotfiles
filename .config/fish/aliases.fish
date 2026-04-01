@@ -23,8 +23,6 @@ alias ghide='git update-index --assume-unchanged'
 alias gunhide='git update-index --no-assume-unchanged'
 alias ghidden='! git ls-files -v | grep '^h' | cut -c3-'
 
-alias lgit="lazygit"
-
 alias ghpr="gh pr create --title"
 
 ### Package managers ###
@@ -43,22 +41,15 @@ alias fz="fzf --preview=\"bat --color=always {}\" | xargs -r cursor"
 alias ios="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app"
 alias watchos="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator\ \(Watch\).app"
 
-### Kubectl ###
-# alias k="kubectl"
-
 ### Tmux ###
 alias t="tmux"
 alias ta="tmux a -t"
 alias tls="tmux ls"
 alias tn="tmux new -s"
 
-### Docker ###
-alias d="docker"
-alias dc="docker container"
-alias dcr="docker container run"
-alias dcs="docker container stop"
-alias dn="docker network"
-alias di="docker image"
-alias dv="docker volume"
-alias dcp="docker-compose"
-alias ds="docker service"
+### Worktrunk ###
+alias wcp='wt switch --create --execute="claude --permission-mode plan"'
+alias wc='wt switch --create --execute=claude'
+alias wl='wt list --full'
+alias wm='wt merge'
+alias wr='wt remove'
