@@ -239,11 +239,40 @@ no-ff = false      # Create a merge commit even when fast-forward is possible (-
 # """
 # <!-- DEFAULT_SQUASH_TEMPLATE_END -->
 
-[post-switch]
-tmux = "[ -n \"$TMUX\" ] && tmux rename-window {{ repo ~ '-' ~ branch }} | sanitize"
+# Worktree layout: sibling directories
+# ~/code/myapp → ~/code/myapp.fix-rls
+worktree-path = "{{ repo_path }}/../{{ repo }}.{{ branch | sanitize }}"
 
 [aliases]
 # Quick dashboard refresh
 st = "wt list --full"
 # Open worktree in Zed
-code = "zed {{ worktree_path }}"
+zed = "zed {{ worktree_path }}"
+
+# ── HOOKS: the tmux session lifecycle ────────────────────────
+
+# PRE-START (blocking): Create a tmux session with 2-pane layout
+# This runs BEFORE the --execute command (Claude Code)
+# so the session is ready when Claude starts.
+[pre-start]
+tmux-session = """
+S="{{ repo }}__{{ branch | sanitize }}"
+W="{{ worktree_path }}"
+
+mise trust "$W/mise.toml" 2>/dev/null || true
+mise trust "$W/.mise.toml" 2>/dev/null || true
+
+tmux new-session -d -s "$S" -c "$W" -n agent
+tmux split-window -h -t "$S:agent" -c "$W"
+tmux select-pane -t "$S:agent.left"
+tmux resize-pane -t "$S:agent.left" -x 60%
+
+echo "✓ tmux session '$S' ready"
+"""
+
+# PRE-REMOVE (blocking): kill the tmux session before removing worktree
+[pre-remove]
+tmux-kill = """
+S="{{ repo }}__{{ branch | sanitize }}"
+tmux kill-session -t "$S" 2>/dev/null || true
+"""

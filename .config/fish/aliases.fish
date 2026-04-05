@@ -48,8 +48,6 @@ alias tls="tmux ls"
 alias tn="tmux new -s"
 
 ### Worktrunk ###
-alias wcp='wt switch --create --execute="claude --permission-mode plan"'
-alias wc='wt switch --create --execute=claude'
 alias wl='wt list --full'
 alias wm='wt merge'
 alias wr='wt remove'

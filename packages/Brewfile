@@ -9,7 +9,7 @@ cask_args appdir: '/Applications'
 # Core
 brew 'stow'
 brew 'openssl'
-brew "gnupg"
+brew 'gnupg'
 brew 'cmake'
 
 ## Terminal tools
@@ -29,11 +29,13 @@ brew 'sshs'
 brew 'sshpass'
 brew 'gh'
 brew 'ripgrep'
+brew 'sesh'
+brew 'tv'
 
 ## Git tools
 brew 'git'
-brew "git-extras"
-brew "git-lfs"
+brew 'git-extras'
+brew 'git-lfs'
 brew 'worktrunk'
 # brew 'lazygit'
 # brew 'withgraphite/tap/graphite'
@@ -51,7 +53,7 @@ brew 'expo-orbit'
 
 ## Dev tools
 brew 'supabase'
-brew "dopplerhq/cli/doppler"
+brew 'dopplerhq/cli/doppler'
 brew 'docker'
 
 ## Deployment tools
@@ -79,16 +81,16 @@ cask 'android-studio'
 
 ## Terminals
 # cask 'iterm2'
-cask "ghostty"
+cask 'ghostty'
 
 ## Mobile dev tools
 cask 'androidtool'
-cask "genymotion"
+cask 'genymotion'
 cask 'android-platform-tools'
 cask 'ngrok'
 
 ##  API Clients
-cask "insomnia"
+cask 'insomnia'
 cask 'postman'
 cask 'proxyman'
 cask 'yaak'
@@ -187,7 +189,7 @@ cask 'tailscale-app'
 cask 'qlcolorcode'
 cask 'qlmarkdown'
 cask 'quicklook-csv'
-cask "qlvideo"
+cask 'qlvideo'
 
 ## Fonts
 cask 'font-lato'

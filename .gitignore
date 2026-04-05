@@ -3,7 +3,8 @@
 .config/tmux/plugins/
 .config/fish/completions
 .config/fish/fish_variables
-.config/fish/functions
+.config/fish/functions/fisher.fish
+.config/fish/functions/wt.fish
 .config/fish/themes
 .config/raycast
 .config/zed/conversations
@@ -12,6 +13,8 @@
 .config/goose
 .config/ngrok
 .config/opencode
+.config/worktrunk/approvals.toml
+.config/worktrunk/approvals.toml.lock
 .serena
 ai-tools/.claude/hooks/rtk-rewrite.sh
 ai-tools/.claude/hooks/.rtk-hook.sha256
