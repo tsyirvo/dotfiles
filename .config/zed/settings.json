@@ -7,6 +7,23 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "lsp": {
+    "vtsls": {
+      "settings": {
+        "typescript": {
+          "updateImportsOnFileMove": {
+            "enabled": "always",
+          },
+        },
+        "javascript": {
+          "updateImportsOnFileMove": {
+            "enabled": "always",
+          },
+        },
+      },
+      "enable_lsp_tasks": true,
+    },
+  },
   "theme": {
     "mode": "system",
     "light": "One Light",
@@ -55,14 +72,14 @@
     "auto_fold_dirs": false,
     "auto_reveal_entries": true,
     "indent_size": 10,
-    "default_width": 250,
+    "default_width": 200,
     "scrollbar": {
       "show": "never",
     },
   },
   "outline_panel": {
     "indent_size": 10,
-    "default_width": 250,
+    "default_width": 200,
   },
   "file_finder": {
     "modal_max_width": "medium",
@@ -121,18 +138,19 @@
       "model": "qwen/qwen3-coder-next",
     },
     "default_model": {
-      "provider": "anthropic",
-      "model": "claude-opus-4-6-latest",
+      "enable_thinking": true,
+      "provider": "ollama",
+      "model": "qwen3.6:35b-a3b-q4_K_M",
     },
     "use_modifier_to_send": true,
-    "play_sound_when_agent_done": true,
+    "play_sound_when_agent_done": "always",
   },
   "edit_predictions": {
     "sweep": {
       "privacy_mode": true,
     },
     "ollama": {
-      "model": "qwen3.5:9b",
+      "model": "qwen3.6:35b-a3b-q4_K_M",
     },
     "provider": "zed",
     "codestral": {
