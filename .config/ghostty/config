@@ -2,4 +2,5 @@ theme = Catppuccin Mocha
 font-family = "JetBrains Mono Regular"
 shell-integration = fish
 keybind = cmd+shift+space=toggle_quick_terminal
+keybind = alt+backspace=text:\x1b\x7f
 macos-option-as-alt = left
