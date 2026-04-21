@@ -1,7 +1,11 @@
 {
   "env": {
-    "CLAUDE_AUTOCOMPACT_PCT_OVERRIDE": "80",
-    "ENABLE_CLAUDEAI_MCP_SERVERS": "false"
+    "CLAUDE_AUTOCOMPACT_PCT_OVERRIDE": "70",
+    "ENABLE_CLAUDEAI_MCP_SERVERS": "false",
+    "CLAUDE_CODE_DISABLE_1M_CONTEXT": "1",
+    "CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING": "1",
+    "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1",
+    "CLAUDE_CODE_SUBAGENT_MODEL": "sonnet"
   },
   "attribution": {
     "commit": "",
@@ -94,10 +98,11 @@
       "mcp__pencil__*",
       "mcp__convex__status",
       "mcp__convex__data",
-      "mcp__convex__tables"
+      "mcp__convex__tables",
+      "mcp__pencil"
     ],
     "deny": [],
-    "defaultMode": "acceptEdits"
+    "defaultMode": "auto"
   },
   "hooks": {
     "Notification": [
@@ -148,16 +153,16 @@
     "postgres-best-practices@supabase-agent-skills": false,
     "react-native-best-practices@callstack-agent-skills": true,
     "claude-code-wakatime@wakatime": true,
-    "claude-mem@thedotmack": true,
+    "claude-mem@thedotmack": false,
     "code-simplifier@claude-plugins-official": true,
     "claude-md-management@claude-plugins-official": true,
     "ui-ux-pro-max@ui-ux-pro-max-skill": true,
     "skill-creator@claude-plugins-official": true,
     "security-guidance@claude-plugins-official": true,
-    "agent-sdk-dev@claude-plugins-official": true,
+    "agent-sdk-dev@claude-plugins-official": false,
     "swift-lsp@claude-plugins-official": true,
     "skills@swmansion": true,
-    "worktrunk@worktrunk": true
+    "worktrunk@worktrunk": false
   },
   "extraKnownMarketplaces": {
     "swmansion": {
@@ -168,5 +173,6 @@
     }
   },
   "effortLevel": "medium",
+  "skipAutoPermissionPrompt": true,
   "voiceEnabled": false
 }
