@@ -7,6 +7,21 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "ssh_connections": [
+    {
+      "host": "192.168.10.113",
+      "username": "tsyirvo",
+      "args": [],
+      "projects": [
+        {
+          "paths": ["/home/tsyirvo/.hermes/./"],
+        },
+      ],
+    },
+  ],
+  "git_panel": {
+    "dock": "left",
+  },
   "lsp": {
     "vtsls": {
       "settings": {
@@ -68,6 +83,7 @@
     "calt": 1,
   },
   "project_panel": {
+    "dock": "left",
     "hide_root": true,
     "auto_fold_dirs": false,
     "auto_reveal_entries": true,
@@ -78,6 +94,7 @@
     },
   },
   "outline_panel": {
+    "dock": "left",
     "indent_size": 10,
     "default_width": 200,
   },
@@ -126,6 +143,7 @@
     },
   },
   "collaboration_panel": {
+    "dock": "right",
     "button": false,
   },
   "telemetry": {
@@ -133,6 +151,8 @@
     "metrics": false,
   },
   "agent": {
+    "default_width": 200,
+    "dock": "right",
     "inline_assistant_model": {
       "provider": "openrouter",
       "model": "qwen/qwen3-coder-next",
@@ -146,9 +166,6 @@
     "play_sound_when_agent_done": "always",
   },
   "edit_predictions": {
-    "sweep": {
-      "privacy_mode": true,
-    },
     "ollama": {
       "model": "qwen3.6:35b-a3b-q4_K_M",
     },

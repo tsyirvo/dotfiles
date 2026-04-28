@@ -69,6 +69,7 @@ brew 'terminal-notifier'
 
 ## LLMS / AI
 brew 'ollama'
+brew 'llama.cpp'
 
 ######### Apps #########
 
