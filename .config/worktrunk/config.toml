@@ -103,7 +103,6 @@ commit = true      # Commit uncommitted changes first (--no-commit to skip)
 rebase = true      # Rebase onto target before merge (--no-rebase to skip)
 remove = true      # Remove worktree after merge (--no-remove to keep)
 verify = true      # Run project hooks (--no-verify to skip)
-no-ff = false      # Create a merge commit even when fast-forward is possible (--no-ff)
 #
 # ### Switch
 #
@@ -241,7 +240,8 @@ no-ff = false      # Create a merge commit even when fast-forward is possible (-
 
 # Worktree layout: sibling directories
 # ~/code/myapp → ~/code/myapp.fix-rls
-worktree-path = "{{ repo_path }}/../{{ repo }}.{{ branch | sanitize }}"
+# worktree-path = "{{ repo_path }}/../{{ repo }}.{{ branch | sanitize }}"
+ff = true
 
 [aliases]
 # Quick dashboard refresh
@@ -251,7 +251,8 @@ zed = "zed {{ worktree_path }}"
 
 # ── HOOKS: the tmux session lifecycle ────────────────────────
 
-# PRE-START (blocking): Create a tmux session with 2-pane layout
+# PRE-START (blocking): Create a tmux session with 3-pane layout
+# (left: full height, right: two stacked vertically)
 # This runs BEFORE the --execute command (Claude Code)
 # so the session is ready when Claude starts.
 [pre-start]
@@ -264,6 +265,7 @@ mise trust "$W/.mise.toml" 2>/dev/null || true
 
 tmux new-session -d -s "$S" -c "$W" -n agent
 tmux split-window -h -t "$S:agent" -c "$W"
+tmux split-window -v -t "$S:agent.right" -c "$W"
 tmux select-pane -t "$S:agent.left"
 tmux resize-pane -t "$S:agent.left" -x 60%
 

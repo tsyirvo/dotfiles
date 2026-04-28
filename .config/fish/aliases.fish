@@ -48,6 +48,5 @@ alias tls="tmux ls"
 alias tn="tmux new -s"
 
 ### Worktrunk ###
-alias wl='wt list --full'
-alias wm='wt merge'
-alias wr='wt remove'
+alias wls='wt list --full'
+alias wrm='wt remove'
