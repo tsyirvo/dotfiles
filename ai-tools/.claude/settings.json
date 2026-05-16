@@ -104,6 +104,7 @@
     "deny": [],
     "defaultMode": "auto"
   },
+  "model": "sonnet",
   "hooks": {
     "Notification": [
       {
@@ -144,24 +145,24 @@
   },
   "enabledPlugins": {
     "frontend-design@claude-plugins-official": true,
-    "context7@claude-plugins-official": true,
+    "context7@claude-plugins-official": false,
     "typescript-lsp@claude-plugins-official": true,
     "figma@claude-plugins-official": false,
     "supabase@claude-plugins-official": false,
-    "explanatory-output-style@claude-plugins-official": true,
-    "learning-output-style@claude-plugins-official": true,
+    "explanatory-output-style@claude-plugins-official": false,
+    "learning-output-style@claude-plugins-official": false,
     "postgres-best-practices@supabase-agent-skills": false,
     "react-native-best-practices@callstack-agent-skills": true,
     "claude-code-wakatime@wakatime": true,
     "claude-mem@thedotmack": false,
-    "code-simplifier@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": false,
     "claude-md-management@claude-plugins-official": true,
     "ui-ux-pro-max@ui-ux-pro-max-skill": true,
-    "skill-creator@claude-plugins-official": true,
+    "skill-creator@claude-plugins-official": false,
     "security-guidance@claude-plugins-official": true,
     "agent-sdk-dev@claude-plugins-official": false,
-    "swift-lsp@claude-plugins-official": true,
-    "skills@swmansion": true,
+    "swift-lsp@claude-plugins-official": false,
+    "skills@swmansion": false,
     "worktrunk@worktrunk": false
   },
   "extraKnownMarketplaces": {
@@ -173,7 +174,7 @@
     }
   },
   "effortLevel": "medium",
-  "remoteControlAtStartup": true,
+  "remoteControlAtStartup": false,
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
   "voiceEnabled": false

@@ -1,4 +1,4 @@
-function wc --description "Spawn Claude agent (auto mode) in background tmux session"
+function wc --description "Spawn Claude agent in background tmux session"
     set -l branch $argv[1]
     set -l claude_args
 
@@ -25,5 +25,9 @@ function wc --description "Spawn Claude agent (auto mode) in background tmux ses
         tmux send-keys -t "$sname:agent.left" "claude" Enter
     end
 
-    echo "✓ Agent spawned in background: $sname"
+    if set -q TMUX
+        tmux switch-client -t "$sname"
+    else
+        tmux attach-session -t "$sname"
+    end
 end
