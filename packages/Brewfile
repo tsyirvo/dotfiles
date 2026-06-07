@@ -37,6 +37,7 @@ brew 'git'
 brew 'git-extras'
 brew 'git-lfs'
 brew 'worktrunk'
+brew 'modem-dev/tap/hunk'
 # brew 'lazygit'
 # brew 'withgraphite/tap/graphite'
 
@@ -66,6 +67,7 @@ brew 'borders'
 brew 'btop'
 brew 'mole'
 brew 'terminal-notifier'
+brew 'mactop'
 
 ## LLMS / AI
 brew 'ollama'
