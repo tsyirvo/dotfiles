@@ -31,6 +31,7 @@ brew 'gh'
 brew 'ripgrep'
 brew 'sesh'
 brew 'tv'
+brew 'hk'
 
 ## Git tools
 brew 'git'
