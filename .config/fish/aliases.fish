@@ -50,3 +50,6 @@ alias tn="tmux new -s"
 ### Worktrunk ###
 alias wls='wt list --full'
 alias wrm='wt remove'
+
+### Hunk ###
+alias hd='hunk diff'
