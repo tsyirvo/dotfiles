@@ -1,7 +1,8 @@
 [tools]
 bun = "latest"
 java = "17"
-node = "22"
+node = "24"
+"npm:@earendil-works/pi-coding-agent" = "latest"
 pnpm = "latest"
 python = "3.14"
 ruby = "3"
