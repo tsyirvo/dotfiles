@@ -11,4 +11,16 @@
       "tab": "editor::AcceptEditPrediction",
     },
   },
+  {
+    "context": "BufferSearchBar",
+    "bindings": {
+      "cmd-g": "search::SelectNextMatch"
+    }
+  },
+  {
+    "context": "BufferSearchBar",
+    "unbind": {
+      "cmd-f3": "search::SelectNextMatch"
+    }
+  },
 ]
