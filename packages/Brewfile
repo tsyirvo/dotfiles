@@ -80,7 +80,6 @@ brew 'llama.cpp'
 cask 'visual-studio-code'
 cask 'cursor'
 cask 'zed'
-cask 'antigravity'
 cask 'android-studio'
 
 ## Terminals
@@ -103,7 +102,7 @@ cask 'yaak'
 cask 'orbstack'
 
 ## Browsers
-cask 'thebrowsercompany-dia'
+cask 'zen'
 cask 'google-chrome'
 cask 'firefox'
 
@@ -117,7 +116,6 @@ cask 'notion'
 cask 'notion-calendar'
 cask 'obsidian'
 cask 'linear-linear'
-cask 'rescuetime'
 
 ## Design & UI
 cask 'figma'
@@ -170,7 +168,7 @@ cask 'flux-app'
 ## LLMs / AI
 cask 'ollama-app'
 cask 'claude'
-cask 'chatgpt'
+cask 'codex'
 cask 'conductor'
 cask 'voiceink'
 
