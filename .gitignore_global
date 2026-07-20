@@ -259,3 +259,4 @@ dist
 # Cursor
 .cursorrules
 .cursor
+**/.claude/settings.local.json

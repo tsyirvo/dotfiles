@@ -13,6 +13,8 @@
 .config/goose
 .config/ngrok
 .config/opencode
+.config/mole/purge_paths
+.config/herdr/session.json
 .config/worktrunk/approvals.toml
 .config/worktrunk/approvals.toml.lock
 .serena
