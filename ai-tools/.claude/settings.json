@@ -1,11 +1,8 @@
 {
   "env": {
     "CLAUDE_AUTOCOMPACT_PCT_OVERRIDE": "70",
-    "ENABLE_CLAUDEAI_MCP_SERVERS": "false",
-    "CLAUDE_CODE_DISABLE_1M_CONTEXT": "1",
-    "CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING": "1",
-    "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1",
-    "CLAUDE_CODE_SUBAGENT_MODEL": "sonnet"
+    "CLAUDE_CODE_SUBAGENT_MODEL": "sonnet",
+    "ENABLE_CLAUDEAI_MCP_SERVERS": "false"
   },
   "attribution": {
     "commit": "",
@@ -75,11 +72,9 @@
       "Skill(frontend-design:frontend-design)",
       "mcp__plugin_claude-mem_mcp-search__*",
       "mcp__plugin_context7_context7__*",
-      "mcp__plugin_serena_serena__*",
       "mcp__figma-dev-mode-mcp-server",
       "mcp__ide__*",
       "mcp__context7__*",
-      "mcp__serena__*",
       "mcp__grepai__*",
       "mcp__supabase__get_logs",
       "mcp__supabase__search_docs",
@@ -104,7 +99,6 @@
     "deny": [],
     "defaultMode": "auto"
   },
-  "model": "sonnet",
   "hooks": {
     "Notification": [
       {
@@ -113,6 +107,17 @@
           {
             "type": "command",
             "command": "bash $HOME/.claude/hooks/notify.sh \"Claude Code\" \"An input is needed from you\""
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "[ -n \"$SUPERSET_HOME_DIR\" ] && [ -x \"$SUPERSET_HOME_DIR/hooks/notify.sh\" ] && \"$SUPERSET_HOME_DIR/hooks/notify.sh\" || true"
           }
         ]
       }
@@ -136,6 +141,48 @@
           }
         ]
       }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "[ -n \"$SUPERSET_HOME_DIR\" ] && [ -x \"$SUPERSET_HOME_DIR/hooks/notify.sh\" ] && \"$SUPERSET_HOME_DIR/hooks/notify.sh\" || true"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "[ -n \"$SUPERSET_HOME_DIR\" ] && [ -x \"$SUPERSET_HOME_DIR/hooks/notify.sh\" ] && \"$SUPERSET_HOME_DIR/hooks/notify.sh\" || true"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "[ -n \"$SUPERSET_HOME_DIR\" ] && [ -x \"$SUPERSET_HOME_DIR/hooks/notify.sh\" ] && \"$SUPERSET_HOME_DIR/hooks/notify.sh\" || true"
+          }
+        ]
+      }
+    ],
+    "PostToolUseFailure": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "[ -n \"$SUPERSET_HOME_DIR\" ] && [ -x \"$SUPERSET_HOME_DIR/hooks/notify.sh\" ] && \"$SUPERSET_HOME_DIR/hooks/notify.sh\" || true"
+          }
+        ]
+      }
     ]
   },
   "statusLine": {
@@ -144,28 +191,32 @@
     "padding": 0
   },
   "enabledPlugins": {
-    "frontend-design@claude-plugins-official": true,
+    "agent-sdk-dev@claude-plugins-official": false,
+    "claude-code-wakatime@wakatime": true,
+    "claude-md-management@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": false,
     "context7@claude-plugins-official": false,
-    "typescript-lsp@claude-plugins-official": true,
-    "figma@claude-plugins-official": false,
-    "supabase@claude-plugins-official": false,
     "explanatory-output-style@claude-plugins-official": false,
+    "figma@claude-plugins-official": false,
+    "frontend-design@claude-plugins-official": false,
     "learning-output-style@claude-plugins-official": false,
     "postgres-best-practices@supabase-agent-skills": false,
-    "react-native-best-practices@callstack-agent-skills": true,
-    "claude-code-wakatime@wakatime": true,
-    "claude-mem@thedotmack": false,
-    "code-simplifier@claude-plugins-official": false,
-    "claude-md-management@claude-plugins-official": true,
-    "ui-ux-pro-max@ui-ux-pro-max-skill": true,
-    "skill-creator@claude-plugins-official": false,
+    "react-native-best-practices@callstack-agent-skills": false,
     "security-guidance@claude-plugins-official": true,
-    "agent-sdk-dev@claude-plugins-official": false,
-    "swift-lsp@claude-plugins-official": false,
+    "skill-creator@claude-plugins-official": false,
     "skills@swmansion": false,
-    "worktrunk@worktrunk": false
+    "supabase@claude-plugins-official": false,
+    "swift-lsp@claude-plugins-official": false,
+    "typescript-lsp@claude-plugins-official": true,
+    "ui-ux-pro-max@ui-ux-pro-max-skill": false
   },
   "extraKnownMarketplaces": {
+    "agricidaniel-seo": {
+      "source": {
+        "source": "github",
+        "repo": "AgriciDaniel/claude-seo"
+      }
+    },
     "swmansion": {
       "source": {
         "source": "github",
@@ -174,8 +225,10 @@
     }
   },
   "effortLevel": "medium",
+  "tui": "fullscreen",
   "remoteControlAtStartup": false,
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "voiceEnabled": false
+  "voiceEnabled": false,
+  "model": "opus"
 }
