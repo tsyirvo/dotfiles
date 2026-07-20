@@ -51,7 +51,7 @@ set -gx PATH $ANDROID_HOME/emulator $PATH
 ######### Editor Config #########
 
 # Set Cursor as default editor
-set -x --global EDITOR cursor
+set -x --global EDITOR zed
 
 ######### Prompt Config #########
 
