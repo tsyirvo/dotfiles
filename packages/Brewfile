@@ -39,6 +39,7 @@ brew 'git-extras'
 brew 'git-lfs'
 brew 'worktrunk'
 brew 'modem-dev/tap/hunk'
+brew 'agavra/tap/tuicr'
 # brew 'lazygit'
 # brew 'withgraphite/tap/graphite'
 
