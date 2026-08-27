@@ -175,9 +175,11 @@
   },
   "edit_predictions": {
     "ollama": {
-      "model": "qwen3.6:35b-a3b-q4_K_M",
+      "max_output_tokens": 512,
+      "prompt_format": "sweep",
+      "model": "sweepai/sweep-next-edit:latest",
     },
-    "provider": "zed",
+    "provider": "mercury",
     "codestral": {
       "max_tokens": 151,
     },

@@ -1,9 +1,15 @@
 [tools]
 bun = "latest"
 java = "17"
-node = "24"
+node = "26"
 "npm:@earendil-works/pi-coding-agent" = "latest"
+"npm:ctx7" = "latest"
+"npm:eas-cli" = "latest"
 pnpm = "latest"
-python = "3.14"
+python = "3"
 ruby = "3"
 uv = "latest"
+yarn = "latest"
+
+[settings]
+idiomatic_version_file_enable_tools = ["node"]

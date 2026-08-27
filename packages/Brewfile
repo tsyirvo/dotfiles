@@ -1,13 +1,11 @@
 ## Taps
 tap 'FelixKratz/formulae' # JankyBorders
-tap 'mobile-dev-inc/tap' # Maestro
 
 cask_args appdir: '/Applications'
 
 ######### Binaries #########
 
 # Core
-brew 'stow'
 brew 'openssl'
 brew 'gnupg'
 brew 'cmake'
@@ -15,33 +13,30 @@ brew 'cmake'
 ## Terminal tools
 brew 'fish'
 brew 'tmux'
-brew 'mise'
 brew 'starship'
 brew 'bat'
 brew 'ack'
-brew 'difftastic'
 brew 'eza'
 brew 'zoxide'
 brew 'fd'
 brew 'fzf'
 brew 'atuin'
 brew 'sshs'
-brew 'sshpass'
-brew 'gh'
 brew 'ripgrep'
 brew 'sesh'
 brew 'tv'
-brew 'hk'
 
 ## Git tools
 brew 'git'
 brew 'git-extras'
 brew 'git-lfs'
+brew 'difftastic'
+brew 'gh'
+brew 'hk'
 brew 'worktrunk'
-brew 'modem-dev/tap/hunk'
-brew 'agavra/tap/tuicr'
-# brew 'lazygit'
-# brew 'withgraphite/tap/graphite'
+brew 'tuicr'
+brew 'lazygit'
+brew 'gitleaks'
 
 ## Mobile dev tools
 brew 'gradle'
@@ -50,85 +45,77 @@ brew 'cocoapods'
 brew 'maven'
 brew 'scrcpy'
 brew 'fastlane'
-brew 'mobile-dev-inc/tap/maestro'
-# brew 'ios-deploy'
 brew 'expo-orbit'
 
 ## Dev tools
+brew 'mise'
 brew 'supabase'
-brew 'dopplerhq/cli/doppler'
+brew 'doppler'
 brew 'docker'
-
-## Deployment tools
 brew 'ctop'
 
 ## Misc
 brew 'mas'
-# brew 'blueutil'
+brew 'blueutil'
 brew 'borders'
 brew 'btop'
 brew 'mole'
 brew 'terminal-notifier'
 brew 'mactop'
+brew 'thaw'
 
-## LLMS / AI
+## AI
 brew 'ollama'
-brew 'llama.cpp'
+brew 'herdr'
+brew 'rtk'
+brew 'mlx'
 
 ######### Apps #########
 
 ## IDEs
-cask 'visual-studio-code'
 cask 'cursor'
 cask 'zed'
 cask 'android-studio'
 
 ## Terminals
-# cask 'iterm2'
 cask 'ghostty'
+
+## Browsers
+cask 'zen'
+cask 'google-chrome'
 
 ## Mobile dev tools
 cask 'androidtool'
 cask 'genymotion'
 cask 'android-platform-tools'
-cask 'ngrok'
-
-##  API Clients
-cask 'insomnia'
-cask 'postman'
 cask 'proxyman'
-cask 'yaak'
 
-## Containers
+# Dev tools
+cask 'ngrok'
 cask 'orbstack'
-
-## Browsers
-cask 'zen'
-cask 'google-chrome'
-cask 'firefox'
+cask 'gitkraken'
+cask 'postman'
+cask 'bruno'
 
 ## Communication
 cask 'slack'
 cask 'discord'
-cask 'superhuman'
+cask 'telegram'
 
 ## Productivity
 cask 'notion'
 cask 'notion-calendar'
+cask 'reader'
 cask 'obsidian'
-cask 'linear-linear'
+cask 'linear'
 
 ## Design & UI
 cask 'figma'
-cask 'pixelsnap'
-cask 'pika'
-cask 'imageoptim'
-cask 'clop'
 cask 'rotato'
 cask 'capcut'
+cask 'paper-design'
 
 ## Proton tools
-# cask 'protonmail-bridge'
 cask 'proton-drive'
 cask 'protonvpn'
 cask 'proton-mail'
@@ -140,53 +127,53 @@ cask 'elgato-wave-link'
 
 ## Multimedia
 cask 'vlc'
-# cask 'molotov'
 cask 'spotify'
 cask 'steam'
 cask 'reflex-app'
 cask 'soulseek'
 cask 'calibre'
+cask 'brainfm'
 
-## Versionning
-# cask 'cakebrew'
-# cask 'ndm'
-cask 'gitkraken'
-
-## Mac utilities
-cask 'coconutbattery'
-cask 'aldente'
-cask 'istat-menus'
-cask 'appcleaner'
-cask 'latest'
-cask 'bartender'
-cask 'raycast'
-cask 'nikitabobko/tap/aerospace'
-cask 'the-unarchiver'
-cask 'cleanshot'
-cask 'lookaway'
-cask 'flux-app'
-
-## LLMs / AI
-cask 'ollama-app'
+## AI
 cask 'claude'
 cask 'codex'
+cask 'factory'
 cask 'conductor'
-cask 'voiceink'
 
 ## Keyboards & Peripherals
-# cask 'logi-options-plus'
+cask 'logi-options-plus'
 cask 'logitech-g-hub'
 cask 'via'
 cask 'homerow'
+cask 'hyperkey'
 
 ## 3D Tooling
 cask 'bambu-studio'
+
+## Security
+cask 'oversight'
+cask 'taskexplorer'
+cask 'knockknock'
 
 ## Misc
 cask 'macdown'
 cask 'carbon-copy-cloner'
 cask 'rocket'
 cask 'tailscale-app'
+cask 'coconutbattery'
+cask 'aldente'
+cask 'istat-menus'
+cask 'latest'
+cask 'raycast'
+cask 'nikitabobko/tap/aerospace'
+cask 'the-unarchiver'
+cask 'cleanshot'
+cask 'lookaway'
+cask 'flux-app'
+cask 'imageoptim'
+cask 'clop'
+cask 'pika'
+cask 'voiceink'
 
 ## Quicklook
 cask 'qlcolorcode'
@@ -203,12 +190,11 @@ cask 'font-fira-code-nerd-font'
 cask 'font-jetbrains-mono-nerd-font'
 
 ## Mac App Store
-mas 'Email - Edison Mail', id: 922793622
+mas 'Spark Mail', id: 6445813049
+mas 'WhatsApp', id: 310633997
 mas 'Yubico Authenticator', id: 1497506650
-mas 'Gifsky', id: 1351639930
 mas 'Transporter', id: 1450874784
 mas 'RocketSim for Xcode Simulator', id: 1504940162
 mas 'Infuse', id: 1136220934
 mas 'Pure Paste', id: 1611378436
 mas 'Brother iPrint$Scan', id: 1193539993
-mas 'Todoist', id: 585829637
