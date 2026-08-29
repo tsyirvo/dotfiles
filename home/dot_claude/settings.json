@@ -1,0 +1,176 @@
+{
+  "env": {
+    "CLAUDE_AUTOCOMPACT_PCT_OVERRIDE": "70",
+    "CLAUDE_CODE_SUBAGENT_MODEL": "sonnet",
+    "ENABLE_CLAUDEAI_MCP_SERVERS": "false"
+  },
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch",
+      "Write",
+      "Edit",
+      "Bash(grep:*)",
+      "Bash(ls:*)",
+      "Bash(source:*)",
+      "Bash(find:*)",
+      "Bash(sort:*)",
+      "Bash(mv:*)",
+      "Bash(mkdir:*)",
+      "Bash(tree:*)",
+      "Bash(touch:*)",
+      "Bash(cat:*)",
+      "Bash(cp:*)",
+      "Bash(npm:*)",
+      "Bash(pnpm:*)",
+      "Bash(yarn:*)",
+      "Bash(echo:*)",
+      "Bash(lsof:*)",
+      "Bash(test:*)",
+      "Bash(chmod:*)",
+      "Bash(claude mcp:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git fetch:*)",
+      "Bash(git rm:*)",
+      "Bash(git branch:*)",
+      "Bash(git rev-parse:*)",
+      "Bash(git add:*)",
+      "Bash(git mv:*)",
+      "Bash(git show:*)",
+      "Bash(gh api:*)",
+      "Bash(rtk:*)",
+      "Bash(mise:*)",
+      "Bash(npm view:*)",
+      "Bash(yarn why:*)",
+      "Bash(yarn list:*)",
+      "Bash(yarn info:*)",
+      "Bash(npx lefthook:*)",
+      "Bash(npx @biomejs/biome:*)",
+      "Bash(npx biome:*)",
+      "Bash(npx eslint:*)",
+      "Bash(npx prettier:*)",
+      "Bash(npx vitest:*)",
+      "Bash(npx jest:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npx turbo:*)",
+      "Bash(npx tsc-files:*)",
+      "Bash(npx expo:*)",
+      "Bash(coderabbit:*)",
+      "Bash(rozenite agent:*)",
+      "Bash(.specify/scripts/bash/check-prerequisites.sh:*)",
+      "Bash(.specify/scripts/bash/common.sh:*)",
+      "Bash(.specify/scripts/bash/create-new-feature.sh:*)",
+      "Bash(.specify/scripts/bash/setup-plan.sh:*)",
+      "Bash(.specify/scripts/bash/update-agent-context.sh:*)",
+      "Skill(claude-developer-platform:*)",
+      "Skill(frontend-design:frontend-design)",
+      "mcp__plugin_claude-mem_mcp-search__*",
+      "mcp__plugin_context7_context7__*",
+      "mcp__figma-dev-mode-mcp-server",
+      "mcp__ide__*",
+      "mcp__context7__*",
+      "mcp__grepai__*",
+      "mcp__supabase__get_logs",
+      "mcp__supabase__search_docs",
+      "mcp__supabase__list_tables",
+      "mcp__supabase__get_advisors",
+      "mcp__supabase__list_migrations",
+      "mcp__supabase__list_projects",
+      "mcp__supabase__get_project_url",
+      "mcp__supabase__list_edge_functions",
+      "mcp__supabase__list_extensions",
+      "mcp__sentry__get_issue_details",
+      "mcp__sentry__search_events",
+      "mcp__sentry__search_issues",
+      "mcp__sentry__find_organizations",
+      "mcp__sentry__search_issue_events",
+      "mcp__pencil__*",
+      "mcp__convex__status",
+      "mcp__convex__data",
+      "mcp__convex__tables",
+      "mcp__pencil"
+    ],
+    "deny": [],
+    "defaultMode": "auto"
+  },
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash $HOME/.claude/hooks/notify.sh \"Claude Code\" \"An input is needed from you\""
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash $HOME/.claude/hooks/guard-protected-files.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/tsyirvo/.claude/hooks/rtk-rewrite.sh"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash $HOME/.claude/statusline-ccusage.sh",
+    "padding": 0
+  },
+  "enabledPlugins": {
+    "claude-code-wakatime@wakatime": true,
+    "claude-md-management@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": false,
+    "context7@claude-plugins-official": false,
+    "figma@claude-plugins-official": false,
+    "frontend-design@claude-plugins-official": false,
+    "postgres-best-practices@supabase-agent-skills": false,
+    "react-native-best-practices@callstack-agent-skills": false,
+    "security-guidance@claude-plugins-official": true,
+    "skill-creator@claude-plugins-official": false,
+    "skills@swmansion": false,
+    "supabase@claude-plugins-official": false,
+    "ui-ux-pro-max@ui-ux-pro-max-skill": false
+  },
+  "extraKnownMarketplaces": {
+    "agricidaniel-seo": {
+      "source": {
+        "source": "github",
+        "repo": "AgriciDaniel/claude-seo"
+      }
+    },
+    "swmansion": {
+      "source": {
+        "source": "github",
+        "repo": "software-mansion-labs/skills"
+      }
+    }
+  },
+  "effortLevel": "medium",
+  "tui": "fullscreen",
+  "remoteControlAtStartup": false,
+  "agentPushNotifEnabled": true,
+  "skipAutoPermissionPrompt": true,
+  "voiceEnabled": false,
+  "model": "opus"
+}

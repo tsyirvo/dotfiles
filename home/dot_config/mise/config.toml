@@ -1,0 +1,15 @@
+[tools]
+java = "17"
+node = "26"
+python = "3"
+ruby = "3"
+pnpm = "latest"
+bun = "latest"
+yarn = "latest"
+uv = "latest"
+"npm:@earendil-works/pi-coding-agent" = "latest"
+"npm:ctx7" = "latest"
+"npm:eas-cli" = "latest"
+
+[settings]
+idiomatic_version_file_enable_tools = ["node"]

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euo pipefail
+# run_once_after_ (darwin) — runs the consolidated macOS defaults script.
+# Re-run manually any time with: mise run macos
+{{ if .isDarwin -}}
+bash "{{ .chezmoi.workingTree }}/tasks/macos/defaults.sh"
+{{ end -}}

@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+set -euo pipefail
+# run_once_after_ — fish becomes the login shell on every machine.
+# Idempotent: /etc/shells entry + chsh. PATH is explicit — chezmoi scripts run
+# with a non-login, non-interactive shell
+export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
+FISH="$(command -v fish || true)"
+{{ if .isDarwin -}}
+if [ -z "$FISH" ]; then
+  find_brew() {
+    if command -v brew >/dev/null 2>&1; then
+      command -v brew
+      return
+    fi
+    for candidate in /opt/homebrew/bin/brew /usr/local/bin/brew; do
+      if [ -x "$candidate" ]; then
+        printf '%s\n' "$candidate"
+        return
+      fi
+    done
+    return 1
+  }
+  brew_bin="$(find_brew || true)"
+  if [ -n "$brew_bin" ]; then
+    FISH="$("$brew_bin" --prefix fish 2>/dev/null)/bin/fish"
+  fi
+fi
+{{ end -}}
+if [ -z "$FISH" ]; then
+  echo "50-shell: fish not found" >&2
+  exit 1
+fi
+if ! grep -qxF "$FISH" /etc/shells 2>/dev/null; then
+  echo "adding $FISH to /etc/shells (sudo)"
+  echo "$FISH" | sudo tee -a /etc/shells >/dev/null
+fi
+if [ "${SHELL:-}" != "$FISH" ]; then
+  echo "chsh: ${SHELL:-?} → $FISH"
+  chsh -s "$FISH" 2>/dev/null || sudo chsh -s "$FISH" "$(id -un)"
+fi

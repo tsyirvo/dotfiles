@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+set -euo pipefail
+# run_onchange_before_ — Tailscale: join every machine to the tailnet + zero-trust SSH.
+#   macOS: the GUI cask app is the node. We just expose its bundled CLI (the app can
+#     only be an SSH *client* — Tailscale SSH *server* needs the OSS tailscaled).
+#   Linux: run tailscaled at boot and enable Tailscale SSH (server): it claims port 22
+#     ONLY on the tailnet IP — no public exposure, no sshd required, auth via tailnet
+#     identity + ACLs. MagicDNS (that is, `tailscale ssh <hostname>`) is on by default.
+# First-time auth is deliberately OUT-OF-BAND (secrets never live in this repo):
+#   unattended:  TS_AUTHKEY=tskey-... chezmoi apply
+#   interactive: run the printed `sudo tailscale up --ssh` once per node
+# Re-runs when packages.yaml changes:
+#   packages.yaml:   {{ include ".chezmoidata/packages.yaml" | sha256sum }}
+export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
+
+{{ if .isDarwin -}}
+# --- macOS: app (cask) is the tailnet client; link its bundled CLI into PATH ---------
+APP_BIN="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
+if [ -x "$APP_BIN" ]; then
+  ln -sfn "$APP_BIN" "$HOME/.local/bin/tailscale"
+  if ! tailscale status >/dev/null 2>&1; then
+    echo "12-tailscale: app installed but tailnet not up yet — open Tailscale and sign in" >&2
+  fi
+else
+  echo "12-tailscale: Tailscale.app missing (cask install pending?) — re-run apply" >&2
+fi
+
+{{ else -}}
+# --- Linux: install (debian only; arch comes via pacman in 10-install-packages) -------
+{{ if ne .osID "linux-arch" -}}
+tmp="$(mktemp)"
+trap 'rm -f "$tmp"' EXIT
+curl -fsSL https://tailscale.com/install.sh -o "$tmp"
+sh "$tmp"
+{{ end -}}
+
+if ! command -v tailscale >/dev/null 2>&1; then
+  echo "12-tailscale: tailscale CLI not found after install" >&2
+  exit 1
+fi
+
+# daemon must come up at boot for the node to join the tailnet
+sudo systemctl enable --now tailscaled
+
+if ! tailscale status >/dev/null 2>&1; then
+  # not logged in yet — one-time, out-of-band (auth key or manual login)
+  if [[ -n "${TS_AUTHKEY:-}" ]]; then
+    sudo tailscale up --ssh --operator="$USER" --auth-key="$TS_AUTHKEY"
+  else
+    echo "12-tailscale: node not on the tailnet yet. One-time step on this machine:" >&2
+    echo "               sudo tailscale up --ssh" >&2
+    echo "               (or pass TS_AUTHKEY=tskey-... at apply for unattended install)" >&2
+  fi
+fi
+
+# idempotent zero-trust hardening — safe to re-run whenever the node is logged in:
+if tailscale status >/dev/null 2>&1; then
+  sudo tailscale set --ssh --auto-update
+  sudo tailscale set --operator="$USER" || true
+fi
+{{ end -}}

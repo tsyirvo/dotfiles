@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+set -euo pipefail
+# run_once_before_ — package manager present, sudo warmed up.
+export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
+{{ if .isDarwin -}}
+find_brew() {
+  if command -v brew >/dev/null 2>&1; then
+    command -v brew
+    return
+  fi
+  for candidate in /opt/homebrew/bin/brew /usr/local/bin/brew; do
+    if [ -x "$candidate" ]; then
+      printf '%s\n' "$candidate"
+      return
+    fi
+  done
+  return 1
+}
+
+if ! find_brew >/dev/null; then
+  echo "00-bootstrap: Homebrew missing — run the Homebrew installer, then re-run chezmoi apply" >&2
+  exit 1
+fi
+{{ else if eq .osID "linux-arch" -}}
+command -v pacman >/dev/null 2>&1 || { echo "00-bootstrap: pacman missing" >&2; exit 1; }
+{{ else -}}
+command -v apt-get >/dev/null 2>&1 || { echo "00-bootstrap: apt-get missing" >&2; exit 1; }
+{{ end -}}
+sudo -v || { echo "00-bootstrap: sudo required" >&2; exit 1; }

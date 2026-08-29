@@ -1,0 +1,56 @@
+on: [push, pull_request]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
+      - run: mise install
+      - run: mise run check:shellcheck # renders *.tmpl scripts, shellchecks rendered + static
+      - run: mise run check:gitleaks
+      - run: mise run check:workflows # actionlint + zizmor (guards this file itself)
+
+  apply-debian:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - run: bash tasks/ci/test.sh devbox debian:bookworm # full script execution in a container
+
+  apply-arch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - run: bash tasks/ci/test.sh omarchy archlinux:latest
+
+  apply-darwin:
+    runs-on: macos-26
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - run: brew install chezmoi
+      - run: |
+          set -euo pipefail
+          home="$RUNNER_TEMP/home"; mkdir -p "$home"
+          cat > "$RUNNER_TEMP/chezmoi.toml" <<'EOF'
+          [data]
+              role = "macbook"
+              osID = "darwin"
+          EOF
+          chezmoi --source "$GITHUB_WORKSPACE" --destination "$home" \
+            --config "$RUNNER_TEMP/chezmoi.toml" --cache "$RUNNER_TEMP/cache" \
+            --persistent-state "$RUNNER_TEMP/state/chezmoistate.boltdb" \
+            --no-tty --force apply --exclude=scripts
+          chezmoi --source "$GITHUB_WORKSPACE" --destination "$home" \
+            --config "$RUNNER_TEMP/chezmoi.toml" --no-tty verify --exclude=scripts
+      # scripts are skipped here (they install real packages); containers + real machines cover them

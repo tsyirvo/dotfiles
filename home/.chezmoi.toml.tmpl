@@ -1,0 +1,55 @@
+{{- $osID := .chezmoi.os -}}
+{{- if and (eq .chezmoi.os "linux") (hasKey .chezmoi "osRelease") -}}
+{{-   $osID = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
+{{- end -}}
+
+{{- $defaultRole := "devbox" -}}
+{{- if eq .chezmoi.os "darwin" -}}
+{{-   $defaultRole = "macbook" -}}
+{{- else if eq $osID "linux-arch" -}}
+{{-   $defaultRole = "omarchy" -}}
+{{- end -}}
+
+{{- $role := default $defaultRole (env "DOTFILES_ROLE") -}}
+{{- /* interactive-only prompt; env → OS inference keeps CI/containers silent */ -}}
+{{- if and (eq $role $defaultRole) (stdinIsATTY) -}}
+{{-   $role = promptChoice "Machine role - type ONE letter (m/o/d)" (list "macbook" "omarchy" "devbox") $defaultRole -}}
+{{- end -}}
+{{- $role = default $defaultRole $role -}}
+
+{{- $gitName := default (default "" (index . "gitName")) (env "DOTFILES_GIT_NAME") -}}
+{{- $gitEmail := default (default "" (index . "gitEmail")) (env "DOTFILES_GIT_EMAIL") -}}
+{{- if and (eq $gitName "") (stdinIsATTY) -}}
+{{-   $gitName = promptStringOnce . "gitName" "Git user.name (leave blank to skip)" "" -}}
+{{- end -}}
+{{- if and (eq $gitEmail "") (stdinIsATTY) -}}
+{{-   $gitEmail = promptStringOnce . "gitEmail" "Git user.email (leave blank to skip)" "" -}}
+{{- end -}}
+
+[git]
+    autoCommit = false
+    autoPush = false
+
+[diff]
+    format = "git"     # `chezmoi diff` reuses git's pager/difftool config
+    exclude = ["scripts"]
+
+{{ if eq .chezmoi.os "darwin" }}[merge]
+    command = "opendiff"   # macOS FileMerge for `chezmoi merge` — ships with the OS
+{{ end }}
+
+[data]
+    role = {{ $role | quote }}
+    osID = {{ $osID | quote }}
+    gitName = {{ $gitName | quote }}
+    gitEmail = {{ $gitEmail | quote }}
+
+    # Derived flags — use in templates, never re-derive inline.
+    isDarwin  = {{ eq .chezmoi.os "darwin" }}
+    isLinux   = {{ eq .chezmoi.os "linux" }}
+    isMacbook = {{ eq $role "macbook" }}
+    isOmarchy = {{ eq $role "omarchy" }}
+    isDevbox  = {{ eq $role "devbox" }}
+    isDesktop = {{ ne $role "devbox" }}
+    isHeadless = {{ eq $role "devbox" }}
+    personal  = {{ ne $role "devbox" }}     # available for non-headless personal settings

@@ -1,0 +1,240 @@
+# =============================================================================
+# packages.yaml — per-machine-class OS packages
+# How to use:
+#   add   → one commented line in the right section → `chezmoi apply` installs it
+#   remove → delete the line → `chezmoi apply` stops managing it (manual uninstall)
+# Runtime tools & global npm tools live in dot_config/mise/config.toml, NOT here
+# =============================================================================
+
+packages:
+  fonts:
+    jetbrains_mono_nerd:
+      version: "3.4.0"
+
+  # ---------------------------------------------------------------------------
+  ## Darwin (macOS)
+  darwin:
+    ## Binaries
+    brews:
+      # Core
+      - openssl # TLS lib for build tooling
+      - gnupg # gpg for commit signing (later) & ssh key mgmt
+      - cmake # build dep (watchman, cocoapods, react-native)
+      # Terminal tools
+      - fish # shell (D3: fish everywhere)
+      - tmux # terminal multiplexer
+      - starship # prompt
+      - bat # cat clone
+      - ack # grep replacement (from Brewfile)
+      - eza # ls replacement
+      - zoxide # cd replacement
+      - fd # find replacement
+      - fzf # fuzzy finder
+      - atuin # shell history sync
+      - sshs # ssh config-based host picker
+      - ripgrep # grep replacement
+      - sesh # tmux+projects session switcher
+      - tv # television — terminal fuzzy viewer
+      - jq # JSON processor (jq everywhere)
+      - yazi # file manager
+      # Git tools
+      - git # git (with git-lfs below)
+      - git-extras # extra git commands (git-ignore, git-release…)
+      - git-lfs # large file storage
+      - difftastic # git diff tool (gitconfig: difftool)
+      - gh # GitHub CLI
+      - hk # hunk? rust CLI (see home dir tools)
+      - worktrunk # worktree manager (wt)
+      - tuicr # tailscale? update? (ask: what is tuicr — from commit log)
+      - lazygit # TUI git
+      - gitleaks # secret scanning guard (hooks + CI)
+      # Mobile dev tools
+      - gradle # JVM build tool (Android)
+      - watchman # file watching (React Native)
+      - cocoapods # iOS deps
+      - maven # JVM build tool
+      - scrcpy # Android mirroring
+      - fastlane # mobile CI/release
+      - expo-orbit # Expo dev tooling
+      # Dev tools
+      - mise # runtime/env manager (node, python, java…)
+      - supabase # supabase CLI
+      - doppler # env/secrets CLI
+      - docker # docker CLI (orbstack cask provides engine)
+      - ctop # container top
+      # Misc
+      - mas # Mac App Store CLI (drives the mas section)
+      - blueutil # bluetooth CLI (macOS only)
+      - borders # JankyBorders — window border for Aerospace
+      - btop # system monitor
+      - mole # Mole — local ORM (dev tool)
+      - terminal-notifier # finish-notify for long tasks
+      - mactop # mac silicon stats (macOS only)
+      - thaw # ? (from Brewfile)
+      # AI
+      - ollama # local LLM runtime
+      - herdr # herd orchestration (Pi-adjacent tooling)
+      - rtk # repo toolkit hooks (claude hooks)
+      - mlx # Apple silicon ML libs
+
+    ## Casks — GUI apps (MacBook only)
+    casks:
+      # IDEs
+      - cursor # AI editor
+      - zed # editor (config shipped via dot_config/zed)
+      - android-studio # Android IDE
+      # Terminals
+      - ghostty # terminal
+      # Browsers
+      - zen # zen browser
+      - google-chrome # chrome (dev + default fallback)
+      # Mobile dev tools
+      - androidtool # android ADB/Fastboot GUI
+      - genymotion # Android emulator
+      - android-platform-tools # adb/fastboot
+      - proxyman # http debug proxy
+      # Dev tools
+      - ngrok # ngrok (token out-of-band, §9)
+      - orbstack # docker engine + linux VMs
+      - gitkraken # git GUI
+      - postman # api client
+      - bruno # api client
+      # Communication
+      - slack
+      - discord
+      - telegram
+      # Productivity
+      - notion
+      - notion-calendar
+      - reader # readwise reader
+      - obsidian
+      - linear
+      # Design & UI
+      - figma
+      - rotato # mockup tool
+      - capcut # video editor
+      - paper-design # paper app
+      # Proton tools
+      - proton-drive
+      - protonvpn
+      - proton-mail
+      # Elgato tools
+      - elgato-camera-hub
+      - elgato-stream-deck
+      - elgato-wave-link
+      # Multimedia
+      - vlc
+      - spotify
+      - steam
+      - reflex-app # reflex games
+      - soulseek # soulseek music sharing
+      - calibre # ebook manager
+      - brainfm # focus music
+      # AI
+      - claude # Claude desktop
+      - codex # OpenAI codex desktop
+      - factory # factory.ai
+      - conductor # conductor (agent desktop)
+      # Keyboards & Peripherals
+      - logi-options-plus
+      - logitech-g-hub
+      - via # keyboard configurator
+      - homerow # keyboard shortcuts
+      - hyperkey # ctrl/cmd remap
+      # 3D Tooling
+      - bambu-studio # 3D printer suite
+      # Security
+      - oversight
+      - taskexplorer
+      - knockknock
+      # Misc
+      - macdown # markdown editor
+      - carbon-copy-cloner # backup
+      - rocket # emoji picker
+      - tailscale-app # tailnet client — GUI app bundles the CLI, symlinked by 12-tailscale
+      - coconutbattery
+      - aldente # battery charge limiter
+      - istat-menus
+      - latest # app upgrader
+      - raycast # launcher
+      - nikitabobko/tap/aerospace # tiling WM (tap also declared above)
+      - the-unarchiver
+      - cleanshot # screenshot tool
+      - lookaway # eye break reminder
+      - flux-app # screen warmth
+      - imageoptim
+      - clop # clipboard/compression
+      - pika # color picker
+      - voiceink # voice input
+      # Quicklook
+      - qlcolorcode
+      - qlmarkdown
+      - quicklook-csv
+      - qlvideo
+
+    ## Fonts (casks, MacBook only; Linux uses the shared installer below)
+    fonts_casks:
+      - font-lato
+      - font-hack
+      - font-open-sans
+      - font-roboto
+      - font-fira-code-nerd-font
+      - font-jetbrains-mono-nerd-font
+
+    ## Mac App Store (mas) — id: name ------------------------------------------
+    mas:
+      Spark Mail: 6445813049
+      WhatsApp: 310633997
+      Yubico Authenticator: 1497506650
+      Transporter: 1450874784
+      RocketSim for Xcode Simulator: 1504940162
+      Infuse: 1136220934
+      Pure Paste: 1611378436
+      Brother iPrint$Scan: 1193539993
+
+  # ---------------------------------------------------------------------------
+  ## Arch / Omarchy — pacman + Omarchy's built-in PM ----------------------
+  ## Same cross-platform CLI set as the brew list above.
+  arch:
+    pacman:
+      - fish
+      - tmux
+      - starship
+      - bat
+      - eza
+      - zoxide
+      - fd
+      - fzf
+      - atuin
+      - ripgrep
+      - jq
+      - yazi
+      - git
+      - git-lfs
+      - difftastic
+      - github-cli
+      - lazygit
+      - gitleaks
+      - btop
+      - gnupg
+      - cmake
+      - openssl
+      - curl
+      - unzip # required by the shared Nerd Font installer
+      - fontconfig # refreshes the font cache after Nerd Font installation
+      - tailscale # tailnet — zero-trust mesh; Tailscale SSH server via the 12-tailscale script
+      # first-pass; validate each against the Omarchy repos on boot
+    omarchy_extra: [] # Omarchy-specific packages via its built-in PM — fill at install time
+
+  # ---------------------------------------------------------------------------
+  ## Debian/Ubuntu dev boxes — apt ----------------------------------------------
+  ## NOTE: Debian stable ships RENAMED or OLD tools → mise covers those.
+  debian:
+    apt:
+      - fish git curl unzip ca-certificates build-essential fontconfig
+      - tmux ripgrep fzf btop gnupg jq yazi
+    # tailscale isn't in Debian's default repos → the 12-tailscale script adds the official repo
+    # ships as `batcat`/`fdfind` → aliases added in fish config
+    apt_renamed:
+      bat: batcat
+      fd: fdfind

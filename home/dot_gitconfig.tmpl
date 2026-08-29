@@ -1,15 +1,18 @@
+{{- $gitName := default "" (index . "gitName") -}}
+{{- $gitEmail := default "" (index . "gitEmail") -}}
+{{- if and (ne $gitName "") (ne $gitEmail "") }}
 [user]
-	name = tsyirvo
-	email = gabriel.hofman.00@gmail.com
+	name = {{ $gitName | quote }}
+	email = {{ $gitEmail | quote }}
 
-[core]
+{{ end }}[core]
 	excludesfile = ~/.gitignore_global
 	editor = nano
 	ignorecase = false
 
 [credential]
-  helper = osxkeychain
-
+{{ if .isDarwin }}  helper = osxkeychain
+{{ end }}
 [color]
 	diff = auto
 	status = auto
@@ -49,3 +52,6 @@
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
+
+[alias]
+	upsync = "!f() { git pull origin \"$(git symbolic-ref --short HEAD)\" && git pull origin main; }; f"

@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+set -euo pipefail
+# run_onchange_after_ — pre-fetch every @plugin in tmux.conf via tpm's CLI
+# installer, so a fresh bootstrap leaves tmux fully configured (no manual
+# <prefix>+I on first launch).
+#
+# Why this exists: tpm (the *manager*) is applied by chezmoi as an external
+# archive (.chezmoiexternal.toml.tmpl), and tmux.conf sources it on every
+# tmux start — but tpm does NOT install missing plugins on start (source_plugins
+# silently skips absent dirs). `bin/install_plugins` runs OUTSIDE an interactive
+# session: it starts a headless server, reads the plugin list from the
+# TMUX_PLUGIN_MANAGER_PATH env that tpm set when it sourced tmux.conf, clones
+# missing plugins, and exits with a proper code. Idempotent ("Already installed").
+#
+# Re-runs when tmux.conf changes (new/removed @plugin lines):
+#   tmux.conf:     {{ include "dot_config/tmux/tmux.conf" | sha256sum }}
+export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
+command -v tmux >/dev/null 2>&1 || { echo "20-tmux-plugins: tmux not installed yet — will run after 10-install-packages" >&2; exit 0; }
+TPM_INSTALL="$HOME/.config/tmux/plugins/tpm/bin/install_plugins"
+if [ ! -x "$TPM_INSTALL" ]; then
+  echo "20-tmux-plugins: tpm external not applied yet — re-run chezmoi apply" >&2
+  exit 0
+fi
+echo "20-tmux-plugins: installing tmux plugins via tpm"
+bash "$TPM_INSTALL"
+# NB: the headless server started by the installer exits itself once it has
+# no sessions — no cleanup needed. Never `tmux kill-server` here: on a re-run
+# while a real server is up it would tear down live sessions.

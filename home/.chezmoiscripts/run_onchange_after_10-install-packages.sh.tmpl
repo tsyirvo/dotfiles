@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+set -euo pipefail
+# run_onchange_after_ — OS packages per class + runtimes/npm globals.
+# Runs AFTER files are applied so the managed manifests it reads
+# (~/.Brewfile, ~/.config/mise/config.toml) already exist on a fresh boot.
+# Re-runs only when packages.yaml or dot_config/mise/config.toml changes:
+# both contents-hashes below render into the script BODY, so a change → new
+# rendered content → chezmoi's onchange detection re-runs the script.
+# Nothing changed → hash lines identical → nothing runs.
+export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
+# Re-runs when contents change:
+#   packages.yaml:   {{ include ".chezmoidata/packages.yaml" | sha256sum }}
+#   mise config:     {{ include "dot_config/mise/config.toml" | sha256sum }}
+{{ if .isDarwin -}}
+find_brew() {
+  if command -v brew >/dev/null 2>&1; then
+    command -v brew
+    return
+  fi
+  for candidate in /opt/homebrew/bin/brew /usr/local/bin/brew; do
+    if [ -x "$candidate" ]; then
+      printf '%s\n' "$candidate"
+      return
+    fi
+  done
+  return 1
+}
+
+brew_bin="$(find_brew || true)"
+if [ -z "$brew_bin" ]; then
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  brew_bin="$(find_brew || true)"
+fi
+if [ -z "$brew_bin" ]; then
+  echo "10-install-packages: Homebrew installer completed but brew was not found" >&2
+  exit 1
+fi
+eval "$("$brew_bin" shellenv)"
+brew bundle --file="${HOME}/.Brewfile" --no-lock
+
+{{ else if eq .osID "linux-arch" -}}
+sudo pacman -S --needed --noconfirm {{ range .packages.arch.pacman }}{{ . }} {{ end }}
+# Omarchy's built-in package manager for Omarchy-specific packages (D12):
+#   resolve the exact command from omarchy-update / omarchy docs on first boot
+{{ if .packages.arch.omarchy_extra }}<omarchy-pm> -S --noconfirm {{ end }}{{ range .packages.arch.omarchy_extra }}{{ . }} {{ end }}
+
+{{ else -}}
+export DEBIAN_FRONTEND=noninteractive
+sudo apt-get update && sudo apt-get install -y {{ range .packages.debian.apt }}{{ . }} {{ end }}
+{{ end -}}
+
+# ---- runtimes + global npm tools ----------------------------------------------
+# dot_config/mise/config.toml is the ONLY manifest for these (single source of truth).
+if ! command -v mise >/dev/null 2>&1; then curl -fsSL https://mise.run | sh; fi
+mise install        # idempotent; provisions every runtime + npm: tool listed

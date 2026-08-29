@@ -1,0 +1,37 @@
+# ---- class-based: never managed on any machine -------------------------------
+Library
+.cache/**
+.local/share/mise/**
+.ssh/known_hosts*
+.ssh/agent
+.config/fish/completions/**
+.config/fish/themes/**
+.config/fish/fish_variables
+.config/herdr/herdr-client.log
+.config/herdr/herdr-server.log
+.config/herdr/session.json
+.config/herdr/release-notes.json
+.config/hunk/state.json
+.config/worktrunk/approvals.toml*
+.config/zed/prompts/**
+
+# ---- macbook-only (aerospace is a macOS cask) --------------------------------
+{{ if not .isDarwin }}
+.config/aerospace/**
+.Brewfile
+{{ end }}
+
+# ---- headless dev boxes get no GUI configs ------------------------------------
+{{ if .isHeadless }}
+.config/ghostty/**
+.config/zed/**
+.Brewfile
+{{ end }}
+
+# ---- Omarchy: owned by Omarchy, never managed here (D2) -----------------------
+# (defensive — nothing is shipped, so nothing to exclude; keep this so nobody
+#  adds dot_config/hypr later without revisiting the decision)
+{{ if .isOmarchy }}
+.config/hypr/***
+.config/waybar/***
+{{ end }}

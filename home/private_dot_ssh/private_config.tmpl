@@ -1,0 +1,22 @@
+# Added by OrbStack: 'orb' SSH host for Linux machines
+# This only works if it's at the top of ssh_config (before any Host blocks).
+# This won't be added again if you remove it.
+Include ~/.orbstack/ssh/config
+
+Host github.com
+  AddKeysToAgent yes
+  UseKeychain yes
+  Hostname ssh.github.com
+  Port 443
+  IdentityFile ~/.ssh/id_ed25519
+
+Host gitlab.com
+  AddKeysToAgent yes
+  UseKeychain yes
+  PreferredAuthentications publickey
+  IdentityFile ~/.ssh/gitlab.pub
+
+Host pihole
+  HostName 192.168.10.112
+  User tsyirvo
+  Port 22
