@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
-# run_once_before_ — package manager present, sudo warmed up.
+# run_once_before_ — package manager present (auto-install if missing), sudo warmed up.
+# A script failure here aborts the apply before files/later scripts run, so only
+# fail on unrecoverable problems; Homebrew is installed autonomously when missing.
 export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
+
+# Warm sudo first — the Homebrew installer below and pacman/apt all need it.
+sudo -v || { echo "00-bootstrap: sudo required" >&2; exit 1; }
 {{ if .isDarwin -}}
 find_brew() {
   if command -v brew >/dev/null 2>&1; then
@@ -18,12 +23,15 @@ find_brew() {
 }
 
 if ! find_brew >/dev/null; then
-  echo "00-bootstrap: Homebrew missing — run the Homebrew installer, then re-run chezmoi apply" >&2
-  exit 1
+  echo "00-bootstrap: Homebrew missing — running the official installer (autonomous, a few minutes)..."
+  NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  if ! find_brew >/dev/null; then
+    echo "00-bootstrap: Homebrew installer finished but brew is still not found" >&2
+    exit 1
+  fi
 fi
 {{ else if eq .osID "linux-arch" -}}
 command -v pacman >/dev/null 2>&1 || { echo "00-bootstrap: pacman missing" >&2; exit 1; }
 {{ else -}}
 command -v apt-get >/dev/null 2>&1 || { echo "00-bootstrap: apt-get missing" >&2; exit 1; }
-{{ end -}}
-sudo -v || { echo "00-bootstrap: sudo required" >&2; exit 1; }
+{{ end }}

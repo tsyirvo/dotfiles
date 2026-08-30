@@ -70,7 +70,7 @@ packages:
       - mole # Mole — local ORM (dev tool)
       - terminal-notifier # finish-notify for long tasks
       - mactop # mac silicon stats (macOS only)
-      - thaw # ? (from Brewfile)
+      - thaw # menu bar cleaner
       # AI
       - ollama # local LLM runtime
       - herdr # herd orchestration (Pi-adjacent tooling)
@@ -132,9 +132,12 @@ packages:
       - brainfm # focus music
       # AI
       - claude # Claude desktop
+      - claude-code # Claude code CLI
       - codex # OpenAI codex desktop
       - factory # factory.ai
+      - droid # Droid CLI
       - conductor # conductor (agent desktop)
+      - codexbar # AI sub usage
       # Keyboards & Peripherals
       - logi-options-plus
       - logitech-g-hub

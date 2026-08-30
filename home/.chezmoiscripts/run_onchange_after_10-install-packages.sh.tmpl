@@ -27,8 +27,10 @@ find_brew() {
 }
 
 brew_bin="$(find_brew || true)"
+# 00-bootstrap (run_once_before_) normally installs Homebrew first; this is only a
+# safety net (bootstrap skipped/failed, brew removed later) — keep flags in sync.
 if [ -z "$brew_bin" ]; then
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   brew_bin="$(find_brew || true)"
 fi
 if [ -z "$brew_bin" ]; then
