@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+#
+# update-ai-tools — update every AI tool on this machine in one go.
+#
+#   brew formulae : herdr, rtk
+#   brew casks    : claude, claude-code, codex, factory, conductor, codexbar, droid
+#   native CLIs   : claude (Claude Code), droid (Factory) — self-update
+#   pi            : mise-managed -> `pi update`
+#
+# Tools that aren't installed are skipped with a note, so this is safe to run
+# on any machine class (macbook / omarchy / devbox — brew only exists on mac).
+
+set -euo pipefail
+
+header() { printf '\n\033[1;34m==>\033[0m %s\n' "$*"; }
+ok()     { printf '    \033[1;32m✓\033[0m %s\n' "$*"; }
+skip()   { printf '    \033[2m-\033[0m skip: %s\n' "$*"; }
+
+# brew_has <--formula|--cask> <name> — true if brew exists and the package is
+# installed that way. Returns false when brew itself is missing (Linux boxes).
+brew_has() {
+    command -v brew >/dev/null 2>&1 || return 1
+    brew list "$1" "$2" >/dev/null 2>&1
+}
+
+# upgrade_brew <name> — formula first, then cask; skips if not installed.
+upgrade_brew() {
+    local name="$1"
+    if brew_has --formula "$name"; then
+        header "Upgrading brew formula: $name"
+        brew upgrade "$name"
+        ok "$name up to date"
+    elif brew_has --cask "$name"; then
+        header "Upgrading brew cask: $name"
+        brew upgrade --cask "$name"
+        ok "$name up to date"
+    else
+        skip "$name (not installed)"
+    fi
+}
+
+# --- brew-managed tools -----------------------------------------------------
+for pkg in herdr rtk claude claude-code codex factory conductor codexbar droid; do
+    upgrade_brew "$pkg"
+done
+
+# --- native self-updating CLIs ----------------------------------------------
+# Claude Code installs itself to ~/.local/bin unless managed as the brew cask.
+if command -v claude >/dev/null 2>&1 && ! brew_has --cask claude-code; then
+    header "Updating Claude Code (native install)"
+    claude update
+    ok "claude up to date"
+else
+    skip "claude-code (no native install)"
+fi
+
+# Droid installs itself to ~/.local/bin unless managed as the brew cask.
+if command -v droid >/dev/null 2>&1 && ! brew_has --cask droid; then
+    header "Updating Droid (native install)"
+    droid update
+    ok "droid up to date"
+else
+    skip "droid (no native install)"
+fi
+
+# --- pi (mise-managed) --------------------------------------------------------
+if command -v pi >/dev/null 2>&1; then
+    header "Updating pi and its packages"
+    pi update --all
+    header "Refreshing pi model catalogs"
+    pi update --models
+    ok "pi up to date"
+else
+    skip "pi (not installed)"
+fi
+
+printf '\n All AI tools up to date 🎉\n'
