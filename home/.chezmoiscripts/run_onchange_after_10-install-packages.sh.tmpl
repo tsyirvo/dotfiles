@@ -42,7 +42,7 @@ brew bundle --file="${HOME}/.Brewfile" --no-lock
 
 {{ else if eq .osID "linux-arch" -}}
 sudo pacman -S --needed --noconfirm {{ range .packages.arch.pacman }}{{ . }} {{ end }}
-# Omarchy's built-in package manager for Omarchy-specific packages (D12):
+# Omarchy's built-in package manager for Omarchy-specific packages:
 #   resolve the exact command from omarchy-update / omarchy docs on first boot
 {{ if .packages.arch.omarchy_extra }}<omarchy-pm> -S --noconfirm {{ end }}{{ range .packages.arch.omarchy_extra }}{{ . }} {{ end }}
 

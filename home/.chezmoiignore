@@ -28,7 +28,7 @@ Library
 .Brewfile
 {{ end }}
 
-# ---- Omarchy: owned by Omarchy, never managed here (D2) -----------------------
+# ---- Omarchy: owned by Omarchy, never managed here ---------------------------
 # (defensive — nothing is shipped, so nothing to exclude; keep this so nobody
 #  adds dot_config/hypr later without revisiting the decision)
 {{ if .isOmarchy }}

@@ -1,6 +1,6 @@
 tap 'FelixKratz/formulae'          # JankyBorders
 tap 'nikitabobko/tap'              # aerospace
-tap 'stablyai/orca'                # Orca ADE (D18 §8.8)
+tap 'stablyai/orca'                # Orca ADE
 cask_args appdir: '/Applications'
 {{ range .packages.darwin.brews -}}
 brew {{ . | quote }}

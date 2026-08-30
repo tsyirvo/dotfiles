@@ -4,7 +4,7 @@ set -euo pipefail
 # This is role-inference sugar over the CI-verified install command (README +
 # tasks/ci/test.sh): it picks the role from the OS, then runs the exact same
 # chezmoi init --apply one-liner with DOTFILES_ROLE exported so the config
-# template (§5) never prompts.
+# template never prompts.
 #
 #   curl -fsSL https://raw.githubusercontent.com/tsyirvo/dotfiles/master/install.sh | sh
 #   DOTFILES_ROLE=devbox curl -fsSL ... | sh        # force a role explicitly

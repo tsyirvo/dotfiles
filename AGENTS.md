@@ -35,8 +35,3 @@ mandatory; skip nothing before changing files here.
   `chezmoi execute-template` / `chezmoi cat <target>` and diff against the intended output.
 - Don't duplicate inventories: package/file lists live in one place (README points at them).
 - Update `AGENTS.md` itself in the same commit as any convention change.
-
-## Reference
-
-`PRD-chezmoi-migration.md` is the design document for the stow→chezmoi migration: decisions
-(log D1–D17), routing, package taxonomy, runbook phases, and testing/CI. When in doubt, read it.

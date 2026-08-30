@@ -1,7 +1,7 @@
 [settings]
 lockfile = true        # commit mise.lock → reproducible repo toolchain (kutsan pattern)
 
-[tools]                # pinned dev toolchain for repo work — NOT the user's runtime manifest (§8.5)
+[tools]                # pinned dev toolchain for repo work — NOT the user's runtime manifest
 chezmoi = "2.72.0"     # must match .chezmoiversion (v2.72 tested)
 shellcheck = "0.11.0"
 gitleaks = "8.29.0"
@@ -19,7 +19,7 @@ run = "chezmoi update -v"
 [tasks.check]
 run = "chezmoi unmanaged ~/.config"
 [tasks."check:shellcheck"]
-run = "bash tasks/ci/shellcheck-rendered.sh"   # renders .tmpl then shellchecks (§13.1)
+run = "bash tasks/ci/shellcheck-rendered.sh"   # renders .tmpl then shellchecks
 [tasks."check:gitleaks"]
 run = "gitleaks git --no-banner"
 [tasks."check:workflows"]   # actionlint + zizmor guard CI itself
@@ -27,7 +27,7 @@ run = "bash -c 'actionlint && zizmor --strict-collection .github/workflows/'"
 [tasks."update:pinact"]
 run = "pinact run --update"                    # re-pin GH Action SHAs
 [tasks.fix-globals]
-run = "mise install"        # §8.5: reproduce runtimes + globals
+run = "mise install"        # reproduce runtimes + globals
 [tasks.macos]
 run = "bash tasks/macos/defaults.sh"
 [tasks.test]

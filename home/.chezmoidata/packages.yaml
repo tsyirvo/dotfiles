@@ -22,7 +22,7 @@ packages:
       - gnupg # gpg for commit signing (later) & ssh key mgmt
       - cmake # build dep (watchman, cocoapods, react-native)
       # Terminal tools
-      - fish # shell (D3: fish everywhere)
+      - fish # shell
       - tmux # terminal multiplexer
       - starship # prompt
       - bat # cat clone
@@ -95,7 +95,7 @@ packages:
       - android-platform-tools # adb/fastboot
       - proxyman # http debug proxy
       # Dev tools
-      - ngrok # ngrok (token out-of-band, §9)
+      - ngrok # ngrok (authtoken out-of-band)
       - orbstack # docker engine + linux VMs
       - gitkraken # git GUI
       - postman # api client
