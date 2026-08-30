@@ -246,6 +246,15 @@ packages:
       - gnupg
       - cmake
       - openssl
+      # ruby-build fallback: mise compiles ruby from source when no prebuilt
+      # binary is available for the resolved version (arch ships headers with
+      # the libs, so only base-devel + the libs themselves are needed)
+      - base-devel
+      - zlib
+      - libyaml
+      - libffi
+      - readline
+      - gdbm
       - curl
       - unzip # required by the shared Nerd Font installer
       - fontconfig # refreshes the font cache after Nerd Font installation
@@ -259,6 +268,10 @@ packages:
   debian:
     apt:
       - fish git curl unzip ca-certificates build-essential fontconfig
+      # ruby-build fallback: mise compiles ruby from source when no prebuilt
+      # binary is available — build-essential is the compiler, these supply
+      # ruby-build's configure-time libs/headers
+      - autoconf bison libssl-dev libyaml-dev zlib1g-dev libffi-dev libreadline-dev libgdbm-dev
       - tmux ripgrep fzf btop gnupg jq
     # tailscale isn't in Debian's default repos → the 12-tailscale script adds the official repo
     # ships as `batcat`/`fdfind` → aliases added in fish config
