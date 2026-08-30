@@ -21,6 +21,15 @@ if [ ! -x "$TPM_INSTALL" ]; then
   echo "20-tmux-plugins: tpm external not applied yet — re-run chezmoi apply" >&2
   exit 0
 fi
+TPM_SRC="$HOME/.config/tmux/plugins/tpm"
+# tpm is applied as a chezmoi ARCHIVE, not a git clone — tpm's installer treats
+# it as "not installed" (its check runs `git remote`) and tries to re-clone into
+# the non-empty dir, failing. Give it a remote so the check passes.
+if [ -d "$TPM_SRC" ] && ! git -C "$TPM_SRC" remote >/dev/null 2>&1; then
+  echo "20-tmux-plugins: tpm is a chezmoi archive — faking a git remote so tpm's installer skips it"
+  git -C "$TPM_SRC" init -q
+  git -C "$TPM_SRC" remote add origin https://github.com/tmux-plugins/tpm
+fi
 echo "20-tmux-plugins: installing tmux plugins via tpm"
 bash "$TPM_INSTALL"
 # NB: the headless server started by the installer exits itself once it has

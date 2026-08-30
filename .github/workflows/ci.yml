@@ -25,12 +25,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
       - run: bash tasks/ci/test.sh devbox debian:bookworm # full script execution in a container
 
   apply-arch:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
       - run: bash tasks/ci/test.sh omarchy archlinux:latest
 
   apply-darwin:
@@ -38,7 +42,11 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
-      - run: brew install chezmoi
+        with:
+          persist-credentials: false
+      # install from mise.toml (pins chezmoi to the .chezmoiversion); brew's
+      # formula lags the release and fails "source state requires ... or later"
+      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
       - run: |
           set -euo pipefail
           home="$RUNNER_TEMP/home"; mkdir -p "$home"

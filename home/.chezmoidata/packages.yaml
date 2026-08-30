@@ -259,7 +259,7 @@ packages:
   debian:
     apt:
       - fish git curl unzip ca-certificates build-essential fontconfig
-      - tmux ripgrep fzf btop gnupg jq yazi
+      - tmux ripgrep fzf btop gnupg jq
     # tailscale isn't in Debian's default repos → the 12-tailscale script adds the official repo
     # ships as `batcat`/`fdfind` → aliases added in fish config
     apt_renamed:

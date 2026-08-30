@@ -66,7 +66,7 @@ EOF
       fail=1
     fi
     grep -qxF '.Brewfile' "$tmp/$role/chezmoiignore" || { echo "Brewfile not ignored for $role"; fail=1; }
-    grep -q 'JetBrainsMono.zip' "$tmp/$role/run_onchange_before_15-install-nerd-font.sh" || { echo "missing Nerd Font installer for $role"; fail=1; }
+    grep -q 'JetBrainsMono.zip' "$tmp/$role/run_onchange_after_15-install-nerd-font.sh" || { echo "missing Nerd Font installer for $role"; fail=1; }
   fi
 done
 

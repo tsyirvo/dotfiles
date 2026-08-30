@@ -40,7 +40,12 @@ if ! command -v tailscale >/dev/null 2>&1; then
 fi
 
 # daemon must come up at boot for the node to join the tailnet
-sudo systemctl enable --now tailscaled
+# (containers/non-systemd boots skip this — tailscaled can't run without an init)
+if [ -d /run/systemd/system ] && command -v systemctl >/dev/null 2>&1; then
+  sudo systemctl enable --now tailscaled
+else
+  echo "12-tailscale: no systemd here (container?) — skipping daemon setup; run \`sudo tailscale up\` when the node is booted" >&2
+fi
 
 if ! tailscale status >/dev/null 2>&1; then
   # not logged in yet — one-time, out-of-band (auth key or manual login)
