@@ -61,4 +61,10 @@ jobs:
             --config "$RUNNER_TEMP/chezmoi.toml" --cache "$RUNNER_TEMP/cache" \
             --persistent-state "$RUNNER_TEMP/state/chezmoistate.boltdb" \
             --no-tty verify --exclude=scripts
+          # positive proof the run did its job: verify prints nothing on
+          # success, which reads as "did it even run?" — assert key targets
+          for f in .Brewfile .gitconfig .gitignore_global .config/fish; do
+            [ -e "$home/$f" ] || { echo "FAIL: $home/$f missing"; exit 1; }
+          done
+          echo "darwin apply/verify OK ($(find "$home" -type f | wc -l | tr -d ' ') files applied)"
       # scripts are skipped here (they install real packages); containers + real machines cover them

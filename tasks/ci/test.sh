@@ -23,6 +23,10 @@ set -euo pipefail
 if command -v apt-get >/dev/null 2>&1; then
   apt-get update -qq && apt-get install -y -qq git curl sudo >/dev/null 2>&1
 elif command -v pacman >/dev/null 2>&1; then
+  # Rosetta/emulated x86_64 can't run pacman's syscall sandbox (EINVAL);
+  # harmless on native amd64 CI runners
+  grep -q '^DisableSandboxSyscalls' /etc/pacman.conf \
+    || printf 'DisableSandboxSyscalls\n' >> /etc/pacman.conf
   pacman -Sy --noconfirm --needed git curl sudo >/dev/null 2>&1
 else
   echo 'test: no apt-get/pacman in image' >&2
@@ -38,9 +42,10 @@ git config --system --add safe.directory /dotfiles
 su - test -c "DOTFILES_ROLE=$ROLE sh -c \"\$(curl -fsLS get.chezmoi.io)\" -- init --apply --source=/dotfiles"
 # assert: fish exists, chezmoi doctor exit 0, mise install reproduces tools
 # (run under bash: the bootstrap's 50-shell chsh'd test's login shell to fish;
-# explicit PATH because /etc/skel's ~/.local/bin addition varies by distro)
+# explicit PATH because /etc/skel adds ~/bin and ~/.local/bin only on debian —
+# get.chezmoi.io installs to ~/bin and mise.run to ~/.local/bin)
 su - test -s /bin/bash -c '
-  export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
+  export PATH="$HOME/bin:$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
   command -v fish >/dev/null || { echo "FAIL: fish missing"; exit 1; }
   command -v mise >/dev/null || { echo "FAIL: mise missing"; exit 1; }
   chezmoi --source=/dotfiles doctor >/dev/null || { echo "FAIL: chezmoi doctor"; exit 1; }
