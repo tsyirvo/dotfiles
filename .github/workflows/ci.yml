@@ -58,5 +58,7 @@ jobs:
             --persistent-state "$RUNNER_TEMP/state/chezmoistate.boltdb" \
             --no-tty --force init --apply --exclude=scripts
           chezmoi --source "$GITHUB_WORKSPACE" --destination "$home" \
-            --config "$RUNNER_TEMP/chezmoi.toml" --no-tty verify --exclude=scripts
+            --config "$RUNNER_TEMP/chezmoi.toml" --cache "$RUNNER_TEMP/cache" \
+            --persistent-state "$RUNNER_TEMP/state/chezmoistate.boltdb" \
+            --no-tty verify --exclude=scripts
       # scripts are skipped here (they install real packages); containers + real machines cover them
