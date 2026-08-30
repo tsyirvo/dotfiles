@@ -1,0 +1,95 @@
+#!/usr/bin/env bash
+set -euo pipefail
+# run_onchange_after_11 — vendored DMG apps with no Homebrew cask and no MAS
+# presence: currently Astro (tryastro.app) and Pen (pen.dev).
+#   • Installs if missing; with a `version:` pin in packages.yaml the pin change
+#     re-installs at `latest` (mirror of 15-install-nerd-font's version marker).
+#   • Upgrades afterwards are the app's own job: Sparkle / electron-updater /
+#     vendor updater — same policy as auto_updates casks.
+#   • A flaky vendor URL must never abort the core bundle (10-install-packages),
+#     so failures are per-app: warn, exit non-zero → chezmoi re-runs next apply.
+# Re-runs when packages.yaml changes:
+#   {{ include ".chezmoidata/packages.yaml" | sha256sum }}
+export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
+
+{{ if and .isDarwin .isMacbook -}}
+state_dir="$HOME/.local/state/chezmoi-apps"
+mkdir -p "$state_dir"
+
+# install_custom_app <slug> <app_path> <pinned_version> <url> <url_arm64> <url_x86_64>
+#   url_arm64 / url_x86_64 override `url` on the matching arch ('' = use `url`).
+install_custom_app() {
+  # shellcheck disable=SC2034 # per-arch: the other arch's URL var is unused by design
+  local slug="$1" app_path="$2" pinned="$3" url="$4" url_arm64="$5" url_x86_64="$6"
+  local marker="$state_dir/$slug.version" installed="" tmp="" mount="" dmg=""
+  local app_bundle="" name="" target="" final_url="" resolved=""
+
+  {{ if eq .chezmoi.arch "arm64" -}}
+  [ -n "$url_arm64" ] && url="$url_arm64"
+  {{ else -}}
+  [ -n "$url_x86_64" ] && url="$url_x86_64"
+  {{ end -}}
+
+  installed="$(cat "$marker" 2>/dev/null || true)"
+  # Already there and (unpinned, or pinned to exactly what's on disk) → done.
+  if [ -d "$app_path" ] && { [ -z "$pinned" ] || [ "$installed" = "$pinned" ]; }; then
+    return 0
+  fi
+
+  echo "11-install-extra-apps: installing $slug → $app_path"
+  tmp="$(mktemp -d)"
+  mount="$tmp/mnt"
+  dmg="$tmp/app.dmg"
+  mkdir -p "$mount"
+  trap 'hdiutil detach -quiet "$mount" >/dev/null 2>&1 || true; rm -rf "$tmp"' EXIT
+
+  # NOTE: errexit is off while this function runs in an `||` list (bash semantics),
+  # so every critical step is checked explicitly.
+  final_url="$(curl --fail --location --retry 3 --retry-all-errors --silent --show-error \
+    --output "$dmg" --write-out '%{url_effective}' "$url")" || exit 1
+  hdiutil attach -nobrowse -readonly -quiet -mountpoint "$mount" "$dmg" || exit 1
+
+  app_bundle="$(find "$mount" -maxdepth 2 -name '*.app' -print -quit)"
+  if [ -z "$app_bundle" ]; then
+    echo "11-install-extra-apps: $slug — no .app inside the DMG" >&2
+    exit 1
+  fi
+
+  name="$(basename "$app_bundle")"
+  target="/Applications/$name"
+  if [ "$target" != "$app_path" ]; then
+    echo "11-install-extra-apps: $slug — DMG ships $name, manifest expects $(basename "$app_path")" >&2
+    exit 1
+  fi
+
+  if pgrep -f "/Applications/$name/" >/dev/null 2>&1; then
+    echo "11-install-extra-apps: $slug — $name is running; quit it and re-run apply" >&2
+    exit 1
+  fi
+
+  rm -rf "$target"
+  ditto "$app_bundle" "$target" || exit 1
+
+  if [ -n "$pinned" ]; then
+    resolved="$pinned"
+  else
+    # GitHub-style URLs: record the tag actually installed for human inspection,
+    # e.g. …/releases/download/323/Astro.dmg → 323. Non-GitHub URLs → ''.
+    resolved="$(printf '%s\n' "$final_url" | awk -F'/download/' 'NF>1 {print $2; exit}' | cut -d/ -f1)"
+  fi
+  printf '%s\n' "$resolved" > "$marker"
+  echo "11-install-extra-apps: $slug installed (${resolved:-version unknown})"
+}
+
+fail=0
+{{ range $slug, $cfg := .packages.darwin.custom_apps -}}
+install_custom_app "{{ $slug }}" "{{ $cfg.app }}" "{{ $cfg.version }}" \
+  "{{ $cfg.url }}" "{{ $cfg.url_arm64 }}" "{{ $cfg.url_x86_64 }}" \
+  || { echo "11-install-extra-apps: {{ $slug }} failed — retry on next apply" >&2; fail=1; }
+{{ end -}}
+exit "$fail"
+
+{{ else -}}
+# devbox / omarchy — no vendored GUI apps
+exit 0
+{{ end -}}

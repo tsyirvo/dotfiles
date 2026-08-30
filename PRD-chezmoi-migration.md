@@ -119,25 +119,26 @@ makes sense (tracked in §18 follow-ups).
 
 ## 3. Decisions log
 
-| #   | Decision                                            | Choice                                                                            | Rationale                                                                                                                       |
-| --- | --------------------------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| D1  | Secrets                                             | **Out-of-band, never in git.** No age/encryption pipeline (§9)                    | Public repo; encrypted blobs invite offline attacks; key.txt is a SPOF; rotation is painful. Keys are already untracked today.  |
-| D2  | Omarchy boundary                                    | **Omarchy owns everything GUI**                                                   | No hypr/waybar/alacritty/themes in chezmoi. No fight with `omarchy-update`; manage divergence only via Omarchy's own overrides. |
-| D3  | Fish on dev boxes                                   | **Fish everywhere**                                                               | One shell config everywhere; costs fish + `chsh` per box (§8.4).                                                                |
-| D4  | Host roles                                          | `macbook` / `omarchy` / `devbox` (single value)                                   | Three distinct classes; switch to feature tags only if a 4th ambiguous machine appears.                                         |
-| D5  | Personal flag                                       | `personal = role != devbox`                                                       | Drives cask/MAS/font install on Mac and GUI list on Omarchy.                                                                    |
-| D6  | Repo history                                        | **Keep full history; one big migration commit** (review feedback)                 | No rewrite, no force-push. `stow-final` tag marks the pre-migration state.                                                      |
-| D7  | `~/.claude`                                         | Manage **exactly 4 files** (settings, statusline, 2 hooks); ignore the rest       | Confirmed by review. Negation patterns in `.chezmoiignore` (§7.3).                                                              |
-| D8  | `~/.local/bin`                                      | **Not managed.** mise shims + one-off installer binaries                          | Keep `~/bin` as the managed bin. npm-based tools get folded into the mise manifest (§8.5).                                      |
-| D9  | television cables                                   | Keep all 57 + config                                                              | They're authored channel configs, not generated noise.                                                                          |
-| D10 | `devin`, `amp`, `codexbar`, `.serena`, `.conductor` | **Never track** (review feedback)                                                 | Listed in `.chezmoiignore` so they can't sneak in later.                                                                        |
-| D11 | Debian tooling                                      | Prefer **mise over apt** for modern CLIs                                          | Debian stable ships renamed/dated tools (`batcat`, `fdfind`, old `fd`); mise gives identical binaries on all machines.          |
-| D12 | Omarchy packages                                    | **Use Omarchy's built-in package manager** (review feedback)                      | Resolved; script branch uses it (§8.3).                                                                                         |
-| D13 | shared configs (sesh/worktrunk/tv, zed IP)          | **Ship unchanged on all machines** for now                                        | Review: avoid over-engineering routing; headless still excludes GUI apps.                                                       |
-| D14 | Task runner                                         | **mise tasks** replace Makefile (review feedback)                                 | Leverages existing mise tooling; tasks in repo-root `mise.toml` (§8.6).                                                         |
-| D15 | macOS defaults                                      | **Consolidate 8 scripts → one file** + prune dead keys (§10.4)                    | Review: current config is convoluted; 165 writes, typo domains, dead keys found.                                                |
-| D16 | README                                              | **Full rewrite** for the chezmoi workflow + anti-drift rules (§19)                | Review: onboarding/day-to-day/packages must live in the repo, match the code, and stop drifting.                                |
-| D17 | `~/.pi` agent config                                | **Out of scope** — kept in its own git repo; maybe migrate here later (follow-up) | User confirmed pi config has a dedicated git directory already; no chezmoi surface for now.                                     |
+| #   | Decision                                              | Choice                                                                            | Rationale                                                                                                                                                                                                  |
+| --- | ----------------------------------------------------- | --------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| D1  | Secrets                                               | **Out-of-band, never in git.** No age/encryption pipeline (§9)                    | Public repo; encrypted blobs invite offline attacks; key.txt is a SPOF; rotation is painful. Keys are already untracked today.                                                                             |
+| D2  | Omarchy boundary                                      | **Omarchy owns everything GUI**                                                   | No hypr/waybar/alacritty/themes in chezmoi. No fight with `omarchy-update`; manage divergence only via Omarchy's own overrides.                                                                            |
+| D3  | Fish on dev boxes                                     | **Fish everywhere**                                                               | One shell config everywhere; costs fish + `chsh` per box (§8.4).                                                                                                                                           |
+| D4  | Host roles                                            | `macbook` / `omarchy` / `devbox` (single value)                                   | Three distinct classes; switch to feature tags only if a 4th ambiguous machine appears.                                                                                                                    |
+| D5  | Personal flag                                         | `personal = role != devbox`                                                       | Drives cask/MAS/font install on Mac and GUI list on Omarchy.                                                                                                                                               |
+| D6  | Repo history                                          | **Keep full history; one big migration commit** (review feedback)                 | No rewrite, no force-push. `stow-final` tag marks the pre-migration state.                                                                                                                                 |
+| D7  | `~/.claude`                                           | Manage **exactly 4 files** (settings, statusline, 2 hooks); ignore the rest       | Confirmed by review. Negation patterns in `.chezmoiignore` (§7.3).                                                                                                                                         |
+| D8  | `~/.local/bin`                                        | **Not managed.** mise shims + one-off installer binaries                          | Keep `~/bin` as the managed bin. npm-based tools get folded into the mise manifest (§8.5).                                                                                                                 |
+| D9  | television cables                                     | Keep all 57 + config                                                              | They're authored channel configs, not generated noise.                                                                                                                                                     |
+| D10 | `devin`, `amp`, `codexbar`, `.serena`, `.conductor`   | **Never track** (review feedback)                                                 | Listed in `.chezmoiignore` so they can't sneak in later.                                                                                                                                                   |
+| D11 | Debian tooling                                        | Prefer **mise over apt** for modern CLIs                                          | Debian stable ships renamed/dated tools (`batcat`, `fdfind`, old `fd`); mise gives identical binaries on all machines.                                                                                     |
+| D12 | Omarchy packages                                      | **Use Omarchy's built-in package manager** (review feedback)                      | Resolved; script branch uses it (§8.3).                                                                                                                                                                    |
+| D13 | shared configs (sesh/worktrunk/tv, zed IP)            | **Ship unchanged on all machines** for now                                        | Review: avoid over-engineering routing; headless still excludes GUI apps.                                                                                                                                  |
+| D14 | Task runner                                           | **mise tasks** replace Makefile (review feedback)                                 | Leverages existing mise tooling; tasks in repo-root `mise.toml` (§8.6).                                                                                                                                    |
+| D15 | macOS defaults                                        | **Consolidate 8 scripts → one file** + prune dead keys (§10.4)                    | Review: current config is convoluted; 165 writes, typo domains, dead keys found.                                                                                                                           |
+| D16 | README                                                | **Full rewrite** for the chezmoi workflow + anti-drift rules (§19)                | Review: onboarding/day-to-day/packages must live in the repo, match the code, and stop drifting.                                                                                                           |
+| D17 | `~/.pi` agent config                                  | **Out of scope** — kept in its own git repo; maybe migrate here later (follow-up) | User confirmed pi config has a dedicated git directory already; no chezmoi surface for now.                                                                                                                |
+| D18 | Non-Homebrew macOS apps (WireGuard, Orca, Astro, Pen) | **Ladder: MAS → brew tap+cask → vendored DMG script (§8.8)**                      | WireGuard is App Store-only (mas); Orca ships its own tap (`stablyai/orca/orca` — bare `orca` collides with plotly's cask); Astro/Pen have no cask or MAS presence, self-update in-app (Sparkle/electron). |
 
 ---
 
@@ -178,6 +179,7 @@ dotfiles/
 │   ├── .chezmoiscripts/
 │   │   ├── 00-bootstrap.sh.tmpl       # run_once_before_ — package manager (brew auto-installed), sudo
 │   │   ├── 10-install-packages.sh.tmpl# run_onchange_after_ — keyed on packages.yaml + mise config
+│   │   ├── 11-install-extra-apps.sh.tmpl# run_onchange_after_ — vendored DMGs, no cask/MAS (D18 §8.8)
 │   │   ├── 20-install-tmux-plugins.sh.tmpl  # run_onchange_after_ — pre-fetch tpm plugins (§8.7)
 │   │   ├── 45-rebuild-native-modules.sh.tmpl  # run_onchange_ — re-runs on Node ABI change (§8.5.6, joelazar trick)
 │   │   ├── 50-shell.sh.tmpl           # run_once_after_ — /etc/shells + chsh
@@ -379,10 +381,11 @@ Notes:
 
 Two manifests, no duplication:
 
-| Manifest                           | Holds                                                                                          | Managed by                                     |
-| ---------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------- |
-| `home/.chezmoidata/packages.yaml`  | **OS packages per machine class**: brew formulae, casks, MAS apps, pacman, AUR/Omarchy-PM, apt | `10-install-packages` script (hash-keyed)      |
-| `home/dot_config/mise/config.toml` | **runtimes + global npm tools** (`node`, `python`, `bun`, `npm:…`) — single source of truth    | `mise install` in the same script (hash-keyed) |
+| Manifest                                                 | Holds                                                                                          | Managed by                                     |
+| -------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| `home/.chezmoidata/packages.yaml`                        | **OS packages per machine class**: brew formulae, casks, MAS apps, pacman, AUR/Omarchy-PM, apt | `10-install-packages` script (hash-keyed)      |
+| `home/.chezmoidata/packages.yaml` → `darwin.custom_apps` | **vendored DMG apps** — no brew cask / no MAS (Astro, Pen, D18)                                | `11-install-extra-apps` script (hash-keyed)    |
+| `home/dot_config/mise/config.toml`                       | **runtimes + global npm tools** (`node`, `python`, `bun`, `npm:…`) — single source of truth    | `mise install` in the same script (hash-keyed) |
 
 **Adding a package:** pick the manifest by the table above → add one commented line → `chezmoi
 apply` (the `run_onchange_` script detects the hash change and installs it). No shell editing.
@@ -689,6 +692,44 @@ fresh isolated HOME, it cloned all 8 plugins without any interactive session.
     stripComponents = 1
     refreshPeriod = "168h"
 ```
+
+### 8.8 Non-Homebrew macOS apps — decision ladder + vendored DMGs (D18)
+
+Some GUI apps have **no brew cask and no Mac App Store entry**. Autonomous install uses a
+three-rung ladder, in order:
+
+1. **Mac App Store?** → the `mas:` map in `packages.yaml` (existing `brew bundle` channel).
+   **WireGuard** (`1451685025`) is App Store-only on macOS. Caveat: `mas` needs the App Store
+   signed in — one-time, interactive, per machine — and a failure aborts the whole bundle in
+   `10-install-packages` (pre-existing behavior, now documented in the manifest header).
+2. **Third-party brew tap with a cask?** → `tap 'owner/repo'` line in `dot_Brewfile.tmpl` + a
+   **fully-qualified** entry in the `casks` list (`owner/repo/token`). **Orca** ships `stablyai/orca`
+   (cask `orca.rb`, arch-aware DMG from stablyai's own releases, `auto_updates true` so
+   electron-updater owns upgrades; it also symlinks the bundled `orca` CLI onto PATH). Bare `orca`
+   would resolve to **plotly's** image-renderer cask in homebrew/cask, so the FQ form is mandatory
+   — same rule already applied to `nikitabobko/tap/aerospace`.
+3. **Neither?** → `darwin.custom_apps` in `packages.yaml` + `11-install-extra-apps.sh.tmpl`:
+   - **Manifest entries**: `app` (bundle path), `version` (`''` = install-if-missing; a pin
+     re-installs at `latest` when it changes), `url` + optional `url_arm64` / `url_x86_64`
+     overrides. **Astro** (tryastro.app, single universal DMG) and **Pen** (pen.dev, per-arch DMGs)
+     live here.
+   - **Install**: `curl -fL --retry` → `hdiutil attach -readonly` → find `.app` (maxdepth 2,
+     name must match the manifest) → `ditto` to `/Applications` → detach + cleanup via `mktemp`/trap.
+     Skips when already installed (marker at `~/.local/state/chezmoi-apps/<slug>.version`, mirror of
+     the Nerd Font script). Guarded against replacing a running app.
+   - **Failure semantics**: a flaky vendor URL must not abort the core bundle — per-app failure is
+     warned, the script still exits non-zero, and chezmoi re-runs it on the next apply.
+   - **Updates are the app's own job**: Sparkle (Astro has a repo `appcast.xml`), electron-updater
+     (Orca), vendor updater (Pen). Policy matches `auto_updates` casks; bump the `version` pin to
+     force a reinstall.
+   - curl does **not** set `com.apple.quarantine`, so a scripted install opens without the
+     Gatekeeper "downloaded from the internet" prompt — another reason to prefer this over browser
+     installs.
+
+**Before declaring an app in this repo, probe the channels** (10 seconds, all curl):
+`formulae.brew.sh/api/cask/<name>.json` (cask?), `itunes.apple.com/lookup?id=<mas id>` (MAS?),
+then look for a DMG + a self-update feed (Sparkle `appcast.xml`, `latest-*.yml` for
+electron-builder).
 
 ---
 

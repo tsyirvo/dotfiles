@@ -4,6 +4,7 @@
 #   add   → one commented line in the right section → `chezmoi apply` installs it
 #   remove → delete the line → `chezmoi apply` stops managing it (manual uninstall)
 # Runtime tools & global npm tools live in dot_config/mise/config.toml, NOT here
+# No brew cask / no MAS? → darwin.custom_apps (vendored DMG)
 # =============================================================================
 
 packages:
@@ -138,6 +139,7 @@ packages:
       - droid # Droid CLI
       - conductor # conductor (agent desktop)
       - codexbar # AI sub usage
+      - stablyai/orca/orca # AI agent desktop environment
       # Keyboards & Peripherals
       - logi-options-plus
       - logitech-g-hub
@@ -194,6 +196,28 @@ packages:
       Infuse: 1136220934
       Pure Paste: 1611378436
       Brother iPrint$Scan: 1193539993
+      WireGuard: 1451685025
+
+    ## Vendor DMGs — no brew cask, no MAS. 11-install-extra-apps
+    ## installs them via curl → hdiutil → /Applications; apps self-update in-app
+    ## (Sparkle / electron-updater / vendor updater). Rules:
+    ##   version: ""  → install-if-missing only (default; let the app update itself)
+    ##   version: X   → pin; re-installs at `latest` when X changes
+    ##   url         → default (universal / x86_64 fallback)
+    ##   url_arm64 / url_x86_64 → arch override; "" = fall back to `url`
+    custom_apps:
+      astro: # tryastro.app (single universal DMG)
+        app: /Applications/Astro.app
+        version: ""
+        url: https://github.com/matteospada/astro/releases/latest/download/Astro.dmg
+        url_arm64: ""
+        url_x86_64: ""
+      pen: # pen.dev (arch-specific DMGs)
+        app: /Applications/Pen.app
+        version: ""
+        url: https://pen.dev/download/Pen-mac-x64.dmg
+        url_arm64: https://pen.dev/download/Pen-mac-arm64.dmg
+        url_x86_64: ""
 
   # ---------------------------------------------------------------------------
   ## Arch / Omarchy — pacman + Omarchy's built-in PM ----------------------

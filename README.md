@@ -4,11 +4,11 @@ Personal dotfiles managed with [chezmoi](https://www.chezmoi.io). One repository
 
 ## Machine classes
 
-| Class           | OS                                 | role      | Packages from                                                 |
-| --------------- | ---------------------------------- | --------- | ------------------------------------------------------------- |
-| MacBook Pro     | macOS (Apple Silicon)              | `macbook` | Homebrew (+ casks, + Mac App Store, + Nerd Fonts)             |
-| Omarchy desktop | Arch Linux + Hyprland              | `omarchy` | pacman + Omarchy's built-in package manager; shared Nerd Font |
-| Dev box         | Debian/Ubuntu, headless (VM / VPS) | `devbox`  | apt + mise for modern CLIs; shared Nerd Font                  |
+| Class           | OS                                 | role      | Packages from                                                      |
+| --------------- | ---------------------------------- | --------- | ------------------------------------------------------------------ |
+| MacBook Pro     | macOS (Apple Silicon)              | `macbook` | Homebrew (+ casks, + Mac App Store, + Nerd Fonts, + vendored DMGs) |
+| Omarchy desktop | Arch Linux + Hyprland              | `omarchy` | pacman + Omarchy's built-in package manager; shared Nerd Font      |
+| Dev box         | Debian/Ubuntu, headless (VM / VPS) | `devbox`  | apt + mise for modern CLIs; shared Nerd Font                       |
 
 Routing per class (which config is installed where) lives in `home/.chezmoiignore` — **keep this
 table in sync with it** (same commit).
@@ -74,11 +74,12 @@ Also: `chezmoi cd` → shell inside `home/`; `chezmoi data` → every template v
 Two manifests, no overlap. The full taxonomy (what goes where, how to remove) is the header
 comment of `home/.chezmoidata/packages.yaml`.
 
-| What                                                           | Where                              | Installed by                                                    |
-| -------------------------------------------------------------- | ---------------------------------- | --------------------------------------------------------------- |
-| OS packages (brew / pacman / apt / casks / mas)                | `home/.chezmoidata/packages.yaml`  | `10-install-packages` + `12-tailscale` scripts (auto, on apply) |
-| Runtimes + global npm tools (`node`, `python`, `bun`, `npm:…`) | `home/dot_config/mise/config.toml` | `mise install` (auto, on apply)                                 |
-| tmux plugins (8 via tpm; tpm itself an external)               | tmux.conf `@plugin` lines          | `20-install-tmux-plugins` script (auto, on apply)               |
+| What                                                           | Where                                  | Installed by                                                    |
+| -------------------------------------------------------------- | -------------------------------------- | --------------------------------------------------------------- |
+| OS packages (brew / pacman / apt / casks / mas)                | `home/.chezmoidata/packages.yaml`      | `10-install-packages` + `12-tailscale` scripts (auto, on apply) |
+| Vendored DMG apps — no brew cask, no MAS (e.g. Astro, Pen)     | `packages.yaml` → `darwin.custom_apps` | `11-install-extra-apps` script (auto, on apply)                 |
+| Runtimes + global npm tools (`node`, `python`, `bun`, `npm:…`) | `home/dot_config/mise/config.toml`     | `mise install` (auto, on apply)                                 |
+| tmux plugins (8 via tpm; tpm itself an external)               | tmux.conf `@plugin` lines              | `20-install-tmux-plugins` script (auto, on apply)               |
 
 - **Add:** one commented line in the right manifest → `chezmoi apply` installs it.
 - **Remove:** delete the line → `chezmoi apply`, then uninstall from the OS
