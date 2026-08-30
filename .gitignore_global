@@ -33,9 +33,6 @@ Desktop.ini
 .AppleDouble
 .LSOverride
 
-# Icon must end with two \r
-Icon
-
 # Thumbnails
 ._*
 
@@ -56,9 +53,7 @@ Temporary Items
 .apdisk
 
 # Icon must ends with two \r.
-Icon
-Icon\r\r
-Icon\r
+Icon?
 
 ## File-based project format
 *.ipr
