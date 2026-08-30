@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
-# run_onchange_before_ — Tailscale: join every machine to the tailnet + zero-trust SSH.
+# run_onchange_after_ (packages already installed) — Tailscale: join every
+# machine to the tailnet + zero-trust SSH.
 #   macOS: the GUI cask app is the node. We just expose its bundled CLI (the app can
 #     only be an SSH *client* — Tailscale SSH *server* needs the OSS tailscaled).
 #   Linux: run tailscaled at boot and enable Tailscale SSH (server): it claims port 22

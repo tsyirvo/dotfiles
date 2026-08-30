@@ -23,6 +23,9 @@ docker run --rm ${docker_platform[@]+"${docker_platform[@]}"} -v "$PWD:/dotfiles
   fi
   useradd -m -s /bin/bash test
   echo 'test ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+  # runner-checkout is owned by a different uid inside the container → git's
+  # dubious-ownership guard fires on any git op in /dotfiles (chezmoi doctor)
+  su - test -s /bin/bash -c 'git config --global --add safe.directory /dotfiles'
   su - test -c 'DOTFILES_ROLE=$role sh -c \"\$(curl -fsLS get.chezmoi.io)\" -- init --apply --source=/dotfiles'
   # assert: fish exists, chezmoi doctor exit 0, mise install reproduces tools,
   # no unmanaged surprises in the source dir (run under bash: the bootstrap's
