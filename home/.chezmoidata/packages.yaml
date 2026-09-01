@@ -24,6 +24,7 @@ packages:
       # Terminal tools
       - fish # shell
       - tmux # terminal multiplexer
+      - mobile-shell # mosh — resilient remote terminal
       - starship # prompt
       - bat # cat clone
       - ack # grep replacement (from Brewfile)
@@ -226,6 +227,7 @@ packages:
     pacman:
       - fish
       - tmux
+      - mosh
       - starship
       - bat
       - eza
@@ -272,7 +274,7 @@ packages:
       # binary is available — build-essential is the compiler, these supply
       # ruby-build's configure-time libs/headers
       - autoconf bison libssl-dev libyaml-dev zlib1g-dev libffi-dev libreadline-dev libgdbm-dev
-      - tmux ripgrep fzf btop gnupg jq
+      - tmux mosh ripgrep fzf btop gnupg jq gh
     # tailscale isn't in Debian's default repos → the 12-tailscale script adds the official repo
     # ships as `batcat`/`fdfind` → aliases added in fish config
     apt_renamed:

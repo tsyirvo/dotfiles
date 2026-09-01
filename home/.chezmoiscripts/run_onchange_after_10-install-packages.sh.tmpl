@@ -51,6 +51,11 @@ export DEBIAN_FRONTEND=noninteractive
 sudo apt-get update && sudo apt-get install -y {{ range .packages.debian.apt }}{{ . }} {{ end }}
 {{ end -}}
 
+{{ if .isLinux -}}
+# Herdr has no distro package; install its official Linux binary when absent.
+if ! command -v herdr >/dev/null 2>&1; then curl -fsSL https://herdr.dev/install.sh | sh; fi
+{{ end -}}
+
 # ---- runtimes + global npm tools ----------------------------------------------
 # dot_config/mise/config.toml is the ONLY manifest for these (single source of truth).
 if ! command -v mise >/dev/null 2>&1; then curl -fsSL https://mise.run | sh; fi
