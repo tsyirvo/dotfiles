@@ -29,19 +29,12 @@ packages:
       - ack # grep replacement (from Brewfile)
       - fd # find replacement
       - fzf # fuzzy finder
-      - sshs # ssh config-based host picker
       - ripgrep # grep replacement
       - jq # JSON processor (jq everywhere)
-      - yazi # file manager
       # Git tools
       - git # git (with git-lfs below)
       - git-extras # extra git commands (git-ignore, git-release…)
       - git-lfs # large file storage
-      - difftastic # git diff tool (gitconfig: difftool)
-      - gh # GitHub CLI
-      - hk # hunk? rust CLI (see home dir tools)
-      - lazygit # TUI git
-      - gitleaks # secret scanning guard (hooks + CI)
       # Mobile dev tools
       - gradle # JVM build tool (Android)
       - watchman # file watching (React Native)
@@ -52,9 +45,7 @@ packages:
       - expo-orbit # Expo dev tooling
       # Dev tools
       - mise # runtime/env manager (node, python, java…)
-      - supabase # supabase CLI
       - docker # docker CLI (orbstack cask provides engine)
-      - ctop # container top
       # Misc
       - mas # Mac App Store CLI (drives the mas section)
       - blueutil # bluetooth CLI (macOS only)
@@ -221,13 +212,8 @@ packages:
       - fzf
       - ripgrep
       - jq
-      - yazi
       - git
       - git-lfs
-      - difftastic
-      - github-cli
-      - lazygit
-      - gitleaks
       - btop
       - gnupg
       - cmake
@@ -258,7 +244,7 @@ packages:
       # binary is available — build-essential is the compiler, these supply
       # ruby-build's configure-time libs/headers
       - autoconf bison libssl-dev libyaml-dev zlib1g-dev libffi-dev libreadline-dev libgdbm-dev
-      - tmux mosh ripgrep fzf btop gnupg jq gh
+      - tmux mosh ripgrep fzf btop gnupg jq
     # tailscale isn't in Debian's default repos → the 12-tailscale script adds the official repo
     # ships as `batcat`/`fdfind` → aliases added in fish config
     apt_renamed:
