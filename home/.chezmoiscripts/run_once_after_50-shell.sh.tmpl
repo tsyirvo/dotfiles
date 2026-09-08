@@ -36,5 +36,5 @@ if ! grep -qxF "$FISH" /etc/shells 2>/dev/null; then
 fi
 if [ "${SHELL:-}" != "$FISH" ]; then
   echo "chsh: ${SHELL:-?} → $FISH"
-  chsh -s "$FISH" 2>/dev/null || sudo chsh -s "$FISH" "$(id -un)"
+  sudo chsh -s "$FISH" "$(id -un)"
 fi
