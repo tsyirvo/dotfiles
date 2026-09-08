@@ -2,8 +2,8 @@
 #
 # update-ai-tools — update every AI tool on this machine in one go.
 #
-#   brew formulae : herdr, rtk
-#   brew casks    : claude, claude-code, codex, factory, conductor, codexbar, droid
+#   brew casks    : claude, codex, factory, conductor, codexbar, droid
+#   mise tools    : claude-code, herdr, rtk
 #   native CLIs   : claude (Claude Code), droid (Factory) — self-update
 #   pi            : mise-managed -> `pi update`
 #
@@ -40,13 +40,26 @@ upgrade_brew() {
 }
 
 # --- brew-managed tools -----------------------------------------------------
-for pkg in herdr rtk claude claude-code codex factory conductor codexbar droid; do
+for pkg in claude codex factory conductor codexbar droid; do
     upgrade_brew "$pkg"
 done
 
+# --- mise-managed tools -----------------------------------------------------
+for tool in claude-code herdr rtk; do
+    if command -v mise >/dev/null 2>&1 && mise where "$tool" >/dev/null 2>&1; then
+        header "Upgrading mise tool: $tool"
+        mise upgrade "$tool"
+        ok "$tool up to date"
+    else
+        skip "$tool (not installed by mise)"
+    fi
+done
+
 # --- native self-updating CLIs ----------------------------------------------
-# Claude Code installs itself to ~/.local/bin unless managed as the brew cask.
-if command -v claude >/dev/null 2>&1 && ! brew_has --cask claude-code; then
+# Claude Code installs itself to ~/.local/bin unless managed by mise or Homebrew.
+if command -v claude >/dev/null 2>&1 \
+    && ! brew_has --cask claude-code \
+    && { ! command -v mise >/dev/null 2>&1 || ! mise where claude-code >/dev/null 2>&1; }; then
     header "Updating Claude Code (native install)"
     claude update
     ok "claude up to date"

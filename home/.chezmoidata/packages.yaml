@@ -31,8 +31,6 @@ packages:
       - fzf # fuzzy finder
       - sshs # ssh config-based host picker
       - ripgrep # grep replacement
-      - sesh # tmux+projects session switcher
-      - tv # television — terminal fuzzy viewer
       - jq # JSON processor (jq everywhere)
       - yazi # file manager
       # Git tools
@@ -42,8 +40,6 @@ packages:
       - difftastic # git diff tool (gitconfig: difftool)
       - gh # GitHub CLI
       - hk # hunk? rust CLI (see home dir tools)
-      - worktrunk # worktree manager (wt)
-      - tuicr # tailscale? update? (ask: what is tuicr — from commit log)
       - lazygit # TUI git
       - gitleaks # secret scanning guard (hooks + CI)
       # Mobile dev tools
@@ -57,7 +53,6 @@ packages:
       # Dev tools
       - mise # runtime/env manager (node, python, java…)
       - supabase # supabase CLI
-      - doppler # env/secrets CLI
       - docker # docker CLI (orbstack cask provides engine)
       - ctop # container top
       # Misc
@@ -71,8 +66,6 @@ packages:
       - thaw # menu bar cleaner
       # AI
       - ollama # local LLM runtime
-      - herdr # herd orchestration (Pi-adjacent tooling)
-      - rtk # repo toolkit hooks (claude hooks)
       - mlx # Apple silicon ML libs
 
     ## Casks — GUI apps (MacBook only)
@@ -130,7 +123,6 @@ packages:
       - brainfm # focus music
       # AI
       - claude # Claude desktop
-      - claude-code # Claude code CLI
       - codex # OpenAI codex desktop
       - factory # factory.ai
       - droid # Droid CLI
