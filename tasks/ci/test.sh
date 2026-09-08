@@ -47,6 +47,8 @@ su - test -c "DOTFILES_ROLE=$ROLE sh -c \"\$(curl -fsLS get.chezmoi.io)\" -- ini
 su - test -s /bin/bash -c '
   export PATH="$HOME/bin:$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
   command -v fish >/dev/null || { echo "FAIL: fish missing"; exit 1; }
+  command -v batcat >/dev/null || { echo "FAIL: batcat missing"; exit 1; }
+  command -v fdfind >/dev/null || { echo "FAIL: fdfind missing"; exit 1; }
   command -v mise >/dev/null || { echo "FAIL: mise missing"; exit 1; }
   chezmoi --source=/dotfiles doctor >/dev/null || { echo "FAIL: chezmoi doctor"; exit 1; }
   echo OK

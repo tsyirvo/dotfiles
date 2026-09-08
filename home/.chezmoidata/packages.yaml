@@ -279,4 +279,4 @@ packages:
     # ships as `batcat`/`fdfind` → aliases added in fish config
     apt_renamed:
       bat: batcat
-      fd: fdfind
+      fd-find: fdfind

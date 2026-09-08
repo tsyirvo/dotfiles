@@ -48,7 +48,7 @@ sudo pacman -S --needed --noconfirm {{ range .packages.arch.pacman }}{{ . }} {{ 
 
 {{ else -}}
 export DEBIAN_FRONTEND=noninteractive
-sudo apt-get update && sudo apt-get install -y {{ range .packages.debian.apt }}{{ . }} {{ end }}
+sudo apt-get update && sudo apt-get install -y {{ range .packages.debian.apt }}{{ . }} {{ end }}{{ range $package, $command := .packages.debian.apt_renamed }}{{ $package }} {{ end }}
 {{ end -}}
 
 {{ if .isLinux -}}
