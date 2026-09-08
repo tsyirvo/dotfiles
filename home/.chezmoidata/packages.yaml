@@ -3,7 +3,7 @@
 # How to use:
 #   add   → one commented line in the right section → `chezmoi apply` installs it
 #   remove → delete the line → `chezmoi apply` stops managing it (manual uninstall)
-# Runtime tools & global npm tools live in dot_config/mise/config.toml, NOT here
+# Cross-platform CLI tools, runtimes, and global npm tools live in dot_config/mise/config.toml, NOT here
 # No brew cask / no MAS? → darwin.custom_apps (vendored DMG)
 # =============================================================================
 
@@ -25,14 +25,10 @@ packages:
       - fish # shell
       - tmux # terminal multiplexer
       - mobile-shell # mosh — resilient remote terminal
-      - starship # prompt
       - bat # cat clone
       - ack # grep replacement (from Brewfile)
-      - eza # ls replacement
-      - zoxide # cd replacement
       - fd # find replacement
       - fzf # fuzzy finder
-      - atuin # shell history sync
       - sshs # ssh config-based host picker
       - ripgrep # grep replacement
       - sesh # tmux+projects session switcher
@@ -228,13 +224,9 @@ packages:
       - fish
       - tmux
       - mosh
-      - starship
       - bat
-      - eza
-      - zoxide
       - fd
       - fzf
-      - atuin
       - ripgrep
       - jq
       - yazi

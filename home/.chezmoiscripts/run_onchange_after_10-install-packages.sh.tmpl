@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
-# run_onchange_after_ — OS packages per class + runtimes/npm globals.
+# run_onchange_after_ — OS packages per class + mise-managed tools.
 # Runs AFTER files are applied so the managed manifests it reads
 # (~/.Brewfile, ~/.config/mise/config.toml) already exist on a fresh boot.
 # Re-runs only when packages.yaml or dot_config/mise/config.toml changes:
@@ -56,7 +56,7 @@ sudo apt-get update && sudo apt-get install -y {{ range .packages.debian.apt }}{
 if ! command -v herdr >/dev/null 2>&1; then curl -fsSL https://herdr.dev/install.sh | sh; fi
 {{ end -}}
 
-# ---- runtimes + global npm tools ----------------------------------------------
+# ---- cross-platform CLI tools, runtimes, and global npm tools ------------------
 # dot_config/mise/config.toml is the ONLY manifest for these (single source of truth).
 if ! command -v mise >/dev/null 2>&1; then curl -fsSL https://mise.run | sh; fi
 mise install        # idempotent; provisions every runtime + npm: tool listed

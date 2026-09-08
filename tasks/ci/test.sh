@@ -50,6 +50,7 @@ su - test -s /bin/bash -c '
   command -v batcat >/dev/null || { echo "FAIL: batcat missing"; exit 1; }
   command -v fdfind >/dev/null || { echo "FAIL: fdfind missing"; exit 1; }
   command -v mise >/dev/null || { echo "FAIL: mise missing"; exit 1; }
+  fish -ic "type -q starship eza zoxide atuin" || { echo "FAIL: mise-managed shell tools missing"; exit 1; }
   chezmoi --source=/dotfiles doctor >/dev/null || { echo "FAIL: chezmoi doctor"; exit 1; }
   echo OK
 '

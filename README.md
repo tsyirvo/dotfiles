@@ -15,8 +15,8 @@ table in sync with it** (same commit).
 
 ## Install on a new machine
 
-OS packages come from `home/.chezmoidata/packages.yaml`; runtimes + global npm tools from
-`home/dot_config/mise/config.toml`. A fresh machine gets both automatically:
+OS packages come from `home/.chezmoidata/packages.yaml`; cross-platform CLI tools, runtimes,
+and global npm tools from `home/dot_config/mise/config.toml`. A fresh machine gets both automatically:
 
 ```bash
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply tsyirvo
@@ -33,8 +33,8 @@ this change, then run `chezmoi apply`.
 The bootstrap then runs automatically, in order:
 
 1. **Package manager** — Homebrew on macOS, pacman/Omarchy PM on Arch, apt on Debian.
-2. **Packages** — `brew bundle` / pacman / apt per the class + **all runtimes and global npm
-   tools** via `mise install`.
+2. **Packages** — `brew bundle` / pacman / apt per the class + **cross-platform CLI tools,
+   runtimes, and global npm tools** via `mise install`.
 3. **Shell** — fish becomes your login shell (added to `/etc/shells`, `chsh`).
 4. **Pre-commit hook** — gitleaks guards the repo against secret leaks.
 
@@ -74,12 +74,12 @@ Also: `chezmoi cd` → shell inside `home/`; `chezmoi data` → every template v
 Two manifests, no overlap. The full taxonomy (what goes where, how to remove) is the header
 comment of `home/.chezmoidata/packages.yaml`.
 
-| What                                                           | Where                                  | Installed by                                                    |
-| -------------------------------------------------------------- | -------------------------------------- | --------------------------------------------------------------- |
-| OS packages (brew / pacman / apt / casks / mas)                | `home/.chezmoidata/packages.yaml`      | `10-install-packages` + `12-tailscale` scripts (auto, on apply) |
-| Vendored DMG apps — no brew cask, no MAS (e.g. Astro, Pen)     | `packages.yaml` → `darwin.custom_apps` | `11-install-extra-apps` script (auto, on apply)                 |
-| Runtimes + global npm tools (`node`, `python`, `bun`, `npm:…`) | `home/dot_config/mise/config.toml`     | `mise install` (auto, on apply)                                 |
-| tmux plugins (8 via tpm; tpm itself an external)               | tmux.conf `@plugin` lines              | `20-install-tmux-plugins` script (auto, on apply)               |
+| What                                                       | Where                                  | Installed by                                                    |
+| ---------------------------------------------------------- | -------------------------------------- | --------------------------------------------------------------- |
+| OS packages (brew / pacman / apt / casks / mas)            | `home/.chezmoidata/packages.yaml`      | `10-install-packages` + `12-tailscale` scripts (auto, on apply) |
+| Vendored DMG apps — no brew cask, no MAS (e.g. Astro, Pen) | `packages.yaml` → `darwin.custom_apps` | `11-install-extra-apps` script (auto, on apply)                 |
+| Cross-platform CLIs, runtimes, global npm tools            | `home/dot_config/mise/config.toml`     | `mise install` (auto, on apply)                                 |
+| tmux plugins (8 via tpm; tpm itself an external)           | tmux.conf `@plugin` lines              | `20-install-tmux-plugins` script (auto, on apply)               |
 
 - **Add:** one commented line in the right manifest → `chezmoi apply` installs it.
 - **Remove:** delete the line → `chezmoi apply`, then uninstall from the OS
