@@ -45,8 +45,8 @@
 #
 # ### Claude Code
 #
-[commit.generation]
-command = "CLAUDECODE= MAX_THINKING_TOKENS=0 claude -p --no-session-persistence --model=haiku --tools='' --disable-slash-commands --setting-sources='' --system-prompt=''"
+# [commit.generation]
+# command = "CLAUDECODE= MAX_THINKING_TOKENS=0 claude -p --no-session-persistence --model=haiku --tools='' --disable-slash-commands --setting-sources='' --system-prompt=''"
 #
 # ### Codex
 #
@@ -255,26 +255,26 @@ zed = "zed {{ worktree_path }}"
 # (left: full height, right: two stacked vertically)
 # This runs BEFORE the --execute command (Claude Code)
 # so the session is ready when Claude starts.
-[pre-start]
-tmux-session = """
-S="{{ repo }}__{{ branch | sanitize }}"
-W="{{ worktree_path }}"
+# [pre-start]
+# tmux-session = """
+# S="{{ repo }}__{{ branch | sanitize }}"
+# W="{{ worktree_path }}"
 
-mise trust "$W/mise.toml" 2>/dev/null || true
-mise trust "$W/.mise.toml" 2>/dev/null || true
+# mise trust "$W/mise.toml" 2>/dev/null || true
+# mise trust "$W/.mise.toml" 2>/dev/null || true
 
-tmux new-session -d -s "$S" -c "$W" -n agent
-tmux split-window -h -t "$S:agent" -c "$W"
-tmux split-window -v -t "$S:agent.right" -c "$W"
-tmux select-pane -t "$S:agent.left"
-tmux resize-pane -t "$S:agent.left" -x 60%
+# tmux new-session -d -s "$S" -c "$W" -n agent
+# tmux split-window -h -t "$S:agent" -c "$W"
+# tmux split-window -v -t "$S:agent.right" -c "$W"
+# tmux select-pane -t "$S:agent.left"
+# tmux resize-pane -t "$S:agent.left" -x 60%
 
-echo "✓ tmux session '$S' ready"
-"""
+# echo "✓ tmux session '$S' ready"
+# """
 
-# PRE-REMOVE (blocking): kill the tmux session before removing worktree
-[pre-remove]
-tmux-kill = """
-S="{{ repo }}__{{ branch | sanitize }}"
-tmux kill-session -t "$S" 2>/dev/null || true
-"""
+# # PRE-REMOVE (blocking): kill the tmux session before removing worktree
+# [pre-remove]
+# tmux-kill = """
+# S="{{ repo }}__{{ branch | sanitize }}"
+# tmux kill-session -t "$S" 2>/dev/null || true
+# """

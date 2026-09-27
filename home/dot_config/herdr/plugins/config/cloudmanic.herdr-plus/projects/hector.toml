@@ -1,0 +1,27 @@
+name = "Hector"
+description = "The main Hector repository"
+working_dir = "/Users/tsyirvo/projects/clients/frontend"
+
+[[tabs]]
+name = "agent"
+command = "pi"
+
+[[tabs]]
+name = "project"
+
+[[tabs.panes]]
+label = "CLI"
+
+[[tabs.panes]]
+label = "Bundler"
+working_dir = "mobile"
+command = "mise use yarn@1.22.22 && yarn"
+split = "right"
+ratio = 0.4
+
+[[tabs.panes]]
+label = "Other"
+split = "down"
+
+[[tabs]]
+name = "review"

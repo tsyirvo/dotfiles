@@ -7,6 +7,7 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "proxy": "",
   "format_on_save": "on",
   "cli_default_open_behavior": "new_window",
   "ssh_connections": [
@@ -159,6 +160,45 @@
     "metrics": false,
   },
   "agent": {
+    "default_profile": "ask",
+    "profiles": {
+      "ask": {
+        "name": "Ask",
+        "tools": {
+          "delete_path": false,
+          "copy_path": true,
+          "create_directory": false,
+          "write_file": false,
+          "terminal": true,
+          "move_path": false,
+          "edit_file": false,
+          "create_thread": true,
+          "diagnostics": true,
+          "ask_user": false,
+          "fetch": true,
+          "list_agents_and_models": true,
+          "list_directory": true,
+          "find_path": true,
+          "find_references": true,
+          "get_code_actions": true,
+          "go_to_definition": true,
+          "read_file": true,
+          "grep": true,
+          "skill": true,
+          "spawn_agent": true,
+          "search_web": true,
+        },
+        "enable_all_context_servers": false,
+        "context_servers": {
+          "mcp-server-context7": {
+            "tools": {
+              "resolve-library-id": true,
+              "query-docs": true,
+            },
+          },
+        },
+      },
+    },
     "default_width": 200,
     "dock": "right",
     "inline_assistant_model": {
@@ -166,14 +206,16 @@
       "model": "qwen/qwen3-coder-next",
     },
     "default_model": {
+      "effort": "medium",
       "enable_thinking": true,
-      "provider": "ollama",
-      "model": "qwen3.6:35b-a3b-q4_K_M",
+      "provider": "openai-subscribed",
+      "model": "gpt-5.6-terra",
     },
     "use_modifier_to_send": true,
     "play_sound_when_agent_done": "always",
   },
   "edit_predictions": {
+    "allow_data_collection": "no",
     "ollama": {
       "max_output_tokens": 512,
       "prompt_format": "sweep",
