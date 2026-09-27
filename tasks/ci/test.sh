@@ -47,8 +47,10 @@ su - test -c "DOTFILES_ROLE=$ROLE sh -c \"\$(curl -fsLS get.chezmoi.io)\" -- ini
 su - test -s /bin/bash -c '
   export PATH="$HOME/bin:$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
   command -v fish >/dev/null || { echo "FAIL: fish missing"; exit 1; }
-  command -v batcat >/dev/null || { echo "FAIL: batcat missing"; exit 1; }
-  command -v fdfind >/dev/null || { echo "FAIL: fdfind missing"; exit 1; }
+  # debian ships bat/fd as batcat/fdfind (packages.yaml apt_renamed); arch does not
+  if command -v apt-get >/dev/null; then bat=batcat fd=fdfind; else bat=bat fd=fd; fi
+  command -v "$bat" >/dev/null || { echo "FAIL: $bat missing"; exit 1; }
+  command -v "$fd" >/dev/null || { echo "FAIL: $fd missing"; exit 1; }
   command -v mise >/dev/null || { echo "FAIL: mise missing"; exit 1; }
   fish -ic "type -q starship eza zoxide atuin claude sesh tv wt tuicr doppler btop herdr rtk sshs yazi difft gh hk lazygit gitleaks supabase ctop" || { echo "FAIL: coding tools missing"; exit 1; }
   test -x "$HOME/.config/git/hooks/pre-commit" || { echo "FAIL: gitleaks hook missing"; exit 1; }
