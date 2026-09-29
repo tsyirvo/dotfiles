@@ -48,3 +48,4 @@ description = "Worktree: merge into the target branch"
 
 [ui]
 status_indicators = "symbols"
+sidebar_collapsed_mode = 'hidden'
