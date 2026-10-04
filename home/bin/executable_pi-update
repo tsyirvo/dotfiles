@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+# Update the chezmoi-managed pi executable and optionally sync pi-harness's SDK.
+# The Stow updater in bin/pi-update remains separate until the migration is done.
+# Usage: pi-update (override the harness location with PI_HARNESS_DIR).
+
+set -euo pipefail
+
+if [ "$#" -gt 0 ]; then
+    echo "usage: pi-update" >&2
+    exit 2
+fi
+
+command -v mise >/dev/null 2>&1 || {
+    echo "mise not found on PATH" >&2
+    exit 1
+}
+
+HARNESS_DIR="${PI_HARNESS_DIR:-$HOME/projects/argentic/pi-harness}"
+# Resolve relative overrides before leaving the caller's directory.
+if [[ "$HARNESS_DIR" != /* ]]; then
+    HARNESS_DIR="$PWD/$HARNESS_DIR"
+fi
+PI_TOOL="npm:@earendil-works/pi-coding-agent"
+
+# Ignore project-level tool selections; do not rewrite the managed manifest.
+cd "$HOME"
+if ! mise where "$PI_TOOL" >/dev/null 2>&1; then
+    echo "pi is not installed as a mise npm tool; apply the chezmoi mise config and run mise install first." >&2
+    exit 1
+fi
+mise upgrade "$PI_TOOL"
+PI_BIN="$(mise which pi --tool "$PI_TOOL")"
+export PI_BIN
+
+if [ -f "$HARNESS_DIR/package.json" ]; then
+    # Yarn 1 must also be used by the nested install inside pi:sync.
+    mise exec yarn@1.22 -- yarn --cwd "$HARNESS_DIR" pi:sync
+else
+    echo "skip: pi-harness SDK sync (not found at $HARNESS_DIR; override with PI_HARNESS_DIR)"
+fi
+
+# Use the canonical executable, not an old Node-global pi on PATH.
+# mise exec supplies the global Node runtime even when invoked from a project.
+mise exec -- "$PI_BIN" update --extensions
+mise exec -- "$PI_BIN" update --models
+
+echo ""
+echo "Updated pi. Restart running agents/panes (and Herdr/tmux daemons) to pick it up."

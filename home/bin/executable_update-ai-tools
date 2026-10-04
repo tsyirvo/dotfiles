@@ -5,7 +5,7 @@
 #   brew casks    : claude, codex, factory, conductor, codexbar, droid
 #   mise tools    : claude-code, herdr, rtk
 #   native CLIs   : claude (Claude Code), droid (Factory) — self-update
-#   pi            : mise-managed -> `pi update`
+#   pi            : pi-update (mise executable + optional pi-harness SDK sync)
 #
 # Tools that aren't installed are skipped with a note, so this is safe to run
 # on any machine class (macbook / omarchy / devbox — brew only exists on mac).
@@ -77,14 +77,13 @@ else
 fi
 
 # --- pi (mise-managed) --------------------------------------------------------
-if command -v pi >/dev/null 2>&1; then
+if command -v mise >/dev/null 2>&1 \
+    && mise -C "$HOME" where "npm:@earendil-works/pi-coding-agent" >/dev/null 2>&1; then
     header "Updating pi and its packages"
-    pi update --all
-    header "Refreshing pi model catalogs"
-    pi update --models
+    "$(dirname "$0")/pi-update"
     ok "pi up to date"
 else
-    skip "pi (not installed)"
+    skip "pi (not installed as a mise npm tool)"
 fi
 
 printf '\n All AI tools up to date 🎉\n'

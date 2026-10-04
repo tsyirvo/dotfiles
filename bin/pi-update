@@ -1,0 +1,41 @@
+#!/bin/sh
+#
+# Update the pi agent everywhere:
+#
+# 1. Installs the npm-latest pi into every mise-managed Node install
+#    (each Node version keeps its own npm global prefix).
+# 2. Pins the pi-harness repo SDK packages to that same version,
+#    so its typecheck tracks the version that actually runs.
+#
+# The repo uses a Yarn 1 lockfile; mise's plain `yarn` is 4.x, which would
+# migrate the lockfile. Pin Yarn 1 for the whole run so the nested
+# `yarn install` inside `pi:sync` also resolves Yarn 1.
+#
+# Usage: pi-update            # no flags accepted
+# Override the harness location with PI_HARNESS_DIR.
+
+set -eu
+
+if [ $# -gt 0 ]; then
+    echo "usage: pi-update" >&2
+    exit 2
+fi
+
+HARNESS_DIR="${PI_HARNESS_DIR:-$HOME/projects/argentic/pi-harness}"
+
+if [ ! -f "$HARNESS_DIR/package.json" ]; then
+    echo "pi-harness not found at $HARNESS_DIR (override with PI_HARNESS_DIR)" >&2
+    exit 1
+fi
+
+command -v mise > /dev/null 2>&1 || {
+    echo "mise not found on PATH" >&2
+    exit 1
+}
+
+cd "$HARNESS_DIR"
+mise exec yarn@1.22 -- yarn pi:update-globals
+mise exec yarn@1.22 -- yarn pi:sync
+
+echo ""
+echo "Updated everywhere. Restart running agents/panes (and Herdr/tmux daemons) to pick it up."

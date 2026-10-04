@@ -88,8 +88,30 @@ comment of `home/.chezmoidata/packages.yaml`.
 ### Node / global npm rules
 
 - Every global is a `npm:<pkg>` entry in `mise/config.toml` — **never** `npm i -g`.
-- One pinned Node per machine; switching Node moves globals → run `mise install` (or
-  `mise run fix-globals`) to restore everything.
+- The global config selects the default Node; projects can select another version.
+  Mise npm tools have separate install directories, not one copy per Node prefix.
+  Run `mise install` (or `mise run fix-globals`) to provision missing tools.
+
+### Updating pi
+
+On a chezmoi-managed machine, run `pi-update`, or `update-ai-tools` to update all AI tools.
+The updater upgrades pi through mise using the global tool selection, then synchronizes
+pi-harness's SDK devDependencies to that exact executable using Yarn 1 and runs its
+install/typecheck workflow. Extension packages and model catalogs are refreshed separately;
+pi does not self-update the mise-owned executable.
+
+The harness defaults to `~/projects/argentic/pi-harness`; override it with
+`PI_HARNESS_DIR`. If absent, SDK sync is explicitly skipped. A sync/typecheck failure stops
+the updater. Updating the harness can modify its `package.json` and `yarn.lock`; review and
+commit those changes in that repository. `chezmoi apply` never runs this sync automatically.
+Restart running agents/panes and Herdr/tmux daemons after updating.
+
+**While this Mac still uses Stow, keep using the existing `bin/pi-update`.** It continues
+updating every Node-global pi installation and syncing the harness. The new updater lives
+only in `home/` until the fresh chezmoi installation; do not apply it over the Stow-managed
+command. Once the fresh Mac is verified, retire the Stow updater and pi-harness's
+`pi:update-globals` script. If migrating an existing machine instead, verify the mise-owned
+pi resolves across projects before deliberately removing old Node-global copies.
 
 ## Shortcuts (`mise run …`)
 
