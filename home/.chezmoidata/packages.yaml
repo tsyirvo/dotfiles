@@ -64,17 +64,17 @@ packages:
       # IDEs
       - cursor # AI editor
       - zed # editor (config shipped via dot_config/zed)
-      - android-studio # Android IDE
       # Terminals
       - ghostty # terminal
       # Browsers
       - zen # zen browser
       - google-chrome # chrome (dev + default fallback)
       # Mobile dev tools
-      - androidtool # android ADB/Fastboot GUI
+      - android-studio # Android IDE
       - genymotion # Android emulator
       - android-platform-tools # adb/fastboot
       - proxyman # http debug proxy
+      - xcodes # Manage Xcode versions
       # Dev tools
       - ngrok # ngrok (authtoken out-of-band)
       - orbstack # docker engine + linux VMs
@@ -108,18 +108,16 @@ packages:
       - vlc
       - spotify
       - steam
-      - reflex-app # reflex games
-      - soulseek # soulseek music sharing
+      - reflex-app
+      - soulseek
       - calibre # ebook manager
       - brainfm # focus music
       # AI
       - claude # Claude desktop
-      - codex # OpenAI codex desktop
+      - chatgpt # ChatGPT desktop
       - factory # factory.ai
       - droid # Droid CLI
-      - conductor # conductor (agent desktop)
       - codexbar # AI sub usage
-      - stablyai/orca/orca # AI agent desktop environment
       # Keyboards & Peripherals
       - logi-options-plus
       - logitech-g-hub
@@ -159,10 +157,6 @@ packages:
 
     ## Fonts (casks, MacBook only; Linux uses the shared installer below)
     fonts_casks:
-      - font-lato
-      - font-hack
-      - font-open-sans
-      - font-roboto
       - font-fira-code-nerd-font
       - font-jetbrains-mono-nerd-font
 
