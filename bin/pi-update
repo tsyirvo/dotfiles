@@ -7,9 +7,8 @@
 # 2. Pins the pi-harness repo SDK packages to that same version,
 #    so its typecheck tracks the version that actually runs.
 #
-# The repo uses a Yarn 1 lockfile; mise's plain `yarn` is 4.x, which would
-# migrate the lockfile. Pin Yarn 1 for the whole run so the nested
-# `yarn install` inside `pi:sync` also resolves Yarn 1.
+# The harness uses Bun and requires Node 26. Select both through mise so
+# nested installs and typechecks use the same stack regardless of the caller.
 #
 # Usage: pi-update            # no flags accepted
 # Override the harness location with PI_HARNESS_DIR.
@@ -34,8 +33,8 @@ command -v mise > /dev/null 2>&1 || {
 }
 
 cd "$HARNESS_DIR"
-mise exec yarn@1.22 -- yarn pi:update-globals
-mise exec yarn@1.22 -- yarn pi:sync
+mise exec node@26 bun -- bun run pi:update-globals
+mise exec node@26 bun -- bun run pi:sync
 
 echo ""
 echo "Updated everywhere. Restart running agents/panes (and Herdr/tmux daemons) to pick it up."

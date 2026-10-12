@@ -70,7 +70,7 @@ esac
     def calls(self):
         return self.log.read_text().splitlines() if self.log.exists() else []
 
-    def test_sync_uses_canonical_pi_and_yarn_one_from_home(self):
+    def test_sync_uses_canonical_pi_and_bun_with_node_26_from_home(self):
         self.env["PI_BIN"] = "stale override"
         result = self.run_updater()
         self.assertEqual(result.returncode, 0, result.stderr)
@@ -78,7 +78,7 @@ esac
         self.assertEqual(len(calls), 6)
         self.assertIn(f"|upgrade {TOOL}|", calls[1])
         self.assertIn(f"|which pi --tool {TOOL}|", calls[2])
-        self.assertIn(f"exec yarn@1.22 -- yarn --cwd {self.harness} pi:sync", calls[3])
+        self.assertIn(f"exec node@26 bun -- bun run --cwd {self.harness} pi:sync", calls[3])
         self.assertIn(f"PI_BIN={self.env['CANONICAL_PI']}", calls[3])
         self.assertIn("update --extensions", calls[4])
         self.assertIn("update --models", calls[5])
@@ -114,6 +114,30 @@ esac
 
     def test_arguments_are_rejected_without_updates(self):
         self.assertEqual(self.run_updater("pi-update", "--all").returncode, 2)
+        self.assertEqual(self.calls(), [])
+
+    def use_stow_updater(self):
+        shutil.copyfile(ROOT / "bin/pi-update", self.bin / "pi-update")
+
+    def test_stow_updater_uses_bun_with_node_26_for_both_steps(self):
+        self.use_stow_updater()
+        result = self.run_updater()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(self.calls(), [
+            f"{self.harness}|exec node@26 bun -- bun run pi:update-globals|PI_BIN=",
+            f"{self.harness}|exec node@26 bun -- bun run pi:sync|PI_BIN=",
+        ])
+
+    def test_stow_failure_stops_before_sync(self):
+        self.use_stow_updater()
+        self.mock("mise", 'echo "$*" >> "$CALL_LOG"; exit 1\n')
+        self.assertNotEqual(self.run_updater().returncode, 0)
+        self.assertEqual(len(self.calls()), 1)
+
+    def test_stow_missing_harness_stops_without_updates(self):
+        self.use_stow_updater()
+        self.env["PI_HARNESS_DIR"] = str(self.root / "missing")
+        self.assertNotEqual(self.run_updater().returncode, 0)
         self.assertEqual(self.calls(), [])
 
     def test_update_ai_tools_delegates_to_sibling_updater(self):

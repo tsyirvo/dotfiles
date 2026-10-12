@@ -33,8 +33,8 @@ PI_BIN="$(mise which pi --tool "$PI_TOOL")"
 export PI_BIN
 
 if [ -f "$HARNESS_DIR/package.json" ]; then
-    # Yarn 1 must also be used by the nested install inside pi:sync.
-    mise exec yarn@1.22 -- yarn --cwd "$HARNESS_DIR" pi:sync
+    # Supply Bun and Node 26 to the nested install/typecheck workflow too.
+    mise exec node@26 bun -- bun run --cwd "$HARNESS_DIR" pi:sync
 else
     echo "skip: pi-harness SDK sync (not found at $HARNESS_DIR; override with PI_HARNESS_DIR)"
 fi
