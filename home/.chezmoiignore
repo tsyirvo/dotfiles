@@ -21,6 +21,12 @@ Library
 .Brewfile
 {{ end }}
 
+# ---- Debian renames bat/fd → shims in ~/.local/bin, dev boxes only ------------
+{{ if not .isDevbox }}
+.local/bin/bat
+.local/bin/fd
+{{ end }}
+
 # ---- headless dev boxes get no GUI configs ------------------------------------
 {{ if .isHeadless }}
 .config/ghostty/**

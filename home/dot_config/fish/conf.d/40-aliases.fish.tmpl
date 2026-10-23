@@ -47,7 +47,6 @@ alias wls='wt list --full'
 alias wrm='wt remove'
 
 {{- if .isDevbox }}
-# Debian ships these commands under alternate names.
-alias cat="batcat"
-alias fd="fdfind"
+# Debian ships batcat/fdfind; ~/.local/bin/{bat,fd} symlinks restore the names.
+alias cat="bat"
 {{- end }}

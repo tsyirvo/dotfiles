@@ -14,4 +14,5 @@ export PATH="$HOME/.local/bin:$HOME/.local/share/mise/shims:/opt/homebrew/bin:/u
 gitleaks protect --staged --redact
 EOF
 chmod +x "$HOOKS_DIR/pre-commit"
-git config --global core.hooksPath "$HOOKS_DIR"
+# core.hooksPath lives in dot_gitconfig.tmpl — never `git config --global` here,
+# it would rewrite the managed ~/.gitconfig and drift from chezmoi.

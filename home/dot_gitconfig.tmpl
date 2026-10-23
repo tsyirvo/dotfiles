@@ -9,6 +9,8 @@
 	excludesfile = ~/.gitignore_global
 	editor = nano
 	ignorecase = false
+	# gitleaks pre-commit hook, installed by the 90-gitleaks script
+	hooksPath = ~/.config/git/hooks
 
 [credential]
 {{ if .isDarwin }}  helper = osxkeychain
@@ -55,3 +57,10 @@
 
 [alias]
 	upsync = "!f() { git pull origin \"$(git symbolic-ref --short HEAD)\" && git pull origin main; }; f"
+
+# Machine-local, unmanaged: signing keys, gpg/commit settings, anything that
+# differs per box. Write there with `git config --file ~/.gitconfig.local …`
+# — `git config --global` would edit this managed file and show in chezmoi diff.
+# Must stay LAST so local values win.
+[include]
+	path = ~/.gitconfig.local
