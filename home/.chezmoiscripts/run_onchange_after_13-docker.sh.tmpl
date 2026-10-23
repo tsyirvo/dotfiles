@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+set -euo pipefail
+# run_onchange_after_ (packages already installed) — Docker Engine on dev boxes.
+#   macOS: OrbStack cask + `docker` brew provide the engine/CLI → nothing to do.
+#   Debian/Ubuntu: add Docker's official apt repo, install engine + compose plugin,
+#     start dockerd at boot, and put $USER in the `docker` group so agents can drive
+#     containers without sudo (the group is root-equivalent: fine on a single-user,
+#     tailnet-only dev box).
+# Group membership is read at LOGIN: long-lived tmux/herdr servers keep their old
+# groups and every pane inherits them → after the first add, restart those servers
+# (or reboot) once. The script prints the reminder when it applies.
+# Re-runs when packages.yaml changes:
+#   packages.yaml:   {{ include ".chezmoidata/packages.yaml" | sha256sum }}
+export PATH="$HOME/.local/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
+
+{{ if .isDevbox -}}
+# shellcheck disable=SC1091 # runtime file: ID=debian|ubuntu, VERSION_CODENAME=bookworm|noble…
+. /etc/os-release
+
+# --- repo (idempotent: keyring + list rewritten every run) ------------------------
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL "https://download.docker.com/linux/${ID}/gpg" -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/${ID} ${VERSION_CODENAME} stable" \
+  | sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
+
+export DEBIAN_FRONTEND=noninteractive
+sudo apt-get update && sudo apt-get install -y {{ range .packages.debian.docker }}{{ . }} {{ end }}
+
+# --- daemon at boot (containers/non-systemd boots skip, same as 12-tailscale) -----
+if [ -d /run/systemd/system ] && command -v systemctl >/dev/null 2>&1; then
+  sudo systemctl enable --now docker containerd
+else
+  echo "13-docker: no systemd here (container?) — skipping daemon setup" >&2
+fi
+
+# --- sudo-less socket access for $USER (and every agent it runs) ------------------
+user="$(id -un)"
+if ! id -nG "$user" | tr ' ' '\n' | grep -qx docker; then
+  sudo usermod -aG docker "$user"
+  echo "13-docker: added $user to the docker group. Existing sessions don't see it yet:" >&2
+  echo "           run \`tmux kill-server\`, restart herdr, and reconnect — or just reboot" >&2
+fi
+
+# sanity check with the group applied (works before any re-login)
+if [ -d /run/systemd/system ] && ! sg docker -c 'docker info' >/dev/null 2>&1; then
+  echo "13-docker: \`docker info\` failed as $user via the docker group" >&2
+  exit 1
+fi
+
+{{ else -}}
+# macbook: OrbStack provides the engine; omarchy: not wired up yet
+exit 0
+{{ end -}}

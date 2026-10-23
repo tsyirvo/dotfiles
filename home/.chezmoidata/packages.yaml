@@ -46,6 +46,7 @@ packages:
       # Dev tools
       - mise # runtime/env manager (node, python, java…)
       - docker # docker CLI (orbstack cask provides engine)
+      - libpq # psql / pg_dump clients (keg-only → PATH added in 10-environment.fish)
       # Misc
       - mas # Mac App Store CLI (drives the mas section)
       - blueutil # bluetooth CLI (macOS only)
@@ -231,6 +232,14 @@ packages:
       # ruby-build's configure-time libs/headers
       - autoconf bison libssl-dev libyaml-dev zlib1g-dev libffi-dev libreadline-dev libgdbm-dev
       - tmux mosh ripgrep fzf btop gnupg jq
+      - postgresql-client # psql / pg_dump against the local Postgres containers
+    # Docker isn't in Debian/Ubuntu default repos → 13-docker adds Docker's official apt repo
+    docker:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin # `docker compose build` relies on buildx
+      - docker-compose-plugin
     # tailscale isn't in Debian's default repos → the 12-tailscale script adds the official repo
     # ships as `batcat`/`fdfind` → ~/.local/bin/{bat,fd} symlinks (dot_local/bin)
     apt_renamed:

@@ -38,6 +38,9 @@ The bootstrap then runs automatically, in order:
 2. **Packages** — `brew bundle` / pacman / apt per the class + **cross-platform CLI tools,
    runtimes, and global npm tools** via `mise install`.
 3. **Shell** — fish becomes your login shell (added to `/etc/shells`, `chsh`).
+   On dev boxes, Docker Engine is also installed from Docker's apt repo and your user joins the
+   `docker` group (sudo-less containers for agents). The group only reaches new sessions: after
+   the first apply, run `tmux kill-server`, restart herdr and reconnect — or reboot.
 4. **Pre-commit hook** — gitleaks guards the repo against secret leaks.
 
 Last, the **secrets step** (2 minutes, once per machine): SSH keys are
@@ -76,12 +79,12 @@ Also: `chezmoi cd` → shell inside `home/`; `chezmoi data` → every template v
 Two manifests, no overlap. The full taxonomy (what goes where, how to remove) is the header
 comment of `home/.chezmoidata/packages.yaml`.
 
-| What                                                       | Where                                  | Installed by                                                    |
-| ---------------------------------------------------------- | -------------------------------------- | --------------------------------------------------------------- |
-| OS packages (brew / pacman / apt / casks / mas)            | `home/.chezmoidata/packages.yaml`      | `10-install-packages` + `12-tailscale` scripts (auto, on apply) |
-| Vendored DMG apps — no brew cask, no MAS (e.g. Astro, Pen) | `packages.yaml` → `darwin.custom_apps` | `11-install-extra-apps` script (auto, on apply)                 |
-| Cross-platform CLIs, runtimes, global npm tools            | `home/dot_config/mise/config.toml`     | `mise install` (auto, on apply)                                 |
-| tmux plugins (8 via tpm; tpm itself an external)           | tmux.conf `@plugin` lines              | `20-install-tmux-plugins` script (auto, on apply)               |
+| What                                                       | Where                                  | Installed by                                                                  |
+| ---------------------------------------------------------- | -------------------------------------- | ----------------------------------------------------------------------------- |
+| OS packages (brew / pacman / apt / casks / mas)            | `home/.chezmoidata/packages.yaml`      | `10-install-packages` + `12-tailscale` + `13-docker` scripts (auto, on apply) |
+| Vendored DMG apps — no brew cask, no MAS (e.g. Astro, Pen) | `packages.yaml` → `darwin.custom_apps` | `11-install-extra-apps` script (auto, on apply)                               |
+| Cross-platform CLIs, runtimes, global npm tools            | `home/dot_config/mise/config.toml`     | `mise install` (auto, on apply)                                               |
+| tmux plugins (8 via tpm; tpm itself an external)           | tmux.conf `@plugin` lines              | `20-install-tmux-plugins` script (auto, on apply)                             |
 
 - **Add:** one commented line in the right manifest → `chezmoi apply` installs it.
 - **Remove:** delete the line → `chezmoi apply`, then uninstall from the OS

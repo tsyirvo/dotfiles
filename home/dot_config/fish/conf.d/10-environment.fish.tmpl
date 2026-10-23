@@ -14,6 +14,10 @@ set -gx ANDROID_HOME "$HOME/Library/Android/sdk"
 set -gx ANDROID_SDK_ROOT "$ANDROID_HOME"
 set -gx ANDROID_AVD_HOME "$HOME/.android/avd"
 fish_add_path --path "$ANDROID_HOME/platform-tools" "$ANDROID_HOME/emulator"
+# libpq is keg-only in Homebrew → psql / pg_dump aren't linked into the prefix
+if set -q HOMEBREW_PREFIX
+    fish_add_path --path "$HOMEBREW_PREFIX/opt/libpq/bin"
+end
 set -gx EDITOR zed
 {{- else }}
 set -gx EDITOR vi
