@@ -72,11 +72,10 @@ packages:
       # Mobile dev tools
       - android-studio # Android IDE
       - genymotion # Android emulator
-      - android-platform-tools # adb/fastboot
-      - proxyman # http debug proxy
       - xcodes # Manage Xcode versions
       # Dev tools
       - ngrok # ngrok (authtoken out-of-band)
+      - proxyman # http debug proxy-
       - orbstack # docker engine + linux VMs
       - gitkraken # git GUI
       - postman # api client
@@ -116,32 +115,30 @@ packages:
       - claude # Claude desktop
       - chatgpt # ChatGPT desktop
       - factory # factory.ai
-      - droid # Droid CLI
       - codexbar # AI sub usage
       # Keyboards & Peripherals
       - logi-options-plus
       - logitech-g-hub
-      - via # keyboard configurator
       - homerow # keyboard shortcuts
       - hyperkey # ctrl/cmd remap
       # 3D Tooling
       - bambu-studio # 3D printer suite
       # Security
-      - oversight
-      - taskexplorer
-      - knockknock
+      # - oversight
+      # - taskexplorer
+      # - knockknock
       # Misc
-      - macdown # markdown editor
+      - macdown-3000 # markdown editor
       - carbon-copy-cloner # backup
       - rocket # emoji picker
       - tailscale-app # tailnet client — GUI app bundles the CLI, symlinked by 12-tailscale
       - coconutbattery
       - aldente # battery charge limiter
       - istat-menus
-      - latest # app upgrader
       - raycast # launcher
       - nikitabobko/tap/aerospace # tiling WM (tap also declared above)
       - the-unarchiver
+      - macpacker
       - cleanshot # screenshot tool
       - lookaway # eye break reminder
       - flux-app # screen warmth
@@ -149,11 +146,6 @@ packages:
       - clop # clipboard/compression
       - pika # color picker
       - voiceink # voice input
-      # Quicklook
-      - qlcolorcode
-      - qlmarkdown
-      - quicklook-csv
-      - qlvideo
 
     ## Fonts (casks, MacBook only; Linux uses the shared installer below)
     fonts_casks:

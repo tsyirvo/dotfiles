@@ -2,6 +2,9 @@ set -gx BAT_THEME "Catppuccin Mocha"
 set -gx EZA_CONFIG_DIR "$HOME/.config/eza"
 fish_add_path --path "$HOME/bin" "$HOME/.local/bin"
 
+set -gx PI_WAKATIME_CLI "$HOME/.local/share/mise/installs/aqua-wakatime-wakatime-cli/latest/wakatime-cli"
+set -gx PI_WAKATIME_ENABLED 1
+
 {{- if .isDarwin }}
 set -gx HOMEBREW_NO_AUTO_UPDATE 1
 set -gx PNPM_HOME "$HOME/Library/pnpm"
