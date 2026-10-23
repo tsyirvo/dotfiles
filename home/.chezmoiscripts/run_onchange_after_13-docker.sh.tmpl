@@ -42,8 +42,9 @@ if ! id -nG "$user" | tr ' ' '\n' | grep -qx docker; then
   echo "           run \`tmux kill-server\`, restart herdr, and reconnect — or just reboot" >&2
 fi
 
-# sanity check with the group applied (works before any re-login)
-if [ -d /run/systemd/system ] && ! sg docker -c 'docker info' >/dev/null 2>&1; then
+# sanity check with the group applied (works before any re-login): sudo -u re-reads
+# /etc/group for the target user — `sg` isn't shipped on every Debian/Ubuntu image
+if [ -d /run/systemd/system ] && ! sudo -u "$user" docker info >/dev/null; then
   echo "13-docker: \`docker info\` failed as $user via the docker group" >&2
   exit 1
 fi
