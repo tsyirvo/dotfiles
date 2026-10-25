@@ -4,11 +4,11 @@ Personal dotfiles managed with [chezmoi](https://www.chezmoi.io). One repository
 
 ## Machine classes
 
-| Class           | OS                                 | role      | Packages from                                                      |
-| --------------- | ---------------------------------- | --------- | ------------------------------------------------------------------ |
-| MacBook Pro     | macOS (Apple Silicon)              | `macbook` | Homebrew (+ casks, + Mac App Store, + Nerd Fonts, + vendored DMGs) |
-| Omarchy desktop | Arch Linux + Hyprland              | `omarchy` | pacman + Omarchy's built-in package manager; shared Nerd Font      |
-| Dev box         | Debian/Ubuntu, headless (VM / VPS) | `devbox`  | apt + mise for modern CLIs; shared Nerd Font; `bat`/`fd` symlinks  |
+| Class           | OS                                 | role      | Packages from                                                                                    |
+| --------------- | ---------------------------------- | --------- | ------------------------------------------------------------------------------------------------ |
+| MacBook Pro     | macOS (Apple Silicon)              | `macbook` | Homebrew (+ casks, + Mac App Store, + Nerd Fonts, + vendored DMGs)                               |
+| Omarchy desktop | Arch Linux + Hyprland              | `omarchy` | pacman + Omarchy's built-in package manager; shared Nerd Font; systemd user env (mise shims)     |
+| Dev box         | Debian/Ubuntu, headless (VM / VPS) | `devbox`  | apt + mise for modern CLIs; shared Nerd Font; `bat`/`fd` symlinks; systemd user env (mise shims) |
 
 Routing per class (which config is installed where) lives in `home/.chezmoiignore` — **keep this
 table in sync with it** (same commit).

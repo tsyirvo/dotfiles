@@ -5,6 +5,11 @@
 Include ~/.orbstack/ssh/config
 
 {{ end -}}
+{{ if .isLinux -}}
+Host *
+  AddKeysToAgent yes
+
+{{ end -}}
 Host github.com
   AddKeysToAgent yes
 {{- if .isDarwin }}

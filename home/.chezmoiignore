@@ -21,6 +21,11 @@ Library
 .Brewfile
 {{ end }}
 
+# ---- Linux-only: systemd user env (mise shims on PATH for user services) -----
+{{ if .isDarwin }}
+.config/environment.d/***
+{{ end }}
+
 # ---- Debian renames bat/fd → shims in ~/.local/bin, dev boxes only ------------
 {{ if not .isDevbox }}
 .local/bin/bat

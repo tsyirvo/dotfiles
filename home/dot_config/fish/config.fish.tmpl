@@ -2,3 +2,16 @@
 if status is-interactive
     set fish_greeting
 end
+{{- if .isLinux }}
+
+if not set -q XDG_RUNTIME_DIR
+    set -gx XDG_RUNTIME_DIR /run/user/(id -u)
+end
+
+# Prefer a forwarded agent from the Mac, else the local one
+if not set -q SSH_AUTH_SOCK; or not test -S "$SSH_AUTH_SOCK"
+    if test -S $XDG_RUNTIME_DIR/openssh_agent
+        set -gx SSH_AUTH_SOCK $XDG_RUNTIME_DIR/openssh_agent
+    end
+end
+{{- end }}
