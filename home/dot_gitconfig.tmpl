@@ -40,6 +40,10 @@
 	default = matching
   followTags = true
 
+# Clone/fetch GitHub over HTTPS (works before an SSH key exists), push over SSH
+[url "git@github.com:"]
+	pushInsteadOf = https://github.com/
+
 [pull]
 	rebase = false
 
