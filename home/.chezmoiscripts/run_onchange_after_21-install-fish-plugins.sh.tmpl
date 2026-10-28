@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -euo pipefail
+# Reconcile Fisher plugins after chezmoi has applied the manifest.
+# fish_plugins: {{ include "dot_config/fish/fish_plugins" | sha256sum }}
+export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
+command -v fish >/dev/null 2>&1 || { echo "21-fish-plugins: fish is required — re-run chezmoi apply after installing packages" >&2; exit 1; }
+
+config_dir="${XDG_CONFIG_HOME:-$HOME/.config}/fish"
+tmp="$(mktemp -d)"
+trap 'rm -rf "$tmp"' EXIT
+cp "$config_dir/fish_plugins" "$tmp/fish_plugins"
+curl -fsSL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish \
+  -o "$tmp/fisher.fish"
+
+# Use noninteractive Fish, but not --no-config: Fisher needs persistent universal
+# variables to track installed files for future updates/removals.
+# Fisher can report success after a partial download and rewrite fish_plugins to
+# omit failed installs. Preserve the desired list and fail so chezmoi retries.
+# shellcheck disable=SC2016 # $argv belongs to Fish, not bash.
+if fish -c 'source "$argv[1]"; and fisher update' "$tmp/fisher.fish" </dev/null \
+  && cmp -s "$tmp/fish_plugins" "$config_dir/fish_plugins"; then
+  echo "21-fish-plugins: Fisher plugins installed"
+else
+  cp "$tmp/fish_plugins" "$config_dir/fish_plugins"
+  echo "21-fish-plugins: installation incomplete — re-run chezmoi apply to retry" >&2
+  exit 1
+fi

@@ -47,6 +47,10 @@ su - test -c "DOTFILES_ROLE=$ROLE sh -c \"\$(curl -fsLS get.chezmoi.io)\" -- ini
 su - test -s /bin/bash -c '
   export PATH="$HOME/bin:$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
   command -v fish >/dev/null || { echo "FAIL: fish missing"; exit 1; }
+  fish -c "type -q fisher _autopair_insert_left" || { echo "FAIL: Fisher/autopair missing"; exit 1; }
+  fish -c "fisher list" | sort | diff - <(sort "$HOME/.config/fish/fish_plugins") || { echo "FAIL: Fisher installation state missing"; exit 1; }
+  test -f "$HOME/.config/fish/themes/catppuccin-mocha.theme" || { echo "FAIL: Catppuccin theme missing"; exit 1; }
+  chezmoi --source=/dotfiles verify "$HOME/.config/fish/fish_plugins" || { echo "FAIL: Fish plugin manifest drifted"; exit 1; }
   # debian ships batcat/fdfind; the devbox ~/.local/bin symlinks must restore bat/fd
   command -v bat >/dev/null || { echo "FAIL: bat missing"; exit 1; }
   command -v fd >/dev/null || { echo "FAIL: fd missing"; exit 1; }
