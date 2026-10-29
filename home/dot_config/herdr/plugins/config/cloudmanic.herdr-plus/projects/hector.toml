@@ -1,6 +1,6 @@
 name = "Hector"
 description = "The main Hector repository"
-working_dir = "/Users/tsyirvo/projects/clients/frontend"
+working_dir = "~/projects/clients/frontend" # ~ and $VARS expand (herdr-plus)
 
 [[tabs]]
 name = "agent"

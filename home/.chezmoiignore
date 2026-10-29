@@ -11,6 +11,10 @@ Library
 .config/herdr/herdr-server.log
 .config/herdr/session.json
 .config/herdr/release-notes.json
+.config/herdr/.plugins.lock
+.config/herdr/plugins.json
+.config/herdr/plugins/.locks/**
+.config/herdr/plugins/github/**
 .config/hunk/state.json
 .config/worktrunk/approvals.toml*
 .config/zed/prompts/**

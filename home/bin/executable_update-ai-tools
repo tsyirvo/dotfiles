@@ -4,6 +4,7 @@
 #
 #   brew casks    : claude, codex, factory, conductor, codexbar, droid
 #   mise tools    : claude-code, herdr, rtk
+#   herdr plugins : herdr plugin update
 #   native CLIs   : claude (Claude Code), droid (Factory) — self-update
 #   pi            : pi-update (mise executable + optional pi-harness SDK sync)
 #
@@ -54,6 +55,15 @@ for tool in claude-code herdr rtk; do
         skip "$tool (not installed by mise)"
     fi
 done
+
+# --- herdr plugins (installed by .chezmoiscripts 22-install-herdr-plugins) ----
+if command -v herdr >/dev/null 2>&1; then
+    header "Updating herdr plugins"
+    herdr plugin update --yes
+    ok "herdr plugins up to date"
+else
+    skip "herdr plugins (herdr not installed)"
+fi
 
 # --- native self-updating CLIs ----------------------------------------------
 # Claude Code installs itself to ~/.local/bin unless managed by mise or Homebrew.

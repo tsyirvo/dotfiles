@@ -56,6 +56,8 @@ su - test -s /bin/bash -c '
   command -v fd >/dev/null || { echo "FAIL: fd missing"; exit 1; }
   command -v mise >/dev/null || { echo "FAIL: mise missing"; exit 1; }
   fish -ic "type -q starship eza zoxide atuin claude sesh tv wt tuicr doppler btop herdr rtk sshs yazi difft gh hk lazygit gitleaks supabase ctop" || { echo "FAIL: coding tools missing"; exit 1; }
+  herdr_plugins="$(fish -ic "herdr plugin list")"
+  grep -Fqw cloudmanic.herdr-plus <<<"$herdr_plugins" && grep -Fqw worktrunk <<<"$herdr_plugins" || { echo "FAIL: herdr plugins missing"; exit 1; }
   test -x "$HOME/.config/git/hooks/pre-commit" || { echo "FAIL: gitleaks hook missing"; exit 1; }
   chezmoi --source=/dotfiles doctor >/dev/null || { echo "FAIL: chezmoi doctor"; exit 1; }
   echo OK
