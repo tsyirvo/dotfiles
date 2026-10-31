@@ -18,7 +18,10 @@ mkdir -p "$state_dir"
 
 # install_custom_app <slug> <app_path> <pinned_version> <url> <url_arm64> <url_x86_64>
 #   url_arm64 / url_x86_64 override `url` on the matching arch ('' = use `url`).
-install_custom_app() {
+# The body is a SUBSHELL `( … )`, not `{ … }`: `exit` then ends only this app's
+# install (the next app still runs), and the EXIT trap fires when this app is done,
+# while its locals ($mount, $tmp) are still set — required under `set -u`.
+install_custom_app() (
   # shellcheck disable=SC2034 # per-arch: the other arch's URL var is unused by design
   local slug="$1" app_path="$2" pinned="$3" url="$4" url_arm64="$5" url_x86_64="$6"
   local marker="$state_dir/$slug.version" installed="" tmp="" mount="" dmg=""
@@ -33,7 +36,7 @@ install_custom_app() {
   installed="$(cat "$marker" 2>/dev/null || true)"
   # Already there and (unpinned, or pinned to exactly what's on disk) → done.
   if [ -d "$app_path" ] && { [ -z "$pinned" ] || [ "$installed" = "$pinned" ]; }; then
-    return 0
+    exit 0
   fi
 
   echo "11-install-extra-apps: installing $slug → $app_path"
@@ -79,7 +82,7 @@ install_custom_app() {
   fi
   printf '%s\n' "$resolved" > "$marker"
   echo "11-install-extra-apps: $slug installed (${resolved:-version unknown})"
-}
+)
 
 fail=0
 {{ range $slug, $cfg := .packages.darwin.custom_apps -}}
