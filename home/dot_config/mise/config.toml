@@ -1,4 +1,5 @@
 [tools]
+chezmoi = "latest" # the get.chezmoi.io bootstrap binary lands in ./bin, off PATH
 java = "17"
 node = "26"
 python = "3"

@@ -24,7 +24,7 @@ packages:
       # Terminal tools
       - fish # shell
       - tmux # terminal multiplexer
-      - mobile-shell # mosh — resilient remote terminal
+      - mosh # resilient remote terminal
       - bat # cat clone
       - ack # grep replacement (from Brewfile)
       - fd # find replacement
@@ -42,7 +42,6 @@ packages:
       - maven # JVM build tool
       - scrcpy # Android mirroring
       - fastlane # mobile CI/release
-      - expo-orbit # Expo dev tooling
       # Dev tools
       - mise # runtime/env manager (node, python, java…)
       - docker # docker CLI (orbstack cask provides engine)
@@ -55,7 +54,6 @@ packages:
       - mole # Mole — local ORM (dev tool)
       - terminal-notifier # finish-notify for long tasks
       - mactop # mac silicon stats (macOS only)
-      - thaw # menu bar cleaner
       # AI
       - mlx # Apple silicon ML libs
 
@@ -73,6 +71,7 @@ packages:
       - android-studio # Android IDE
       - genymotion # Android emulator
       - xcodes # Manage Xcode versions
+      - expo-orbit # Expo dev tooling
       # Dev tools
       - ngrok # ngrok (authtoken out-of-band)
       - proxyman # http debug proxy-
@@ -135,6 +134,7 @@ packages:
       - aldente # battery charge limiter
       - istat-menus
       - raycast # launcher
+      - thaw # menu bar cleaner
       - nikitabobko/tap/aerospace # tiling WM (tap also declared above)
       - the-unarchiver
       - macpacker
