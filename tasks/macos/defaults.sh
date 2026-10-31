@@ -3,19 +3,28 @@
 # macOS user defaults
 # Re-run manually any time: mise run macos
 # Some changes need a logout/restart to take effect.
-set -euo pipefail
+#
+# Best-effort by design: every line is an independent setting, and macOS keeps
+# changing which ones are allowed (spctl, pmset keys…). No `set -e` — a failing
+# setting is reported (line + command) and the rest still apply. The summary at
+# the end lists failures; exit stays 0 so a single stale key can't block
+# `chezmoi apply` forever (this runs from a run_once_ script).
+set -uo pipefail
+failures=()
+trap 'failures+=("line $LINENO: $BASH_COMMAND")' ERR
 
-## preflight — sudo + sanity guard -------------------------------------------
+## preflight — sudo ------------------------------------------------------------
 sudo -v || { echo "defaults: sudo required" >&2; exit 1; }
-defaults read NSGlobalDomain AppleShowScrollBars >/dev/null 2>&1 \
-  || echo "defaults: NSGlobalDomain not readable yet (first run?)"
 
 ## General — NSGlobalDomain survivors -----------------------------------------
 # SSH identities → Keychain is handled by ~/.ssh/config (AddKeysToAgent + UseKeychain),
 # not here: keys don't exist yet on a fresh Mac, and sudo strips SSH_AUTH_SOCK.
 
-# Disable Gatekeeper (install apps from anywhere)
-sudo spctl --master-disable
+# Disable Gatekeeper (install apps from anywhere). Since macOS 15 this only
+# UNLOCKS the "Anywhere" option and exits 1; selecting it is a manual step.
+if ! sudo spctl --master-disable >/dev/null 2>&1; then
+  echo "defaults: Gatekeeper — finish manually: System Settings → Privacy & Security → Allow applications from → Anywhere"
+fi
 
 # Mute the startup chime
 sudo nvram StartupMute=%01
@@ -290,4 +299,9 @@ defaults write com.apple.dt.Xcode ShowBuildOperationDuration -bool true
 
 ## Apply -----------------------------------------------------------------------
 killall Dock Finder SystemUIServer >/dev/null 2>&1 || true
+
+if [ "${#failures[@]}" -gt 0 ]; then
+  echo "defaults: ${#failures[@]} setting(s) failed and were skipped:" >&2
+  printf '  - %s\n' "${failures[@]}" >&2
+fi
 echo "macOS defaults applied — some changes require a logout/restart."
