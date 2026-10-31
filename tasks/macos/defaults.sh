@@ -109,9 +109,11 @@ defaults write com.apple.dock launchanim -bool false
 # Faster Mission Control animation
 defaults write com.apple.dock expose-animation-duration -float 0.1
 ## Mission Control / Spaces — AeroSpace owns window + workspace management ------
-# Group windows by app in Mission Control: AeroSpace recommends this, otherwise
-# its windows (parked off-screen) show up as tiny tiles.
-defaults write com.apple.dock expose-group-apps -bool true
+# "Group windows by application" off (matches the main Mac; AeroSpace's docs
+# suggest on, but Mission Control isn't used here anyway)
+defaults write com.apple.dock expose-group-apps -bool false
+# "Drag windows to top of screen to enter Mission Control" off
+defaults write com.apple.dock enterMissionControlByTopWindowDrag -bool false
 # Never rearrange Spaces by most recent use
 defaults write com.apple.dock mru-spaces -bool false
 # Don't jump to another Space when activating an app
@@ -163,9 +165,13 @@ defaults write com.apple.finder QuitMenuItem -bool true
 # No window/Get Info animations
 defaults write com.apple.finder DisableAllAnimations -bool true
 
-# Default Finder window = Desktop
-defaults write com.apple.finder NewWindowTarget -string "PfDe"
-defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/"
+# New Finder windows open in Downloads (PfLo = "Other…" location + path)
+defaults write com.apple.finder NewWindowTarget -string "PfLo"
+defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/Downloads/"
+
+# Sidebar: no Tags section. (Recents / Shared / This Mac live in protected
+# sharedfilelist .sfl files, not defaults — see the manual reminder at the end.)
+defaults write com.apple.finder ShowRecentTags -bool false
 
 # Desktop stays empty: no drives / servers / removable media icons
 defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool false
@@ -302,13 +308,16 @@ disable_hotkey 79 65535 123 8650752    # Move left a Space           ⌃←
 disable_hotkey 81 65535 124 8650752    # Move right a Space          ⌃→
 # Apply without logging out
 /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
-# systemsetup needs admin, always exits 0 and logs a harmless "Error:-99" on recent
-# macOS — so silence it and check the result instead.
-sudo systemsetup -settimezone "Europe/Paris" >/dev/null 2>&1
-case "$(readlink /etc/localtime)" in
-  */Europe/Paris) ;;
-  *) failures+=("timezone not set to Europe/Paris (is: $(readlink /etc/localtime))") ;;
-esac
+# Timezone: read it via systemsetup (/etc/localtime isn't reliably a symlink), and
+# only set it when it differs. systemsetup needs admin and logs a harmless
+# "Error:-99" on recent macOS, so its output is silenced and the result re-read.
+tz_wanted="Europe/Paris"
+get_tz() { sudo systemsetup -gettimezone 2>/dev/null | sed -n 's/^Time Zone: //p' || true; }
+if [ "$(get_tz)" != "$tz_wanted" ]; then
+  sudo systemsetup -settimezone "$tz_wanted" >/dev/null 2>&1 || true
+  tz_now="$(get_tz)"
+  [ "$tz_now" = "$tz_wanted" ] || failures+=("timezone is '${tz_now:-unknown}', wanted $tz_wanted")
+fi
 
 ## Screen & Screen Saver -------------------------------------------------------
 # Require password immediately after sleep/screensaver
@@ -394,6 +403,7 @@ defaults write com.apple.dt.Xcode ShowBuildOperationDuration -bool true
 killall Dock Finder SystemUIServer ControlCenter >/dev/null 2>&1 || true
 
 # Not scriptable (no stable defaults key; the setting lives in a protected store):
+echo "defaults: Finder sidebar — set manually: Finder → Settings → Sidebar → uncheck Recents + Shared, check your Mac under Locations"
 echo "defaults: AutoFill — turn off manually: System Settings → General → AutoFill & Passwords → AutoFill Passwords and Passkeys (keep Dashlane on)"
 
 if [ "${#failures[@]}" -gt 0 ]; then
