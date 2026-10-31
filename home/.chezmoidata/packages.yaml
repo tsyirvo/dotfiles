@@ -57,7 +57,6 @@ packages:
       - mactop # mac silicon stats (macOS only)
       - thaw # menu bar cleaner
       # AI
-      - ollama # local LLM runtime
       - mlx # Apple silicon ML libs
 
     ## Casks — GUI apps (MacBook only)
@@ -111,7 +110,6 @@ packages:
       - reflex-app
       - soulseek
       - calibre # ebook manager
-      - brainfm # focus music
       # AI
       - claude # Claude desktop
       - chatgpt # ChatGPT desktop
@@ -178,12 +176,6 @@ packages:
         version: ""
         url: https://github.com/matteospada/astro/releases/latest/download/Astro.dmg
         url_arm64: ""
-        url_x86_64: ""
-      pen: # pen.dev (arch-specific DMGs)
-        app: /Applications/Pen.app
-        version: ""
-        url: https://pen.dev/download/Pen-mac-x64.dmg
-        url_arm64: https://pen.dev/download/Pen-mac-arm64.dmg
         url_x86_64: ""
 
   # ---------------------------------------------------------------------------
