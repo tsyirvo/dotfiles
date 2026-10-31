@@ -11,6 +11,7 @@ export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
 # Re-runs when contents change:
 #   packages.yaml:   {{ include ".chezmoidata/packages.yaml" | sha256sum }}
 #   mise config:     {{ include "dot_config/mise/config.toml" | sha256sum }}
+#   Brewfile:        {{ include "dot_Brewfile.tmpl" | sha256sum }}
 {{ if .isDarwin -}}
 find_brew() {
   if command -v brew >/dev/null 2>&1; then
