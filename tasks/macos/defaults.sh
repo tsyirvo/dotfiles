@@ -55,8 +55,9 @@ defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
 # Disable the “Are you sure you want to open this application?” dialog
 defaults write com.apple.LaunchServices LSQuarantine -bool false
 
-# Rebuild the Open-With menu (dedupe)
-/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user
+# Dedupe the Open-With menu: garbage-collect stale Launch Services entries
+# (`-kill` and `-domain` were removed from lsregister in recent macOS)
+/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -gc
 
 # Show ASCII control characters in caret notation
 defaults write NSGlobalDomain NSTextShowsControlCharacters -bool true
@@ -216,7 +217,13 @@ defaults write NSGlobalDomain AppleLanguages -array "en"
 defaults write NSGlobalDomain AppleLocale -string "en_US@currency=EUR"
 defaults write NSGlobalDomain AppleMeasurementUnits -string "Centimeters"
 defaults write NSGlobalDomain AppleMetricUnits -bool true
-sudo systemsetup -settimezone "Europe/Paris" > /dev/null  # needs admin; exits 0 even when it refuses
+# systemsetup needs admin, always exits 0 and logs a harmless "Error:-99" on recent
+# macOS — so silence it and check the result instead.
+sudo systemsetup -settimezone "Europe/Paris" >/dev/null 2>&1
+case "$(readlink /etc/localtime)" in
+  */Europe/Paris) ;;
+  *) failures+=("timezone not set to Europe/Paris (is: $(readlink /etc/localtime))") ;;
+esac
 
 ## Screen & Screen Saver -------------------------------------------------------
 # Require password immediately after sleep/screensaver
@@ -239,8 +246,9 @@ sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutio
 ## Energy — pmset, active settings only ----------------------------------------
 sudo pmset -a lidwake 1
 sudo pmset -a autorestart 1
-sudo pmset -a displaysleep 60        # display after 60 min
-sudo pmset -b sleep 20               # machine on battery: 20 min
+sudo pmset -c displaysleep 60        # on power: display after 60 min
+sudo pmset -b displaysleep 15        # on battery: display must sleep BEFORE the machine
+sudo pmset -b sleep 20               # on battery: machine after 20 min
 sudo pmset -a standbydelay 86400     # standby after 24h
 sudo pmset proximitywake 0           # no wake from iPhone/Watch
 
