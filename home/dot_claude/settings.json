@@ -1,8 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "env": {
-    "CLAUDE_CODE_SUBAGENT_MODEL": "sonnet",
-    "CLAUDE_CODE_DISABLE_TERMINAL_TITLE": "1"
+    "CLAUDE_CODE_SUBAGENT_MODEL": "sonnet"
   },
   "attribution": {
     "commit": "",
@@ -101,6 +100,15 @@
             "type": "command",
             "command": "bash \"$HOME/.claude/hooks/herdr-agent-state.sh\" session",
             "timeout": 10
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/bin/sh -c 'rex __internal session-start --agent claude 2>/dev/null || true'",
+            "timeout": 5
           }
         ]
       }
