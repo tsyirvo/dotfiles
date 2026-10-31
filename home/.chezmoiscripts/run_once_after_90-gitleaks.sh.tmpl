@@ -3,8 +3,10 @@ set -euo pipefail
 # run_once_after_ — gitleaks pre-commit hook (protect --staged).
 export PATH="$HOME/.local/bin:$HOME/.local/share/mise/shims:/opt/homebrew/bin:/usr/local/bin:$PATH"
 if ! command -v gitleaks >/dev/null 2>&1; then
-  echo "90-gitleaks: gitleaks not installed yet — will run after 10-install-packages" >&2
-  exit 0
+  # Exit non-zero: a run_once_ script that exits 0 is recorded as done and never
+  # re-runs, which would leave the hook missing for good. Failing retries next apply.
+  echo "90-gitleaks: gitleaks not on PATH (10-install-packages / mise install failed?) — retrying next apply" >&2
+  exit 1
 fi
 HOOKS_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/git/hooks"
 mkdir -p "$HOOKS_DIR"
