@@ -38,7 +38,7 @@ if [ -z "$brew_bin" ]; then
   exit 1
 fi
 eval "$("$brew_bin" shellenv)"
-brew bundle --file="${HOME}/.Brewfile" --no-lock
+brew bundle --file="${HOME}/.Brewfile"
 
 {{ else if eq .osID "linux-arch" -}}
 sudo pacman -S --needed --noconfirm {{ range .packages.arch.pacman }}{{ . }} {{ end }}

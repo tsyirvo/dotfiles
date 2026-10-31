@@ -16,7 +16,16 @@ table in sync with it** (same commit).
 ## Install on a new machine
 
 OS packages come from `home/.chezmoidata/packages.yaml`; cross-platform CLI tools, runtimes,
-and global npm tools from `home/dot_config/mise/config.toml`. A fresh machine gets both automatically:
+and global npm tools from `home/dot_config/mise/config.toml`. A fresh machine gets both automatically.
+
+On macOS, first install the Xcode Command Line Tools and wait for them to finish. A fresh Mac
+ships only a `git` stub that opens an installer dialog, and chezmoi needs a real `git` to clone:
+
+```bash
+xcode-select --install
+```
+
+Then run:
 
 ```bash
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply tsyirvo
