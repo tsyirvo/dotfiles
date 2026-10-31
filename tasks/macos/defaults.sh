@@ -11,8 +11,8 @@ defaults read NSGlobalDomain AppleShowScrollBars >/dev/null 2>&1 \
   || echo "defaults: NSGlobalDomain not readable yet (first run?)"
 
 ## General — NSGlobalDomain survivors -----------------------------------------
-# Store SSH identities in the Keychain
-sudo ssh-add --apple-use-keychain
+# SSH identities → Keychain is handled by ~/.ssh/config (AddKeysToAgent + UseKeychain),
+# not here: keys don't exist yet on a fresh Mac, and sudo strips SSH_AUTH_SOCK.
 
 # Disable Gatekeeper (install apps from anywhere)
 sudo spctl --master-disable
@@ -207,7 +207,7 @@ defaults write NSGlobalDomain AppleLanguages -array "en"
 defaults write NSGlobalDomain AppleLocale -string "en_US@currency=EUR"
 defaults write NSGlobalDomain AppleMeasurementUnits -string "Centimeters"
 defaults write NSGlobalDomain AppleMetricUnits -bool true
-systemsetup -settimezone "Europe/Paris" > /dev/null
+sudo systemsetup -settimezone "Europe/Paris" > /dev/null  # needs admin; exits 0 even when it refuses
 
 ## Screen & Screen Saver -------------------------------------------------------
 # Require password immediately after sleep/screensaver
@@ -261,7 +261,7 @@ defaults write com.apple.spotlight orderedItems -array \
 	'{"enabled" = 0;"name" = "MENU_SPOTLIGHT_SUGGESTIONS";}'
 
 # Rebuild the index so the new rules take effect
-killall mds > /dev/null 2>&1
+sudo killall mds > /dev/null 2>&1 || true  # mds runs as root; launchd restarts it
 sudo mdutil -i on / > /dev/null
 sudo mdutil -E / > /dev/null
 
