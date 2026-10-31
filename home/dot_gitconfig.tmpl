@@ -37,12 +37,16 @@
 	difftool = true
 
 [push]
-	default = matching
+	default = simple
   followTags = true
 
 # Clone/fetch GitHub over HTTPS (works before an SSH key exists), push over SSH
 [url "git@github.com:"]
 	pushInsteadOf = https://github.com/
+
+[fetch]
+	# Drop remote-tracking refs for branches deleted on the remote
+	prune = true
 
 [pull]
 	rebase = false
@@ -51,7 +55,7 @@
 	whitespace = fix
 
 [init]
-  defaultBranch = master
+  defaultBranch = main
 
 [filter "lfs"]
 	required = true
@@ -61,6 +65,9 @@
 
 [alias]
 	upsync = "!f() { git pull origin \"$(git symbolic-ref --short HEAD)\" && git pull origin main; }; f"
+	# Delete local branches whose upstream was deleted (merged PRs). -D because
+	# squash merges never look merged to Git. -r: no-op when nothing is gone.
+	gone = "!git fetch --prune && git for-each-ref --format='%(if:equals=[gone])%(upstream:track)%(then)%(refname:short)%(end)' refs/heads | grep . | xargs -r git branch -D"
 
 # Machine-local, unmanaged: signing keys, gpg/commit settings, anything that
 # differs per box. Write there with `git config --file ~/.gitconfig.local …`
