@@ -26,6 +26,13 @@ if ! sudo spctl --master-disable >/dev/null 2>&1; then
   echo "defaults: Gatekeeper — finish manually: System Settings → Privacy & Security → Allow applications from → Anywhere"
 fi
 
+# Application firewall on (System Settings → Network → Firewall), then verify:
+# a firewall that silently stays off must show up in the failure summary.
+fw=/usr/libexec/ApplicationFirewall/socketfilterfw
+sudo "$fw" --setglobalstate on >/dev/null
+"$fw" --getglobalstate | grep -q "enabled" \
+  || failures+=("firewall still disabled: $("$fw" --getglobalstate)")
+
 # Mute the startup chime
 sudo nvram StartupMute=%01
 
@@ -101,8 +108,16 @@ defaults write com.apple.dock hide-mirror -bool true
 defaults write com.apple.dock launchanim -bool false
 # Faster Mission Control animation
 defaults write com.apple.dock expose-animation-duration -float 0.1
-# Don't group windows by app (old Exposé behavior)
-defaults write com.apple.dock expose-group-by-app -bool false
+## Mission Control / Spaces — AeroSpace owns window + workspace management ------
+# Group windows by app in Mission Control: AeroSpace recommends this, otherwise
+# its windows (parked off-screen) show up as tiny tiles.
+defaults write com.apple.dock expose-group-apps -bool true
+# Never rearrange Spaces by most recent use
+defaults write com.apple.dock mru-spaces -bool false
+# Don't jump to another Space when activating an app
+defaults write NSGlobalDomain AppleSpacesSwitchOnActivate -bool false
+# One Space across all displays (AeroSpace: more stable; needs logout)
+defaults write com.apple.spaces spans-displays -bool true
 
 # Auto-hide: instant + fast
 defaults write com.apple.dock autohide-delay -float 0
@@ -113,8 +128,24 @@ defaults write com.apple.dock showhidden -bool true
 # No recent applications in Dock
 defaults write com.apple.dock show-recents -bool false
 
-# Status-bar clock format
-defaults write com.apple.menuextra.clock DateFormat -string "EEE d MMM HH:mm:ss"
+## Menu bar ---------------------------------------------------------------------
+# Clock: day of week + 24-hour time with seconds (date only when space allows).
+# The old DateFormat string is ignored by recent macOS; these booleans replaced it.
+defaults write com.apple.menuextra.clock ShowDayOfWeek -bool true
+defaults write com.apple.menuextra.clock ShowDate -int 0      # 0 = when space allows · 1 = always · 2 = never
+defaults write com.apple.menuextra.clock Show24Hour -bool true
+defaults write com.apple.menuextra.clock ShowSeconds -bool true
+
+# Control Center items (per-Mac → -currentHost). Values: 8 = hidden ·
+# 2 = shown · 18 = always shown. VisibleCC mirrors the toggle in Settings.
+defaults -currentHost write com.apple.controlcenter Bluetooth -int 18
+defaults write com.apple.controlcenter "NSStatusItem VisibleCC Bluetooth" -bool true
+defaults -currentHost write com.apple.controlcenter Sound -int 18        # always, not only when active
+defaults write com.apple.controlcenter "NSStatusItem VisibleCC Sound" -bool true
+defaults -currentHost write com.apple.controlcenter NowPlaying -int 8
+defaults -currentHost write com.apple.controlcenter Spotlight -int 8
+# Spotlight's magnifier has its own switch (Raycast replaces it)
+defaults -currentHost write com.apple.Spotlight MenuItemHidden -int 1
 
 # Hot corners — all no-op (0)
 defaults write com.apple.dock wvous-tl-corner -int 0
@@ -136,11 +167,11 @@ defaults write com.apple.finder DisableAllAnimations -bool true
 defaults write com.apple.finder NewWindowTarget -string "PfDe"
 defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/"
 
-# Desktop icons: external + mounted servers + removable; hide internal HD
-defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
+# Desktop stays empty: no drives / servers / removable media icons
+defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool false
 defaults write com.apple.finder ShowHardDrivesOnDesktop -bool false
-defaults write com.apple.finder ShowMountedServersOnDesktop -bool true
-defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
+defaults write com.apple.finder ShowMountedServersOnDesktop -bool false
+defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool false
 
 # Show all filename extensions
 defaults write NSGlobalDomain AppleShowAllExtensions -bool true
@@ -190,11 +221,46 @@ defaults write com.apple.finder FXInfoPanesExpanded -dict \
     OpenWith -bool true \
     Privileges -bool true
 
+## Desktop & Dock → Desktop, Stage Manager, Widgets, Windows -------------------
+# (com.apple.WindowManager = the toggles in System Settings → Desktop & Dock)
+# Show Items: hide them on Desktop and in Stage Manager
+defaults write com.apple.WindowManager StandardHideDesktopIcons -bool true
+defaults write com.apple.WindowManager HideDesktop -bool true
+# Show Widgets: neither on Desktop nor in Stage Manager
+defaults write com.apple.WindowManager StandardHideWidgets -bool true
+defaults write com.apple.WindowManager StageManagerHideWidgets -bool true
+# Stage Manager off
+defaults write com.apple.WindowManager GloballyEnabled -bool false
+# Clicking the wallpaper never reveals the desktop
+defaults write com.apple.WindowManager EnableStandardClickToShowDesktop -bool false
+# No native tiling (AeroSpace tiles): edge-drag, top-edge fill, ⌥ accelerator, margins
+defaults write com.apple.WindowManager EnableTilingByEdgeDrag -bool false
+defaults write com.apple.WindowManager EnableTopTilingByEdgeDrag -bool false
+defaults write com.apple.WindowManager EnableTilingOptionAccelerator -bool false
+defaults write com.apple.WindowManager EnableTiledWindowMargins -bool false
+
 ## Trackpad / Mouse / Keyboard — working keys only -----------------------------
-# Tap to click (user + login screen)
-defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+# Built-in trackpad = com.apple.AppleMultitouchTrackpad; Magic Trackpad =
+# com.apple.driver.AppleBluetoothMultitouch.trackpad — every key goes to both.
+trackpads=(com.apple.AppleMultitouchTrackpad com.apple.driver.AppleBluetoothMultitouch.trackpad)
+
+# Tap to click — a light tap instead of a full press (user + login screen)
+for tp in "${trackpads[@]}"; do defaults write "$tp" Clicking -bool true; done
 defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+
+# Three-finger drag (Accessibility → Pointer Control → Trackpad Options).
+# Three-finger swipes must be off, or they'd fight the drag.
+for tp in "${trackpads[@]}"; do
+  defaults write "$tp" TrackpadThreeFingerDrag -bool true
+  defaults write "$tp" TrackpadThreeFingerHorizSwipeGesture -int 0
+  defaults write "$tp" TrackpadThreeFingerVertSwipeGesture -int 0
+  # No four-finger swipes either: Spaces (horizontal) / Mission Control + App Exposé (vertical)
+  defaults write "$tp" TrackpadFourFingerHorizSwipeGesture -int 0
+  defaults write "$tp" TrackpadFourFingerVertSwipeGesture -int 0
+done
+defaults write com.apple.dock showMissionControlGestureEnabled -bool false
+defaults write com.apple.dock showAppExposeGestureEnabled -bool false
 
 # Right-click via two-finger tap
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadRightClick -bool true
@@ -217,6 +283,25 @@ defaults write NSGlobalDomain AppleLanguages -array "en"
 defaults write NSGlobalDomain AppleLocale -string "en_US@currency=EUR"
 defaults write NSGlobalDomain AppleMeasurementUnits -string "Centimeters"
 defaults write NSGlobalDomain AppleMetricUnits -bool true
+# 24-hour time everywhere (en_US would default to 12-hour AM/PM)
+defaults write NSGlobalDomain AppleICUForce24HourTime -bool true
+
+## Keyboard shortcuts — free the ones Raycast / AeroSpace replace ----------------
+# com.apple.symbolichotkeys IDs; the full value is required, enabled = 0 disables.
+# parameters = (ASCII char or 65535, virtual key code, modifier mask)
+#   ctrl = 262144 (+ fn 8388608 on arrow keys), ⌘ = 1048576, ⌥ = 524288
+disable_hotkey() {
+  defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add "$1" \
+    "{ enabled = 0; value = { type = standard; parameters = ($2, $3, $4); }; }"
+}
+disable_hotkey 64 32 49 1048576        # Spotlight search            ⌘Space
+disable_hotkey 65 65535 49 1572864     # Finder search window        ⌥⌘Space
+disable_hotkey 32 65535 126 8650752    # Mission Control             ⌃↑
+disable_hotkey 33 65535 125 8650752    # Application windows         ⌃↓
+disable_hotkey 79 65535 123 8650752    # Move left a Space           ⌃←
+disable_hotkey 81 65535 124 8650752    # Move right a Space          ⌃→
+# Apply without logging out
+/System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
 # systemsetup needs admin, always exits 0 and logs a harmless "Error:-99" on recent
 # macOS — so silence it and check the result instead.
 sudo systemsetup -settimezone "Europe/Paris" >/dev/null 2>&1
@@ -306,7 +391,10 @@ defaults write com.apple.commerce AutoUpdateRestartRequired -bool false
 defaults write com.apple.dt.Xcode ShowBuildOperationDuration -bool true
 
 ## Apply -----------------------------------------------------------------------
-killall Dock Finder SystemUIServer >/dev/null 2>&1 || true
+killall Dock Finder SystemUIServer ControlCenter >/dev/null 2>&1 || true
+
+# Not scriptable (no stable defaults key; the setting lives in a protected store):
+echo "defaults: AutoFill — turn off manually: System Settings → General → AutoFill & Passwords → AutoFill Passwords and Passkeys (keep Dashlane on)"
 
 if [ "${#failures[@]}" -gt 0 ]; then
   echo "defaults: ${#failures[@]} setting(s) failed and were skipped:" >&2
