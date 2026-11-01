@@ -36,7 +36,10 @@ The role (macbook / omarchy / devbox) is inferred from the OS; force it with
 During an interactive install, chezmoi asks once for Git's `user.name` and `user.email` and stores
 those values only in the machine-local chezmoi config. For scripted installs, provide
 `DOTFILES_GIT_NAME` and `DOTFILES_GIT_EMAIL`; when either value is absent, no `[user]` section is
-written to `.gitconfig`. Per-machine Git settings (signing key, `gpg.*`, `commit.gpgsign`) go in the
+written to `.gitconfig`. chezmoi also asks once for your Tailscale tailnet domain (for example
+`tail1234.ts.net`, or `DOTFILES_TAILNET` for scripted installs). The domain is stored only in the
+machine-local chezmoi config and is used to build the Tailscale hosts in `~/.ssh/config`. If you leave it
+blank, those hosts are not written. Per-machine Git settings (signing key, `gpg.*`, `commit.gpgsign`) go in the
 unmanaged `~/.gitconfig.local`, included last — write them with `git config --file ~/.gitconfig.local`,
 never `--global`. On an existing machine, run `chezmoi init` interactively once after pulling
 this change, then run `chezmoi apply`.

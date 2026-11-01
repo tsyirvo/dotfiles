@@ -26,6 +26,12 @@
 {{-   $gitEmail = promptStringOnce . "gitEmail" "Git user.email (leave blank to skip)" "" -}}
 {{- end -}}
 
+{{- /* tailnet MagicDNS suffix (e.g. tail1234.ts.net) — machine-local, never committed */ -}}
+{{- $tailnet := default (default "" (index . "tailnet")) (env "DOTFILES_TAILNET") -}}
+{{- if and (eq $tailnet "") (stdinIsATTY) -}}
+{{-   $tailnet = promptStringOnce . "tailnet" "Tailnet domain, e.g. tail1234.ts.net (leave blank to skip)" "" -}}
+{{- end -}}
+
 [git]
     autoCommit = false
     autoPush = false
@@ -43,6 +49,7 @@
     osID = {{ $osID | quote }}
     gitName = {{ $gitName | quote }}
     gitEmail = {{ $gitEmail | quote }}
+    tailnet = {{ $tailnet | quote }}
 
     # Derived flags — use in templates, never re-derive inline.
     isDarwin  = {{ eq .chezmoi.os "darwin" }}
