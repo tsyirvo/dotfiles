@@ -105,7 +105,7 @@ packages:
       # Mobile dev tools
       - android-studio # Android IDE
       - genymotion # Android emulator
-      - xcodes # Manage Xcode versions
+      - xcodes-app # Manage Xcode versions
       - expo-orbit # Expo dev tooling
       # Dev tools
       - ngrok # ngrok (authtoken out-of-band)
@@ -150,7 +150,7 @@ packages:
       - factory # factory.ai
       - codexbar # AI sub usage
       # Keyboards & Peripherals
-      - logi-options-plus
+      - logi-options+
       - logitech-g-hub
       - homerow # keyboard shortcuts
       - hyperkey # ctrl/cmd remap
