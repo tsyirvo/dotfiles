@@ -7,6 +7,6 @@ require("lanes").setup {
 rex.bind("cmd+alt+n", "lanes_new")
 rex.bind("cmd+alt+backspace", "lanes_remove")
 
--- Floats: ~/.config/rex/floats links to ~/projects/open-source/rex-floats.
--- Each float's key is bound by setup, from floats-config.lua.
-require("floats").setup { floats = require("floats-config") }
+-- Float: ~/.config/rex/float links to ~/projects/open-source/rex-float.
+-- Each float's key is bound by setup, from float-config.lua.
+require("float").setup { floats = require("float-config") }
