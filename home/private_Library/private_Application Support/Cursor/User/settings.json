@@ -1,0 +1,140 @@
+{
+  "editor.formatOnSave": true,
+  "editor.fontFamily": "Fire Code",
+  "editor.fontSize": 12,
+  "editor.minimap.enabled": false,
+  "npm-intellisense.scanDevDependencies": true,
+  "editor.tabSize": 2,
+  "prettier.trailingComma": "es5",
+  "prettier.singleQuote": true,
+  "explorer.autoReveal": true,
+  "editor.multiCursorModifier": "ctrlCmd",
+  "explorer.openEditors.visible": 1,
+  "npm.packageManager": "yarn",
+  "workbench.editor.closeEmptyGroups": false,
+  "breadcrumbs.enabled": true,
+  "terminal.external.osxExec": "Ghostty.app",
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "gitlens.defaultDateFormat": "DD MMMM YYYY h:mma",
+  "gitlens.defaultDateShortFormat": "D MMM YYYY",
+  "[javascript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "editor.tabCompletion": "on",
+  "path-intellisense.autoSlashAfterDirectory": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "files.autoSave": "off",
+  "explorer.compactFolders": false,
+  "workbench.startupEditor": "none",
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "workbench.iconTheme": "catppuccin-mocha",
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "workbench.editor.revealIfOpen": false,
+  "extensions.ignoreRecommendations": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.wordWrap": "on",
+  "wallaby.startAutomatically": false,
+  "i18n-ally.displayLanguage": "en",
+  "security.workspace.trust.untrustedFiles": "open",
+  "javascript.preferences.importModuleSpecifierEnding": "minimal",
+  "typescript.preferences.importModuleSpecifierEnding": "minimal",
+  "editor.formatOnPaste": false,
+  "emmet.showExpandedAbbreviation": "never",
+  "[python]": {
+    "editor.formatOnType": true,
+    "editor.defaultFormatter": "ms-python.autopep8"
+  },
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
+  },
+  "editor.gotoLocation.multipleDefinitions": "goto",
+  "editor.wordBasedSuggestions": "off",
+  "editor.inlineSuggest.enabled": true,
+  "debug.openDebug": "openOnDebugBreak",
+  "debug.internalConsoleOptions": "openOnSessionStart",
+  "[dart]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "editor.rulers": [80],
+    "editor.selectionHighlight": false,
+    "editor.suggestSelection": "first",
+    "editor.tabCompletion": "onlySnippets",
+    "editor.wordBasedSuggestions": "off"
+  },
+  "eslint.probe": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "html",
+    "vue",
+    "markdown",
+    "json"
+  ],
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.patterns": {
+    "pubspec.yaml": "pubspec.lock,pubspec_overrides.yaml,.packages,.flutter-plugins,.flutter-plugins-dependencies,.metadata",
+    "*.dart": "${capture}.g.dart",
+    "*.ts": "${capture}.typegen.ts",
+    "*.tsx": "${capture}.typegen.ts",
+    "*.mts": "${capture}.typegen.ts",
+    "*.cts": "${capture}.typegen.ts"
+  },
+  "git.openRepositoryInParentFolders": "always",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "editor.renderWhitespace": "all",
+  "files.associations": {
+    ".tmux.reset.conf": "bat",
+    ".dev.vars.example": "dotenv",
+    ".env.example": "dotenv"
+  },
+  "redhat.telemetry.enabled": false,
+  "workbench.colorTheme": "Catppuccin Mocha",
+  "cursor.cpp.disabledLanguages": ["plaintext", "markdown", "scminput"],
+  "cursor.composer.shouldChimeAfterChatFinishes": true,
+  "editor.accessibilitySupport": "off",
+  "diffEditor.ignoreTrimWhitespace": true,
+  "[dockercompose]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.autoIndent": "advanced",
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": true
+    },
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "typescript.tsserver.maxTsServerMemory": 4096,
+  "task.allowAutomaticTasks": "off",
+  "gitlens.ai.model": "gitkraken",
+  "gitlens.ai.gitkraken.model": "gemini:gemini-2.0-flash",
+  "workbench.editorAssociations": {
+    "*.svg": "default"
+  },
+  "coderabbit.agentType": "Claude Code",
+  "window.confirmBeforeClose": "keyboardOnly",
+  "typescript.preferences.preferTypeOnlyAutoImports": true,
+  "typescript.updateImportsOnPaste.enabled": true,
+  "biome.suggestInstallingGlobally": false
+}

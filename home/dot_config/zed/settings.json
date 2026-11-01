@@ -42,6 +42,27 @@
       "enable_lsp_tasks": true,
     },
   },
+  // Installed on startup (persists extensions across machines). Add new ones here.
+  "auto_install_extensions": {
+    "astro": true,
+    "biome": true,
+    "catppuccin": true,
+    "catppuccin-icons": true,
+    "color-highlight": true,
+    "dockerfile": true,
+    "fish": true,
+    "git-firefly": true,
+    "groovy": true,
+    "html": true,
+    "kotlin": true,
+    "lua": true,
+    "pkl": true,
+    "ruby": true,
+    "sql": true,
+    "toml": true,
+    "wakatime": true,
+    "xml": true,
+  },
   "theme": {
     "mode": "system",
     "light": "One Light",
@@ -203,14 +224,7 @@
           "search_web": true,
         },
         "enable_all_context_servers": false,
-        "context_servers": {
-          "mcp-server-context7": {
-            "tools": {
-              "resolve-library-id": true,
-              "query-docs": true,
-            },
-          },
-        },
+        "context_servers": {},
       },
     },
     "default_width": 200,
@@ -241,14 +255,7 @@
     },
     "mode": "eager",
   },
-  "context_servers": {
-    "mcp-server-context7": {
-      "enabled": true,
-      "settings": {
-        "context7_api_key": "",
-      },
-    },
-  },
+  "context_servers": {},
   "languages": {
     "TypeScript": {
       "code_actions_on_format": {

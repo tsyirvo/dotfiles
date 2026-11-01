@@ -42,6 +42,28 @@
       "enable_lsp_tasks": true,
     },
   },
+  // Installed on startup (persists extensions across machines). Add new ones here.
+  "auto_install_extensions": {
+    "astro": true,
+    "biome": true,
+    "catppuccin": true,
+    "catppuccin-icons": true,
+    "color-highlight": true,
+    "dockerfile": true,
+    "fish": true,
+    "git-firefly": true,
+    "groovy": true,
+    "html": true,
+    "kotlin": true,
+    "lua": true,
+    "mcp-server-context7": true,
+    "pkl": true,
+    "ruby": true,
+    "sql": true,
+    "toml": true,
+    "wakatime": true,
+    "xml": true
+  },
   "theme": {
     "mode": "system",
     "light": "One Light",
@@ -165,14 +187,14 @@
         "provider": "openai-subscribed",
         "model": "gpt-6.1-sol",
         "enable_thinking": true,
-        "effort": "low"
+        "effort": "low",
       },
       {
         "provider": "openai-subscribed",
         "model": "gpt-6-luna",
         "enable_thinking": true,
-        "effort": "medium"
-      }
+        "effort": "medium",
+      },
     ],
     "default_profile": "write",
     "profiles": {
@@ -200,18 +222,18 @@
           "grep": true,
           "skill": true,
           "spawn_agent": true,
-          "search_web": true
+          "search_web": true,
         },
         "enable_all_context_servers": false,
         "context_servers": {
           "mcp-server-context7": {
             "tools": {
               "resolve-library-id": true,
-              "query-docs": true
-            }
-          }
-        }
-      }
+              "query-docs": true,
+            },
+          },
+        },
+      },
     },
     "default_width": 200,
     "dock": "right",

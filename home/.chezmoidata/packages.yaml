@@ -57,6 +57,41 @@ packages:
       # AI
       - mlx # Apple silicon ML libs
 
+    ## Cursor extensions (MacBook only) — installed by 23-install-cursor-extensions
+    # Additive: removing a line stops managing it, it does not uninstall.
+    cursor_extensions:
+      - aaron-bond.better-comments
+      - anysphere.cursorpyright
+      - anysphere.remote-containers
+      - anysphere.remote-ssh
+      - astro-build.astro-vscode
+      - biomejs.biome
+      - blazejkustra.react-compiler-marker
+      - catppuccin.catppuccin-vsc
+      - catppuccin.catppuccin-vsc-icons
+      - christian-kohler.npm-intellisense
+      - christian-kohler.path-intellisense
+      - dbaeumer.vscode-eslint
+      - eamodio.gitlens
+      - esbenp.prettier-vscode
+      - formulahendry.auto-close-tag
+      - formulahendry.auto-rename-tag
+      - lokalise.i18n-ally
+      - mikestead.dotenv
+      - ms-azuretools.vscode-containers
+      - ms-azuretools.vscode-docker
+      - ms-vscode.atom-keybindings
+      - naumovs.color-highlight
+      - redhat.vscode-yaml
+      - sirtori.indenticator
+      - tamasfe.even-better-toml
+      - unifiedjs.vscode-mdx
+      - wakatime.vscode-wakatime
+      - wallabyjs.quokka-vscode
+      - wallabyjs.wallaby-vscode
+      - wix.vscode-import-cost
+      - yoavbls.pretty-ts-errors
+
     ## Casks — GUI apps (MacBook only)
     casks:
       # IDEs

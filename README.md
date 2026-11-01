@@ -4,11 +4,11 @@ Personal dotfiles managed with [chezmoi](https://www.chezmoi.io). One repository
 
 ## Machine classes
 
-| Class           | OS                                 | role      | Packages from                                                                                    |
-| --------------- | ---------------------------------- | --------- | ------------------------------------------------------------------------------------------------ |
-| MacBook Pro     | macOS (Apple Silicon)              | `macbook` | Homebrew (+ casks, + Mac App Store, + Nerd Fonts, + vendored DMGs)                               |
-| Omarchy desktop | Arch Linux + Hyprland              | `omarchy` | pacman + Omarchy's built-in package manager; shared Nerd Font; systemd user env (mise shims)     |
-| Dev box         | Debian/Ubuntu, headless (VM / VPS) | `devbox`  | apt + mise for modern CLIs; shared Nerd Font; `bat`/`fd` symlinks; systemd user env (mise shims) |
+| Class           | OS                                 | role      | Packages from                                                                                       |
+| --------------- | ---------------------------------- | --------- | --------------------------------------------------------------------------------------------------- |
+| MacBook Pro     | macOS (Apple Silicon)              | `macbook` | Homebrew (+ casks, + Mac App Store, + Nerd Fonts, + vendored DMGs); Cursor user config + extensions |
+| Omarchy desktop | Arch Linux + Hyprland              | `omarchy` | pacman + Omarchy's built-in package manager; shared Nerd Font; systemd user env (mise shims)        |
+| Dev box         | Debian/Ubuntu, headless (VM / VPS) | `devbox`  | apt + mise for modern CLIs; shared Nerd Font; `bat`/`fd` symlinks; systemd user env (mise shims)    |
 
 Routing per class (which config is installed where) lives in `home/.chezmoiignore` — **keep this
 table in sync with it** (same commit).
@@ -95,7 +95,7 @@ comment of `home/.chezmoidata/packages.yaml`.
 | Vendored DMG apps — no brew cask, no MAS (e.g. Astro, Pen) | `packages.yaml` → `darwin.custom_apps` | `11-install-extra-apps` script (auto, on apply)                               |
 | Cross-platform CLIs, runtimes, global npm tools            | `home/dot_config/mise/config.toml`     | `mise install` (auto, on apply)                                               |
 | tmux plugins (8 via tpm; tpm itself an external)           | tmux.conf `@plugin` lines              | `20-install-tmux-plugins` script (auto, on apply)                             |
-| Fish plugins (including Fisher itself)                    | `home/dot_config/fish/fish_plugins`     | `21-install-fish-plugins` script (on first apply and manifest changes)        |
+| Fish plugins (including Fisher itself)                     | `home/dot_config/fish/fish_plugins`    | `21-install-fish-plugins` script (on first apply and manifest changes)        |
 
 - **Add:** one commented line in the right manifest → `chezmoi apply` installs it.
 - **Remove:** delete the line → `chezmoi apply`, then uninstall from the OS

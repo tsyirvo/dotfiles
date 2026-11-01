@@ -1,5 +1,7 @@
 # ---- class-based: never managed on any machine -------------------------------
-Library
+# Library/** so the macbook-only `!` exceptions below can re-include single files
+# (each parent dir needs its own `!` too). `!` beats every ignore: keep them templated.
+Library/**
 .cache/**
 .local/share/mise/**
 .ssh/known_hosts*
@@ -18,6 +20,18 @@ Library
 .config/hunk/state.json
 .config/worktrunk/approvals.toml*
 .config/zed/prompts/**
+
+# ---- macbook-only: Cursor (cask) user config under ~/Library ------------------
+{{ if .isMacbook }}
+!Library
+!Library/Application Support
+!Library/Application Support/Cursor
+!Library/Application Support/Cursor/User
+!Library/Application Support/Cursor/User/snippets
+!Library/Application Support/Cursor/User/settings.json
+!Library/Application Support/Cursor/User/keybindings.json
+!Library/Application Support/Cursor/User/snippets/*.json
+{{ end }}
 
 # ---- macbook-only (aerospace is a macOS cask) --------------------------------
 {{ if not .isDarwin }}

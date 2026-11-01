@@ -1,0 +1,138 @@
+{
+  "Print to console": {
+    "prefix": "log",
+    "body": ["console.log('$1', $2);"],
+    "description": "Log output to console"
+  },
+  "Create a React Native component": {
+    "prefix": "rnp",
+    "body": [
+      "import { Box, Text } from '\\$components/ui/primitives';",
+      "",
+      "const $1 = () => (",
+      "\t<Box>",
+      "\t\t<Text>$1 component</Text>",
+      "\t</Box>",
+      ");",
+      "",
+      "export default $1;"
+    ],
+    "description": "Create a React Native component"
+  },
+  "React Native HOC": {
+    "prefix": "hoc",
+    "body": [
+      "import { Component } from 'react';",
+      "",
+      "const $1 = (Target) => {",
+      "\treturn class extends Component {",
+      "\t\tconstructor(props) {",
+      "\t\t\tsuper(props);",
+      "\t\t}",
+      "",
+      "\t\trender() {",
+      "\t\t\treturn (",
+      "\t\t\t\t<Target {...this.props} />",
+      "\t\t\t);",
+      "\t\t}",
+      "\t};",
+      "};",
+      "",
+      "export default $;"
+    ],
+    "description": "React Native HOC"
+  },
+  "Comment separator": {
+    "prefix": "///",
+    "body": ["/* ***** *****  $1  ***** ***** */"],
+    "description": "Add a comment separator"
+  },
+  "React useState": {
+    "prefix": "rus",
+    "body": ["const [$1, $2] = useState($3);"],
+    "description": "Create a useState"
+  },
+  "React useEffect": {
+    "prefix": "rue",
+    "body": ["useEffect(() => {", "\t$1", "}, []);"],
+    "description": "Create a useEffect"
+  },
+  "JS arrow function": {
+    "prefix": "af",
+    "body": ["const $1 = ($2) => {", "\t$3", "};"],
+    "description": "Create an empty arrow function"
+  },
+  "Test suite": {
+    "prefix": "describe",
+    "body": [
+      "import React from 'react';",
+      "import render from 'react-test-renderer';",
+      "",
+      "describe('${TM_FILENAME_BASE}', () => {",
+      "  afterEach(() => {",
+      "    jest.clearAllMocks();",
+      "  });",
+      "",
+      "  it('$1', () => {",
+      "    // Given",
+      "",
+      "    // When",
+      "",
+      "    // Then",
+      "    expect(0).toEqual(0);",
+      "  });",
+      "});"
+    ],
+    "description": "Add a test suite"
+  },
+  "Absolute Box": {
+    "prefix": "ab",
+    "body": [
+      "<Box position=\"absolute\" top={0} right={0} bottom={0} left={0} alignItems=\"center\" justifyContent=\"center\">"
+    ],
+    "description": "Create an absolute Box"
+  },
+  "useTranslation": {
+    "prefix": "rTranslation",
+    "body": ["const { t } = useTranslation$0()"],
+    "description": "Generate simple useTranslation"
+  },
+  "useNavigation": {
+    "prefix": "rNav",
+    "body": ["const navigation = useNavigation()"],
+    "description": "Generate simple useNavigation"
+  },
+  "useInsets": {
+    "prefix": "rInsets",
+    "body": ["const insets = useSafeAreaInsets$0()"],
+    "description": "Generate simple useSafeAreaInsets"
+  },
+  "New hook": {
+    "prefix": "rHook",
+    "body": [
+      "export const $TM_FILENAME_BASE = () => {",
+      "  $1",
+      "",
+      "  return { }",
+      "}"
+    ],
+    "description": "Create new hook"
+  },
+  "New component for basic React": {
+    "prefix": "rComp",
+    "body": [
+      "type ${TM_FILENAME_BASE}Props = {",
+      "  $1",
+      "}",
+      "",
+      "export const $TM_FILENAME_BASE = ({",
+      "  $1",
+      "}: ${TM_FILENAME_BASE}Props) => {",
+      "  return (",
+      "      $0",
+      "  )",
+      "}"
+    ],
+    "description": "Generate simple component"
+  }
+}

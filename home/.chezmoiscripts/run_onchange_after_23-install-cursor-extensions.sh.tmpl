@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+set -euo pipefail
+# Install the Cursor extensions declared in packages.yaml (darwin.cursor_extensions).
+# The list renders into this script, so editing it re-runs the script. Additive only.
+# Not via the Brewfile: brew bundle's `vscode` entries pick `code` before `cursor`.
+# MacBook only (the cursor cask is MacBook-only); other classes render a no-op.
+{{ if .isMacbook -}}
+export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
+command -v cursor >/dev/null 2>&1 || { echo "23-cursor-extensions: cursor CLI is required — re-run chezmoi apply after installing packages" >&2; exit 1; }
+
+extensions=(
+{{- range .packages.darwin.cursor_extensions }}
+  {{ . | quote }}
+{{- end }}
+)
+
+args=()
+for extension in "${extensions[@]}"; do
+  args+=(--install-extension "$extension")
+done
+
+if cursor "${args[@]}"; then
+  echo "23-cursor-extensions: ${#extensions[@]} Cursor extensions installed"
+else
+  echo "23-cursor-extensions: installation incomplete — re-run chezmoi apply to retry" >&2
+  exit 1
+fi
+{{ end -}}
