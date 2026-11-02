@@ -42,6 +42,7 @@ packages:
       - maven # JVM build tool
       - scrcpy # Android mirroring
       - fastlane # mobile CI/release
+      - mobai-app/tap/simslim
       # Dev tools
       - mise # runtime/env manager (node, python, java…)
       - docker # docker CLI (orbstack cask provides engine)

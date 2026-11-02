@@ -2,6 +2,7 @@
 # `trusted: true` writes them to ~/.homebrew/trust.json before anything installs.
 tap 'FelixKratz/formulae', trusted: true   # JankyBorders
 tap 'nikitabobko/tap', trusted: true       # aerospace
+tap 'mobai-app/tap', trusted: true         # simslim
 cask_args appdir: '/Applications'
 {{ range .packages.darwin.brews -}}
 brew {{ . | quote }}
