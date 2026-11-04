@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# agent-device against the M1's simulators/emulators, through simlock over Tailscale.
+# Session and Metro port are derived from the current git worktree.
+set -euo pipefail
+
+M1_URL="https://macbookpro-m1.clouded-minor.ts.net/v1/agent-device"
+TOKEN_FILE="$HOME/.config/agent-device/m1-token"
+
+M4_HOST="macbookpro-m4.clouded-minor.ts.net" # iOS simulators reach Metro by MagicDNS name
+M4_IP="100.73.76.49"                         # Android emulators: the M4's tailnet IP (tailscale ip -4)
+
+slug() { tr -cs 'A-Za-z0-9' '-' <<<"$1" | tr 'A-Z' 'a-z' | sed 's/^-*//; s/-*$//'; }
+
+root="$(git rev-parse --show-toplevel 2>/dev/null || pwd -P)"
+common="$(git rev-parse --path-format=absolute --git-common-dir 2>/dev/null || true)"
+project="$(basename "$(dirname "${common:-$root/.git}")")"
+tree="$(basename "$root")"
+hash="$(printf '%s' "$root" | shasum | cut -c1-6)"
+
+name="$(slug "$project")"
+[[ "$(slug "$tree")" != "$name" ]] && name="$name-$(slug "$tree")"
+export AGENT_DEVICE_SESSION="${AGENT_DEVICE_SESSION:-m4-${name:0:40}-$hash}"
+
+case "${1:-}" in
+m1-session)
+  echo "$AGENT_DEVICE_SESSION"
+  exit 0
+  ;;
+m1-metro-port)
+  echo $((8100 + 16#$hash % 900))
+  exit 0
+  ;;
+m1-metro-host)
+  [[ "${2:-ios}" == android ]] && echo "$M4_IP" || echo "$M4_HOST"
+  exit 0
+  ;;
+esac
+
+CONFIG="$HOME/.config/agent-device/m1.json"
+export AGENT_DEVICE_STATE_DIR="$HOME/.agent-device-m1" # M1 connections stay out of ~/.agent-device
+
+if [[ ! -f "$AGENT_DEVICE_STATE_DIR/remote-connections/$AGENT_DEVICE_SESSION.json" ]]; then
+  agent-device connect --remote-config "$CONFIG" --session "$AGENT_DEVICE_SESSION" >&2
+fi
+
+exec agent-device "$@" --session "$AGENT_DEVICE_SESSION"
