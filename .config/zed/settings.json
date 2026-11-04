@@ -17,10 +17,31 @@
       "args": [],
       "projects": [
         {
-          "paths": ["/home/tsyirvo/.hermes/./"],
-        },
+          "paths": [
+            "/home/tsyirvo/.hermes/./"
+          ]
+        }
       ],
+      "nickname": "Devbox"
     },
+    {
+      "host": "m1",
+      "username": "tsyirvo",
+      "args": [],
+      "projects": [
+        {
+          "paths": [
+            "/Users/tsyirvo"
+          ]
+        },
+        {
+          "paths": [
+            "/Users/tsyirvo/Developer/app-studio/moth-app"
+          ]
+        }
+      ],
+      "nickname": "Macbook Pro M1"
+    }
   ],
   "git_panel": {
     "dock": "left",
