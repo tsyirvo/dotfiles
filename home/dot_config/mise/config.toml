@@ -38,6 +38,7 @@ ctop = "latest"
 "npm:droid" = "latest"
 "npm:agent-device" = "latest"
 "npm:typescript-language-server" = "latest"
+"npm:simlock" = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = ["node"]
