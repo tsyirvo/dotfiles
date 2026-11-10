@@ -105,7 +105,6 @@ packages:
       - google-chrome # chrome (dev + default fallback)
       # Mobile dev tools
       - android-studio # Android IDE
-      - genymotion # Android emulator
       - xcodes-app # Manage Xcode versions
       - expo-orbit # Expo dev tooling
       # Dev tools
@@ -151,7 +150,7 @@ packages:
       - factory # factory.ai
       - codexbar # AI sub usage
       # Keyboards & Peripherals
-      - logi-options+
+      - openlogi
       - logitech-g-hub
       - homerow # keyboard shortcuts
       - hyperkey # ctrl/cmd remap
