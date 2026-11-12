@@ -20,7 +20,7 @@ mandatory; skip nothing before changing files here.
   auth DBs, caches, logs, lock files, state dirs, app-update artifacts — and anything secret.
 - **Secrets are out-of-band**: SSH keys, `.npmrc` and other
   credentials are never committed. Only hosts/identity-shaped config goes in the repo.
-- `~/.pi` is out of scope — it lives in its own git repository.
+- `~/.pi` is out of scope — tstack installs it (`95-tstack` only bootstraps tstack).
 
 ## Changing routing / packages
 

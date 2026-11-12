@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+set -euo pipefail
+# run_onchange_after_ — clone tstack (the agent stack: skills, rules, and the
+# Claude Code, Pi and Hermes config) and install it. tstack owns what its ledger
+# lists: generated CLAUDE.md, AGENTS.md and Hermes SOUL.md files, its keys in the
+# harness settings, and the skill links; this script only bootstraps it. Updates
+# are `git pull` + `tstack install` in the clone. On the devbox, 14-hermes creates
+# the Hermes profiles first.
+#
+# Runs last: the clone needs the SSH key from the secrets step, so on a fresh
+# machine it fails until then, and the next `chezmoi apply` retries it.
+# tstack machines are macbook and devbox (tstack.yaml); omarchy gets nothing.
+{{ if not .isOmarchy -}}
+export PATH="$HOME/.local/bin:$HOME/.local/share/mise/shims:/opt/homebrew/bin:/usr/local/bin:$PATH"
+for bin in git mise; do
+  command -v "$bin" >/dev/null 2>&1 || { echo "95-tstack: $bin is required — re-run chezmoi apply after installing packages" >&2; exit 1; }
+done
+
+repo="${TSTACK_DIR:-$HOME/projects/argentic/tstack}"
+remote="git@github.com:tsyirvo/tstack.git"
+machine={{ .role | quote }}
+
+if [ ! -d "$repo/.git" ]; then
+  mkdir -p "$(dirname "$repo")"
+  git clone --quiet "$remote" "$repo" || {
+    echo "95-tstack: cannot clone $remote — finish the secrets step (SSH key), then re-run chezmoi apply" >&2
+    exit 1
+  }
+fi
+
+cd "$repo"
+mise trust --quiet
+mise install --quiet
+mise exec -- bun install --frozen-lockfile
+mise exec -- bun cli/tstack.ts vendor sync
+# Conflicts are a human call (what tstack would replace): report, never force.
+# The first run on a machine meets the files the harnesses seeded (Hermes's
+# default SOUL.md): review with `tstack install --dry-run`, then `--backup`.
+if ! mise exec -- bun cli/tstack.ts install --machine "$machine"; then
+  echo "95-tstack: install left conflicts — inspect with 'tstack doctor', then 'tstack install --backup'" >&2
+fi
+{{ end -}}
