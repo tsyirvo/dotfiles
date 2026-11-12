@@ -55,6 +55,11 @@ The bootstrap then runs automatically, in order:
    `docker` group (sudo-less containers for agents). The group only reaches new sessions: after
    the first apply, run `tmux kill-server`, restart herdr and reconnect — or reboot.
 4. **Pre-commit hook** — gitleaks guards the repo against secret leaks.
+5. **Agent stack** (macbook, devbox) — clones [tstack](https://github.com/tsyirvo/tstack) to
+   `~/projects/argentic/tstack` and runs `tstack install`: skills, the generated
+   `~/.claude/CLAUDE.md`, Claude Code settings and statusline. The clone needs the SSH key, so on a
+   fresh machine this step fails until the secrets step below; `chezmoi apply` again then.
+   Conflicts are reported, never forced: `tstack doctor`, then `tstack install --backup`.
 
 Last, the **secrets step** (2 minutes, once per machine): SSH keys are
 deliberately **not** in this repo — copy them from your Mac / 1Password per
