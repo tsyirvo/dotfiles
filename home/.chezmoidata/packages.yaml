@@ -259,6 +259,7 @@ packages:
       # ruby-build's configure-time libs/headers
       - autoconf bison libssl-dev libyaml-dev zlib1g-dev libffi-dev libreadline-dev libgdbm-dev
       - tmux mosh ripgrep fzf btop gnupg jq
+      - xz-utils # the Hermes installer (14-hermes) unpacks Node.js from a .tar.xz
       - postgresql-client # psql / pg_dump against the local Postgres containers
     # Docker isn't in Debian/Ubuntu default repos → 13-docker adds Docker's official apt repo
     docker:
