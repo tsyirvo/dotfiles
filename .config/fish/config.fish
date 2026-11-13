@@ -61,6 +61,9 @@ set -x BAT_THEME "Catppuccin Mocha"
 # Set eza config dir
 set -x EZA_CONFIG_DIR ~/.config/eza
 
+# Pi: sync AI activity to WakaTime (pi-harness wakatime extension)
+set -gx PI_WAKATIME_ENABLED 1
+
 # Start Starship Prompt
 starship init fish | source
 

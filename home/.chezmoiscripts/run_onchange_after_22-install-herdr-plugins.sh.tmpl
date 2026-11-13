@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+set -euo pipefail
+# run_onchange_after_ — install the herdr plugins whose config ships in
+# dot_config/herdr/plugins/config/<id>/ and whose actions config.toml binds.
+#
+# chezmoi only deploys the config; `herdr plugin install` fetches + builds the
+# plugin itself. Install keeps an existing config dir untouched, so the settings
+# applied by chezmoi are picked up whichever order the two happen in. It works
+# without a running herdr server. Already-installed plugins are skipped:
+# reinstalling leaves a fresh managed install dir behind each time. Updates are
+# `herdr plugin update` (bin/update-ai-tools).
+#
+# The plugin list below is the inventory — re-runs when it changes.
+export PATH="$HOME/.local/bin:$HOME/.local/share/mise/shims:/opt/homebrew/bin:/usr/local/bin:$PATH"
+command -v herdr >/dev/null 2>&1 || { echo "22-herdr-plugins: herdr is required — re-run chezmoi apply after installing packages" >&2; exit 1; }
+
+# <plugin id> <GitHub source>
+plugins=(
+  "cloudmanic.herdr-plus cloudmanic/herdr-plus"     # projects / worktree layouts (build: Go or prebuilt binary)
+  "worktrunk devashish2203/herdr-worktrunk"         # wt picker (needs wt, fzf, jq)
+)
+
+installed="$(herdr plugin list 2>/dev/null || true)"
+for entry in "${plugins[@]}"; do
+  read -r id source <<<"$entry"
+  if grep -Fqw -- "$id" <<<"$installed"; then
+    echo "22-herdr-plugins: $id already installed"
+    continue
+  fi
+  echo "22-herdr-plugins: installing $id from $source"
+  herdr plugin install "$source" --yes # flag must follow the source (0.9.5)
+done

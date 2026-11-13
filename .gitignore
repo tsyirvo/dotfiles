@@ -1,5 +1,46 @@
-!.config
+# ---------------------------------------------------------------------------
+# macOS
+# ---------------------------------------------------------------------------
+.DS_Store
 
+# ---------------------------------------------------------------------------
+# Secrets & keys — last line of defense; gitleaks is the real guard
+# ---------------------------------------------------------------------------
+*.key
+*key.txt
+*.pem
+*.p12
+*.p8
+ngrok.yml
+.npmrc
+.credentials
+*_rsa
+*_ed25519
+
+# ---------------------------------------------------------------------------
+# Logs & runtime state
+# ---------------------------------------------------------------------------
+*.log
+
+# ---------------------------------------------------------------------------
+# Stow → chezmoi transition artifacts (removed at cutover)
+# ---------------------------------------------------------------------------
+.config.stow-backup/
+.stowrc
+.stow-local-ignore
+
+# ---------------------------------------------------------------------------
+# Agent/tool state dirs — never managed — keep out even pre-cutover
+# ---------------------------------------------------------------------------
+.conductor/
+.serena/
+.config/chezmoi/chezmoistate.boltdb
+
+# ---------------------------------------------------------------------------
+# Untracked app state inside the old stow tree (~/.config IS the worktree
+# today). Moot once cutover moves ~/.config out of the repo.
+# ---------------------------------------------------------------------------
+.config/mise/config.toml   # legacy duplicate — see home/dot_config/mise/config.toml (chezmoi SOT)
 .config/tmux/plugins/
 .config/fish/completions
 .config/fish/fish_variables
@@ -17,6 +58,5 @@
 .config/herdr/session.json
 .config/worktrunk/approvals.toml
 .config/worktrunk/approvals.toml.lock
-.serena
 ai-tools/.claude/hooks/rtk-rewrite.sh
 ai-tools/.claude/hooks/.rtk-hook.sha256

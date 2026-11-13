@@ -1,0 +1,9 @@
+theme = "catppuccin-mocha"   # graphite, midnight, paper, ember, catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha, zenburn, custom
+mode = "auto"        # auto, split, stack
+vcs = "git"          # git, jj, sl
+watch = true
+exclude_untracked = false
+line_numbers = true
+wrap_lines = false
+agent_notes = true
+transparent_background = false

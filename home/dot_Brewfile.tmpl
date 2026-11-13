@@ -1,0 +1,20 @@
+# Non-official taps must be trusted before Homebrew loads their formulae/casks;
+# `trusted: true` writes them to ~/.homebrew/trust.json before anything installs.
+tap 'FelixKratz/formulae', trusted: true   # JankyBorders
+tap 'nikitabobko/tap', trusted: true       # aerospace
+tap 'mobai-app/tap', trusted: true         # simslim
+cask_args appdir: '/Applications'
+{{ range .packages.darwin.brews -}}
+brew {{ . | quote }}
+{{ end -}}
+{{ if and .isDarwin .isMacbook }}
+{{ range .packages.darwin.casks -}}
+cask {{ . | quote }}
+{{ end -}}
+{{ range .packages.darwin.fonts_casks -}}
+cask {{ . | quote }}
+{{ end -}}
+{{ range $name, $id := .packages.darwin.mas -}}
+mas {{ $name | quote }}, id: {{ $id }}
+{{ end }}
+{{ end }}

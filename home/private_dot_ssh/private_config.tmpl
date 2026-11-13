@@ -1,0 +1,61 @@
+{{ if .isDarwin -}}
+# Added by OrbStack: 'orb' SSH host for Linux machines
+# This only works if it's at the top of ssh_config (before any Host blocks).
+# This won't be added again if you remove it.
+Include ~/.orbstack/ssh/config
+
+{{ end -}}
+Host *
+  AddKeysToAgent yes
+{{- if .isDarwin }}
+  UseKeychain yes
+{{- end }}
+
+Host github.com
+  Hostname ssh.github.com
+  Port 443
+  IdentityFile ~/.ssh/id_ed25519
+
+Host gitlab.com
+  PreferredAuthentications publickey
+  IdentityFile ~/.ssh/gitlab.pub
+
+# ---- home LAN (RFC1918, not reachable from the internet) ---------------------
+Host pihole-unraid
+  HostName 192.168.10.112
+  User tsyirvo
+  Port 22
+
+Host pihole-pi
+  HostName 192.168.10.53
+  User tsyirvo
+  Port 22
+
+Host galaxy
+  HostName 192.168.10.111
+  User root
+  Port 22
+
+Host devbox-unraid
+  HostName 192.168.10.214
+  User tsyirvo
+  Port 22
+{{- /* tailnet domain lives in machine-local chezmoi data, never in the repo;
+       index (not .tailnet) so configs predating the key don't hit missingkey=error */}}
+{{- $tailnet := default "" (index . "tailnet") }}
+{{- if $tailnet }}
+
+# ---- Tailscale (MagicDNS) ---------------------------------------------------
+Host devbox-unraid-tailscale
+  HostName devbox-unraid.{{ $tailnet }}
+  User tsyirvo
+  Port 22
+
+Host dokploy-v1
+  HostName dokploy-v1.{{ $tailnet }}
+  User tsyirvo
+  IdentityFile ~/.ssh/hetzner
+  IdentitiesOnly yes
+  HostKeyAlias dokploy-v1
+  ServerAliveInterval 60
+{{- end }}

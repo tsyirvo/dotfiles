@@ -1,0 +1,274 @@
+# =============================================================================
+# packages.yaml — per-machine-class OS packages
+# How to use:
+#   add   → one commented line in the right section → `chezmoi apply` installs it
+#   remove → delete the line → `chezmoi apply` stops managing it (manual uninstall)
+# Cross-platform CLI tools, runtimes, and global npm tools live in dot_config/mise/config.toml, NOT here
+# No brew cask / no MAS? → darwin.custom_apps (vendored DMG)
+# =============================================================================
+
+packages:
+  fonts:
+    jetbrains_mono_nerd:
+      version: "3.4.0"
+
+  # ---------------------------------------------------------------------------
+  ## Darwin (macOS)
+  darwin:
+    ## Binaries
+    brews:
+      # Core
+      - openssl # TLS lib for build tooling
+      - gnupg # gpg for commit signing (later) & ssh key mgmt
+      - cmake # build dep (watchman, cocoapods, react-native)
+      # Terminal tools
+      - fish # shell
+      - tmux # terminal multiplexer
+      - mosh # resilient remote terminal
+      - bat # cat clone
+      - ack # grep replacement (from Brewfile)
+      - fd # find replacement
+      - fzf # fuzzy finder
+      - ripgrep # grep replacement
+      - jq # JSON processor (jq everywhere)
+      # Git tools
+      - git # git (with git-lfs below)
+      - git-extras # extra git commands (git-ignore, git-release…)
+      - git-lfs # large file storage
+      # Mobile dev tools
+      - gradle # JVM build tool (Android)
+      - watchman # file watching (React Native)
+      - cocoapods # iOS deps
+      - maven # JVM build tool
+      - scrcpy # Android mirroring
+      - fastlane # mobile CI/release
+      - mobai-app/tap/simslim
+      # Dev tools
+      - mise # runtime/env manager (node, python, java…)
+      - docker # docker CLI (orbstack cask provides engine)
+      - libpq # psql / pg_dump clients (keg-only → PATH added in 10-environment.fish)
+      # Misc
+      - mas # Mac App Store CLI (drives the mas section)
+      - blueutil # bluetooth CLI (macOS only)
+      - borders # JankyBorders — window border for Aerospace
+      - btop # system monitor
+      - mole # Mole — local ORM (dev tool)
+      - terminal-notifier # finish-notify for long tasks
+      - mactop # mac silicon stats (macOS only)
+      # AI
+      - mlx # Apple silicon ML libs
+
+    ## Cursor extensions (MacBook only) — installed by 23-install-cursor-extensions
+    # Additive: removing a line stops managing it, it does not uninstall.
+    cursor_extensions:
+      - aaron-bond.better-comments
+      - anysphere.cursorpyright
+      - anysphere.remote-containers
+      - anysphere.remote-ssh
+      - astro-build.astro-vscode
+      - biomejs.biome
+      - blazejkustra.react-compiler-marker
+      - catppuccin.catppuccin-vsc
+      - catppuccin.catppuccin-vsc-icons
+      - christian-kohler.npm-intellisense
+      - christian-kohler.path-intellisense
+      - dbaeumer.vscode-eslint
+      - eamodio.gitlens
+      - esbenp.prettier-vscode
+      - formulahendry.auto-close-tag
+      - formulahendry.auto-rename-tag
+      - lokalise.i18n-ally
+      - mikestead.dotenv
+      - ms-azuretools.vscode-containers
+      - ms-azuretools.vscode-docker
+      - ms-vscode.atom-keybindings
+      - naumovs.color-highlight
+      - redhat.vscode-yaml
+      - sirtori.indenticator
+      - tamasfe.even-better-toml
+      - unifiedjs.vscode-mdx
+      - wakatime.vscode-wakatime
+      - wallabyjs.quokka-vscode
+      - wallabyjs.wallaby-vscode
+      - wix.vscode-import-cost
+      - yoavbls.pretty-ts-errors
+
+    ## Casks — GUI apps (MacBook only)
+    casks:
+      # IDEs
+      - cursor # AI editor
+      - zed # editor (config shipped via dot_config/zed)
+      # Terminals
+      - ghostty # terminal
+      # Browsers
+      - zen # zen browser
+      - google-chrome # chrome (dev + default fallback)
+      # Mobile dev tools
+      - android-studio # Android IDE
+      - xcodes-app # Manage Xcode versions
+      - expo-orbit # Expo dev tooling
+      # Dev tools
+      - ngrok # ngrok (authtoken out-of-band)
+      - proxyman # http debug proxy-
+      - orbstack # docker engine + linux VMs
+      - gitkraken # git GUI
+      - postman # api client
+      - bruno # api client
+      # Communication
+      - slack
+      - discord
+      - telegram
+      # Productivity
+      - notion
+      - notion-calendar
+      - reader # readwise reader
+      - obsidian
+      - linear
+      # Design & UI
+      - figma
+      - rotato # mockup tool
+      - capcut # video editor
+      - paper-design # paper app
+      # Proton tools
+      - proton-drive
+      - protonvpn
+      - proton-mail
+      # Elgato tools
+      - elgato-camera-hub
+      - elgato-stream-deck
+      - elgato-wave-link
+      # Multimedia
+      - vlc
+      - spotify
+      - steam
+      - reflex-app
+      - soulseek
+      - calibre # ebook manager
+      # AI
+      - claude # Claude desktop
+      - chatgpt # ChatGPT desktop
+      - factory # factory.ai
+      - codexbar # AI sub usage
+      # Keyboards & Peripherals
+      - openlogi
+      - logitech-g-hub
+      - homerow # keyboard shortcuts
+      - hyperkey # ctrl/cmd remap
+      # 3D Tooling
+      - bambu-studio # 3D printer suite
+      # Security
+      # - oversight
+      # - taskexplorer
+      # - knockknock
+      # Misc
+      - macdown-3000 # markdown editor
+      - carbon-copy-cloner # backup
+      - rocket # emoji picker
+      - tailscale-app # tailnet client — GUI app bundles the CLI, symlinked by 12-tailscale
+      - coconutbattery
+      - aldente # battery charge limiter
+      - istat-menus
+      - raycast # launcher
+      - thaw # menu bar cleaner
+      - nikitabobko/tap/aerospace # tiling WM (tap also declared above)
+      - the-unarchiver
+      - macpacker
+      - cleanshot # screenshot tool
+      - lookaway # eye break reminder
+      - flux-app # screen warmth
+      - imageoptim
+      - clop # clipboard/compression
+      - pika # color picker
+      - voiceink # voice input
+
+    ## Fonts (casks, MacBook only; Linux uses the shared installer below)
+    fonts_casks:
+      - font-fira-code-nerd-font
+      - font-jetbrains-mono-nerd-font
+
+    ## Mac App Store (mas) — id: name ------------------------------------------
+    mas:
+      Spark Mail: 6445813049
+      WhatsApp: 310633997
+      Yubico Authenticator: 1497506650
+      Transporter: 1450874784
+      RocketSim for Xcode Simulator: 1504940162
+      Infuse: 1136220934
+      Pure Paste: 1611378436
+      Brother iPrint$Scan: 1193539993
+      WireGuard: 1451685025
+
+    ## Vendor DMGs — no brew cask, no MAS. 11-install-extra-apps
+    ## installs them via curl → hdiutil → /Applications; apps self-update in-app
+    ## (Sparkle / electron-updater / vendor updater). Rules:
+    ##   version: ""  → install-if-missing only (default; let the app update itself)
+    ##   version: X   → pin; re-installs at `latest` when X changes
+    ##   url         → default (universal / x86_64 fallback)
+    ##   url_arm64 / url_x86_64 → arch override; "" = fall back to `url`
+    custom_apps:
+      astro: # tryastro.app (single universal DMG)
+        app: /Applications/Astro.app
+        version: ""
+        url: https://github.com/matteospada/astro/releases/latest/download/Astro.dmg
+        url_arm64: ""
+        url_x86_64: ""
+
+  # ---------------------------------------------------------------------------
+  ## Arch / Omarchy — pacman + Omarchy's built-in PM ----------------------
+  ## Same cross-platform CLI set as the brew list above.
+  arch:
+    pacman:
+      - fish
+      - tmux
+      - mosh
+      - bat
+      - fd
+      - fzf
+      - ripgrep
+      - jq
+      - git
+      - git-lfs
+      - btop
+      - gnupg
+      - cmake
+      - openssl
+      # ruby-build fallback: mise compiles ruby from source when no prebuilt
+      # binary is available for the resolved version (arch ships headers with
+      # the libs, so only base-devel + the libs themselves are needed)
+      - base-devel
+      - zlib
+      - libyaml
+      - libffi
+      - readline
+      - gdbm
+      - curl
+      - unzip # required by the shared Nerd Font installer
+      - fontconfig # refreshes the font cache after Nerd Font installation
+      - tailscale # tailnet — zero-trust mesh; Tailscale SSH server via the 12-tailscale script
+      # first-pass; validate each against the Omarchy repos on boot
+    omarchy_extra: [] # Omarchy-specific packages via its built-in PM — fill at install time
+
+  # ---------------------------------------------------------------------------
+  ## Debian/Ubuntu dev boxes — apt ----------------------------------------------
+  ## NOTE: Debian stable ships RENAMED or OLD tools → mise covers those.
+  debian:
+    apt:
+      - fish git curl unzip ca-certificates build-essential fontconfig
+      # ruby-build fallback: mise compiles ruby from source when no prebuilt
+      # binary is available — build-essential is the compiler, these supply
+      # ruby-build's configure-time libs/headers
+      - autoconf bison libssl-dev libyaml-dev zlib1g-dev libffi-dev libreadline-dev libgdbm-dev
+      - tmux mosh ripgrep fzf btop gnupg jq
+      - postgresql-client # psql / pg_dump against the local Postgres containers
+    # Docker isn't in Debian/Ubuntu default repos → 13-docker adds Docker's official apt repo
+    docker:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin # `docker compose build` relies on buildx
+      - docker-compose-plugin
+    # tailscale isn't in Debian's default repos → the 12-tailscale script adds the official repo
+    # ships as `batcat`/`fdfind` → ~/.local/bin/{bat,fd} symlinks (dot_local/bin)
+    apt_renamed:
+      bat: batcat
+      fd-find: fdfind

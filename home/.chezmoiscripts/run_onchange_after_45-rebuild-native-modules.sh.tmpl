@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+# Re-runs on a node-pin change (ABI-relevant): the key must stay in the body —
+# a filename can't carry a hash. NB: never exec node at render time here — it
+# isn't installed on a fresh machine (use a content hash, not `node -p ...`).
+export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
+# ABI key: {{ include "dot_config/mise/config.toml" | sha256sum }}
+if ! command -v node >/dev/null 2>&1; then
+  echo "45-rebuild: node not installed yet — will run after mise install" >&2
+  exit 0
+fi
+npm rebuild -g --depth=0 || true

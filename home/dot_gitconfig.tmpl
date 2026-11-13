@@ -1,0 +1,77 @@
+{{- $gitName := default "" (index . "gitName") -}}
+{{- $gitEmail := default "" (index . "gitEmail") -}}
+{{- if and (ne $gitName "") (ne $gitEmail "") }}
+[user]
+	name = {{ $gitName | quote }}
+	email = {{ $gitEmail | quote }}
+
+{{ end }}[core]
+	excludesfile = ~/.gitignore_global
+	editor = nano
+	ignorecase = false
+	# gitleaks pre-commit hook, installed by the 90-gitleaks script
+	hooksPath = ~/.config/git/hooks
+
+[credential]
+{{ if .isDarwin }}  helper = osxkeychain
+{{ end }}
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+	ui = true
+
+[mergetool]
+	keepBackup = false
+
+[diff]
+	tool = difftastic
+
+[difftool]
+	prompt = false
+
+[difftool "difftastic"]
+	cmd = difft --context 5 --skip-unchanged --display inline --background light "$LOCAL" "$REMOTE"
+
+[pager]
+	difftool = true
+
+[push]
+	default = simple
+  followTags = true
+
+# Clone/fetch GitHub over HTTPS (works before an SSH key exists), push over SSH
+[url "git@github.com:"]
+	pushInsteadOf = https://github.com/
+
+[fetch]
+	# Drop remote-tracking refs for branches deleted on the remote
+	prune = true
+
+[pull]
+	rebase = false
+
+[apply]
+	whitespace = fix
+
+[init]
+  defaultBranch = main
+
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+
+[alias]
+	upsync = "!f() { git pull origin \"$(git symbolic-ref --short HEAD)\" && git pull origin main; }; f"
+	# Delete local branches whose upstream was deleted (merged PRs). -D because
+	# squash merges never look merged to Git. -r: no-op when nothing is gone.
+	gone = "!git fetch --prune && git for-each-ref --format='%(if:equals=[gone])%(upstream:track)%(then)%(refname:short)%(end)' refs/heads | grep . | xargs -r git branch -D"
+
+# Machine-local, unmanaged: signing keys, gpg/commit settings, anything that
+# differs per box. Write there with `git config --file ~/.gitconfig.local …`
+# — `git config --global` would edit this managed file and show in chezmoi diff.
+# Must stay LAST so local values win.
+[include]
+	path = ~/.gitconfig.local

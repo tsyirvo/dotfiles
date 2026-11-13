@@ -1,0 +1,66 @@
+# ---- class-based: never managed on any machine -------------------------------
+# Library/** so the macbook-only `!` exceptions below can re-include single files
+# (each parent dir needs its own `!` too). `!` beats every ignore: keep them templated.
+Library/**
+.cache/**
+.local/share/mise/**
+.ssh/known_hosts*
+.ssh/agent
+.config/fish/completions/**
+.config/fish/themes/**
+.config/fish/fish_variables
+.config/herdr/herdr-client.log
+.config/herdr/herdr-server.log
+.config/herdr/session.json
+.config/herdr/release-notes.json
+.config/herdr/.plugins.lock
+.config/herdr/plugins.json
+.config/herdr/plugins/.locks/**
+.config/herdr/plugins/github/**
+.config/hunk/state.json
+.config/worktrunk/approvals.toml*
+.config/zed/prompts/**
+
+# ---- macbook-only: Cursor (cask) user config under ~/Library ------------------
+{{ if .isMacbook }}
+!Library
+!Library/Application Support
+!Library/Application Support/Cursor
+!Library/Application Support/Cursor/User
+!Library/Application Support/Cursor/User/snippets
+!Library/Application Support/Cursor/User/settings.json
+!Library/Application Support/Cursor/User/keybindings.json
+!Library/Application Support/Cursor/User/snippets/*.json
+{{ end }}
+
+# ---- macbook-only (aerospace is a macOS cask) --------------------------------
+{{ if not .isDarwin }}
+.config/aerospace/**
+.Brewfile
+{{ end }}
+
+# ---- Linux-only: systemd user env (mise shims on PATH for user services) -----
+{{ if .isDarwin }}
+.config/environment.d/***
+{{ end }}
+
+# ---- Debian renames bat/fd → shims in ~/.local/bin, dev boxes only ------------
+{{ if not .isDevbox }}
+.local/bin/bat
+.local/bin/fd
+{{ end }}
+
+# ---- headless dev boxes get no GUI configs ------------------------------------
+{{ if .isHeadless }}
+.config/ghostty/**
+.config/zed/**
+.Brewfile
+{{ end }}
+
+# ---- Omarchy: owned by Omarchy, never managed here ---------------------------
+# (defensive — nothing is shipped, so nothing to exclude; keep this so nobody
+#  adds dot_config/hypr later without revisiting the decision)
+{{ if .isOmarchy }}
+.config/hypr/***
+.config/waybar/***
+{{ end }}

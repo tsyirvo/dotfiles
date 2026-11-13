@@ -1,0 +1,23 @@
+repo = "*"
+
+[[tabs]]
+name = "agent"
+command = "pi"
+
+[[tabs]]
+name = "project"
+
+[[tabs.panes]]
+label = "CLI"
+
+[[tabs.panes]]
+label = "Bundler"
+split = "right"
+ratio = 0.4
+
+[[tabs.panes]]
+label = "Other"
+split = "down"
+
+[[tabs]]
+name = "review"

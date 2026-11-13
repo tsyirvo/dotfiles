@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+set -euo pipefail
+# Installs the shell's shared Nerd Font on Linux machine classes.
+# Re-runs when the font version in packages.yaml changes:
+#   {{ include ".chezmoidata/packages.yaml" | sha256sum }}
+export PATH="$HOME/.local/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
+
+{{ if .isLinux -}}
+font_version="{{ .packages.fonts.jetbrains_mono_nerd.version }}"
+font_dir="$HOME/.local/share/fonts/JetBrainsMonoNerdFont"
+version_file="$font_dir/.version"
+font_file="$font_dir/JetBrainsMonoNerdFont-Regular.ttf"
+
+if [ -f "$font_file" ] && [ "$(cat "$version_file" 2>/dev/null || true)" = "$font_version" ]; then
+  exit 0
+fi
+
+archive="$(mktemp)"
+staging_dir="$(mktemp -d)"
+trap 'rm -rf "$archive" "$staging_dir"' EXIT
+
+curl --fail --location --retry 3 --silent --show-error \
+  --output "$archive" \
+  "https://github.com/ryanoasis/nerd-fonts/releases/download/v${font_version}/JetBrainsMono.zip"
+unzip -q "$archive" -d "$staging_dir"
+
+font_count="$(find "$staging_dir" -type f \( -name '*.ttf' -o -name '*.otf' \) -print | wc -l | tr -d '[:space:]')"
+if [ "$font_count" -eq 0 ]; then
+  echo "15-install-nerd-font: archive contains no fonts" >&2
+  exit 1
+fi
+
+rm -rf "$font_dir"
+mkdir -p "$font_dir"
+find "$staging_dir" -type f \( -name '*.ttf' -o -name '*.otf' \) -exec install -m 0644 {} "$font_dir" \;
+printf '%s\n' "$font_version" > "$version_file"
+fc-cache -f "$font_dir"
+{{ end -}}
