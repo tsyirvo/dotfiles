@@ -36,6 +36,7 @@ ctop = "latest"
 "npm:@openai/codex" = "latest"
 "npm:droid" = "latest"
 "npm:agent-device" = "latest"
+"npm:typescript-language-server" = "latest" # binary for the Claude Code typescript-lsp plugin
 
 [settings]
 idiomatic_version_file_enable_tools = ["node"]
