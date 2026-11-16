@@ -6,7 +6,7 @@ Personal dotfiles managed with [chezmoi](https://www.chezmoi.io). One repository
 
 | Class           | OS                                 | role      | Packages from                                                                                       |
 | --------------- | ---------------------------------- | --------- | --------------------------------------------------------------------------------------------------- |
-| MacBook Pro     | macOS (Apple Silicon)              | `macbook` | Homebrew (+ casks, + Mac App Store, + Nerd Fonts, + vendored DMGs); Cursor user config + extensions |
+| MacBook Pro     | macOS (Apple Silicon)              | `macbook` | Homebrew (+ casks, + Mac App Store, + Nerd Fonts, + vendored DMGs); Cursor user config + extensions; Hex dictation modes + vocabulary |
 | Omarchy desktop | Arch Linux + Hyprland              | `omarchy` | pacman + Omarchy's built-in package manager; shared Nerd Font; systemd user env (mise shims)        |
 | Dev box         | Debian/Ubuntu, headless (VM / VPS) | `devbox`  | apt + mise for modern CLIs; shared Nerd Font; `bat`/`fd` symlinks; systemd user env (mise shims)    |
 
@@ -78,6 +78,19 @@ Source-name prefixes encode behavior: `dot_` → hidden file · `private_` → 0
 | Health check                           | `chezmoi doctor`                                  |
 
 Also: `chezmoi cd` → shell inside `home/`; `chezmoi data` → every template variable.
+
+### Hex dictation settings
+
+`home/.chezmoidata/hex.json` stores the dictation modes and shared vocabulary.
+On MacBooks, chezmoi merges these values into `~/Library/Application Support/hex/settings.json`.
+Other Hex settings remain unchanged. On a fresh install, Hex supplies defaults for the other settings.
+Credentials, history, downloaded models, and runtime state stay outside the repository.
+
+Quit Hex before applying its settings file. OpenCode provider connections must be restored separately.
+While this Mac uses Stow, keep using Hex's CLI for live changes. Copy changes to the managed
+modes and vocabulary into `home/.chezmoidata/hex.json` for the future reinstall.
+
+Run `python3 tasks/ci/test-hex-settings.py` to test restoration in temporary home directories.
 
 ### Adopting a new tool (checklist)
 

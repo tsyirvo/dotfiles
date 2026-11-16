@@ -21,7 +21,7 @@ Library/**
 .config/worktrunk/approvals.toml*
 .config/zed/prompts/**
 
-# ---- macbook-only: Cursor (cask) user config under ~/Library ------------------
+# ---- macbook-only: GUI app config under ~/Library ----------------------------
 {{ if .isMacbook }}
 !Library
 !Library/Application Support
@@ -31,6 +31,8 @@ Library/**
 !Library/Application Support/Cursor/User/settings.json
 !Library/Application Support/Cursor/User/keybindings.json
 !Library/Application Support/Cursor/User/snippets/*.json
+!Library/Application Support/hex
+!Library/Application Support/hex/settings.json
 {{ end }}
 
 # ---- macbook-only (aerospace is a macOS cask) --------------------------------
