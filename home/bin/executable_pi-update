@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
-# Update the chezmoi-managed pi executable and optionally sync pi-harness's SDK.
-# The Stow updater in bin/pi-update remains separate until the migration is done.
-# Usage: pi-update (override the harness location with PI_HARNESS_DIR).
+# Update the chezmoi-managed pi executable, its packages and models, then sync
+# tstack's Pi harness to it. The Stow updater in bin/pi-update remains separate
+# until the migration is done.
+# Usage: pi-update (override the tstack location with TSTACK_DIR).
 
 set -euo pipefail
 
@@ -15,10 +16,10 @@ command -v mise >/dev/null 2>&1 || {
     exit 1
 }
 
-HARNESS_DIR="${PI_HARNESS_DIR:-$HOME/projects/argentic/pi-harness}"
+TSTACK_DIR="${TSTACK_DIR:-$HOME/projects/argentic/tstack}"
 # Resolve relative overrides before leaving the caller's directory.
-if [[ "$HARNESS_DIR" != /* ]]; then
-    HARNESS_DIR="$PWD/$HARNESS_DIR"
+if [[ "$TSTACK_DIR" != /* ]]; then
+    TSTACK_DIR="$PWD/$TSTACK_DIR"
 fi
 PI_TOOL="npm:@earendil-works/pi-coding-agent"
 
@@ -32,17 +33,18 @@ mise upgrade "$PI_TOOL"
 PI_BIN="$(mise which pi --tool "$PI_TOOL")"
 export PI_BIN
 
-if [ -f "$HARNESS_DIR/package.json" ]; then
-    # Supply Bun and Node 26 to the nested install/typecheck workflow too.
-    mise exec node@26 bun -- bun run --cwd "$HARNESS_DIR" pi:sync
-else
-    echo "skip: pi-harness SDK sync (not found at $HARNESS_DIR; override with PI_HARNESS_DIR)"
-fi
-
 # Use the canonical executable, not an old Node-global pi on PATH.
 # mise exec supplies the global Node runtime even when invoked from a project.
 mise exec -- "$PI_BIN" update --extensions
 mise exec -- "$PI_BIN" update --models
+
+# After the package update, so the subagent tool lists see the new pi-subagents.
+if [ -f "$TSTACK_DIR/package.json" ]; then
+    # tstack's own mise.toml pins the Bun and Node its verify expects.
+    mise -C "$TSTACK_DIR" exec -- bun run --cwd "$TSTACK_DIR" pi:sync
+else
+    echo "skip: tstack Pi harness sync (not found at $TSTACK_DIR; override with TSTACK_DIR)"
+fi
 
 echo ""
 echo "Updated pi. Restart running agents/panes (and Herdr/tmux daemons) to pick it up."

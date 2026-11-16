@@ -20,10 +20,13 @@ class PiUpdateTests(unittest.TestCase):
         self.home = self.root / "home"
         self.bin = self.root / "bin"
         self.project = self.root / "project"
+        # The Stow updater still syncs pi-harness; the chezmoi one syncs tstack.
         self.harness = self.home / "projects/argentic/pi-harness"
-        for directory in (self.home, self.bin, self.project, self.harness):
+        self.tstack = self.home / "projects/argentic/tstack"
+        for directory in (self.home, self.bin, self.project, self.harness, self.tstack):
             directory.mkdir(parents=True, exist_ok=True)
         (self.harness / "package.json").write_text("{}")
+        (self.tstack / "package.json").write_text("{}")
         self.log = self.root / "calls"
         self.env = {
             **os.environ,
@@ -32,7 +35,7 @@ class PiUpdateTests(unittest.TestCase):
             "CALL_LOG": str(self.log),
             "CANONICAL_PI": str(self.root / "canonical pi"),
         }
-        for key in ("PI_HARNESS_DIR", "PI_BIN"):
+        for key in ("PI_HARNESS_DIR", "TSTACK_DIR", "PI_BIN"):
             self.env.pop(key, None)
         for name in ("pi-update", "update-ai-tools"):
             target = self.bin / name
@@ -70,7 +73,7 @@ esac
     def calls(self):
         return self.log.read_text().splitlines() if self.log.exists() else []
 
-    def test_sync_uses_canonical_pi_and_bun_with_node_26_from_home(self):
+    def test_packages_update_before_tstack_syncs_with_its_own_tools(self):
         self.env["PI_BIN"] = "stale override"
         result = self.run_updater()
         self.assertEqual(result.returncode, 0, result.stderr)
@@ -78,32 +81,32 @@ esac
         self.assertEqual(len(calls), 6)
         self.assertIn(f"|upgrade {TOOL}|", calls[1])
         self.assertIn(f"|which pi --tool {TOOL}|", calls[2])
-        self.assertIn(f"exec node@26 bun -- bun run --cwd {self.harness} pi:sync", calls[3])
-        self.assertIn(f"PI_BIN={self.env['CANONICAL_PI']}", calls[3])
-        self.assertIn("update --extensions", calls[4])
-        self.assertIn("update --models", calls[5])
+        self.assertIn("update --extensions", calls[3])
+        self.assertIn("update --models", calls[4])
+        self.assertIn(f"-C {self.tstack} exec -- bun run --cwd {self.tstack} pi:sync", calls[5])
+        self.assertIn(f"PI_BIN={self.env['CANONICAL_PI']}", calls[5])
         self.assertTrue(all(call.startswith(f"{self.home}|") for call in calls))
         self.assertNotIn("STALE PI", "\n".join(calls))
         self.assertNotIn("pi:update-globals", "\n".join(calls))
 
-    def test_relative_harness_override(self):
-        harness = self.project / "custom harness"
-        harness.mkdir()
-        (harness / "package.json").write_text("{}")
-        self.env["PI_HARNESS_DIR"] = "custom harness"
+    def test_relative_tstack_override(self):
+        tstack = self.project / "custom tstack"
+        tstack.mkdir()
+        (tstack / "package.json").write_text("{}")
+        self.env["TSTACK_DIR"] = "custom tstack"
         self.assertEqual(self.run_updater().returncode, 0)
-        self.assertIn(f"--cwd {harness} pi:sync", self.calls()[3])
+        self.assertIn(f"--cwd {tstack} pi:sync", self.calls()[5])
 
-    def test_missing_harness_skips_sync_but_updates_packages(self):
-        self.env["PI_HARNESS_DIR"] = str(self.root / "missing")
+    def test_missing_tstack_skips_sync_but_updates_packages(self):
+        self.env["TSTACK_DIR"] = str(self.root / "missing")
         result = self.run_updater()
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertIn("skip: pi-harness SDK sync", result.stdout)
+        self.assertIn("skip: tstack Pi harness sync", result.stdout)
         self.assertEqual(len(self.calls()), 5)
         self.assertIn("update --models", self.calls()[-1])
 
     def test_failures_stop_subsequent_steps(self):
-        for variable, count in (("WHERE_STATUS", 1), ("UPGRADE_STATUS", 2), ("SYNC_STATUS", 4)):
+        for variable, count in (("WHERE_STATUS", 1), ("UPGRADE_STATUS", 2), ("SYNC_STATUS", 6)):
             with self.subTest(variable=variable):
                 self.log.unlink(missing_ok=True)
                 self.env[variable] = "1"

@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+set -euo pipefail
+# run_onchange_after_14 — Hermes, the always-on agent, on the devbox only (tstack
+# ADR 0009 and 0016). Two profiles: the default ~/.hermes is the assistant, and
+# `coder` (~/.hermes/profiles/coder) does engineering.
+#   • Installs Hermes, creates the `coder` profile (and its `coder` command), adds
+#     rtk's command rewrite to `coder`, and runs one gateway per profile as a
+#     systemd user service that starts at boot. The gateways run cron jobs too.
+#   • Runs before 95-tstack on purpose: tstack then writes each profile's SOUL.md,
+#     seed USER.md, skill links and `skills.external_dirs`, and
+#     `hermes profile create` refuses a folder that already exists.
+#   • Secrets stay machine-local: API keys and bot tokens go in ~/.hermes/.env and
+#     ~/.hermes/profiles/coder/.env (`hermes setup`, `coder setup`). Until then the
+#     gateways run cron only; `hermes gateway restart` picks up new tokens.
+# Every step is idempotent; a failure exits non-zero, so the next apply retries.
+export PATH="$HOME/.local/bin:$HOME/.local/share/mise/shims:/usr/local/bin:/usr/bin:/bin:$PATH"
+
+{{ if .isDevbox -}}
+coder_home="$HOME/.hermes/profiles/coder"
+
+if ! command -v hermes >/dev/null 2>&1; then
+  echo "14-hermes: installing Hermes"
+  # --skip-setup: model and keys are a human step (`hermes setup`), not a bootstrap one
+  curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash -s -- --skip-setup
+fi
+
+if [ ! -d "$coder_home" ]; then
+  hermes profile create coder
+fi
+
+# rtk's plugin rewrites the coder's terminal commands, as rtk's hook does for
+# Claude Code. It belongs to rtk (tstack ADR 0012): rtk updates it.
+if command -v rtk >/dev/null 2>&1; then
+  HERMES_HOME="$coder_home" rtk init -g --agent hermes --auto-patch >/dev/null
+else
+  echo "14-hermes: rtk is missing — re-run chezmoi apply after mise installs it" >&2
+  exit 1
+fi
+
+# --- gateways: user services that outlive the SSH session ------------------------
+if [ ! -d /run/systemd/system ]; then
+  echo "14-hermes: no systemd here (container?) — skipping the gateways" >&2
+  exit 0
+fi
+if [ "$(loginctl show-user "$USER" --property=Linger --value 2>/dev/null)" != "yes" ]; then
+  sudo loginctl enable-linger "$USER"
+fi
+# `install` repairs an outdated unit and is a no-op on a current one.
+hermes gateway install --start-now --start-on-login
+hermes --profile coder gateway install --start-now --start-on-login
+
+{{ else -}}
+# macbook / omarchy: Hermes runs on the devbox only
+exit 0
+{{ end -}}

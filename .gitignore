@@ -58,5 +58,3 @@ ngrok.yml
 .config/herdr/session.json
 .config/worktrunk/approvals.toml
 .config/worktrunk/approvals.toml.lock
-ai-tools/.claude/hooks/rtk-rewrite.sh
-ai-tools/.claude/hooks/.rtk-hook.sha256

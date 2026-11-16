@@ -6,7 +6,7 @@
 #   mise tools    : claude-code, herdr, rtk
 #   herdr plugins : herdr plugin update
 #   native CLIs   : claude (Claude Code), droid (Factory) — self-update
-#   pi            : pi-update (mise executable + optional pi-harness SDK sync)
+#   pi            : pi-update (mise executable, packages, then tstack's Pi harness sync)
 #
 # Tools that aren't installed are skipped with a note, so this is safe to run
 # on any machine class (macbook / omarchy / devbox — brew only exists on mac).
