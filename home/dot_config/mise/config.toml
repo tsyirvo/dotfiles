@@ -1,5 +1,5 @@
 [tools]
-chezmoi = "latest" # the get.chezmoi.io bootstrap binary lands in ./bin, off PATH
+chezmoi = "latest"                               # the get.chezmoi.io bootstrap binary lands in ./bin, off PATH
 java = "17"
 node = "26"
 python = "3"
@@ -34,9 +34,10 @@ ctop = "latest"
 "npm:ctx7" = "latest"
 "npm:eas-cli" = "latest"
 "npm:@openai/codex" = "latest"
+"npm:@opencode/cli" = "latest"
 "npm:droid" = "latest"
 "npm:agent-device" = "latest"
-"npm:typescript-language-server" = "latest" # binary for the Claude Code typescript-lsp plugin
+"npm:typescript-language-server" = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = ["node"]

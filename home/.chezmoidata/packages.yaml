@@ -24,7 +24,6 @@ packages:
       # Terminal tools
       - fish # shell
       - tmux # terminal multiplexer
-      - mosh # resilient remote terminal
       - bat # cat clone
       - ack # grep replacement (from Brewfile)
       - fd # find replacement
@@ -48,12 +47,10 @@ packages:
       - docker # docker CLI (orbstack cask provides engine)
       - libpq # psql / pg_dump clients (keg-only → PATH added in 10-environment.fish)
       # Misc
-      - mas # Mac App Store CLI (drives the mas section)
-      - blueutil # bluetooth CLI (macOS only)
+      - mas # Mac App Store CLI (drives the mas section
       - borders # JankyBorders — window border for Aerospace
       - btop # system monitor
       - mole # Mole — local ORM (dev tool)
-      - terminal-notifier # finish-notify for long tasks
       - mactop # mac silicon stats (macOS only)
       # AI
       - mlx # Apple silicon ML libs
@@ -111,7 +108,6 @@ packages:
       - ngrok # ngrok (authtoken out-of-band)
       - proxyman # http debug proxy-
       - orbstack # docker engine + linux VMs
-      - gitkraken # git GUI
       - postman # api client
       - bruno # api client
       # Communication
@@ -148,7 +144,7 @@ packages:
       - claude # Claude desktop
       - chatgpt # ChatGPT desktop
       - factory # factory.ai
-      - codexbar # AI sub usage
+      - thiloreintjes/tinybar/tinybar # AI sub usage
       # Keyboards & Peripherals
       - openlogi
       - logitech-g-hub
@@ -167,11 +163,11 @@ packages:
       - tailscale-app # tailnet client — GUI app bundles the CLI, symlinked by 12-tailscale
       - coconutbattery
       - aldente # battery charge limiter
-      - istat-menus
+      - stats
       - raycast # launcher
       - thaw # menu bar cleaner
       - nikitabobko/tap/aerospace # tiling WM (tap also declared above)
-      - the-unarchiver
+      # - the-unarchiver
       - macpacker
       - cleanshot # screenshot tool
       - lookaway # eye break reminder
@@ -179,7 +175,8 @@ packages:
       - imageoptim
       - clop # clipboard/compression
       - pika # color picker
-      - voiceink # voice input
+      - voiceink
+      - anomalyco/tap/hex
 
     ## Fonts (casks, MacBook only; Linux uses the shared installer below)
     fonts_casks:
@@ -192,7 +189,7 @@ packages:
       WhatsApp: 310633997
       Yubico Authenticator: 1497506650
       Transporter: 1450874784
-      RocketSim for Xcode Simulator: 1504940162
+      # RocketSim for Xcode Simulator: 1504940162
       Infuse: 1136220934
       Pure Paste: 1611378436
       Brother iPrint$Scan: 1193539993
@@ -220,7 +217,6 @@ packages:
     pacman:
       - fish
       - tmux
-      - mosh
       - bat
       - fd
       - fzf
@@ -258,7 +254,7 @@ packages:
       # binary is available — build-essential is the compiler, these supply
       # ruby-build's configure-time libs/headers
       - autoconf bison libssl-dev libyaml-dev zlib1g-dev libffi-dev libreadline-dev libgdbm-dev
-      - tmux mosh ripgrep fzf btop gnupg jq
+      - tmux ripgrep fzf btop gnupg jq
       - postgresql-client # psql / pg_dump against the local Postgres containers
     # Docker isn't in Debian/Ubuntu default repos → 13-docker adds Docker's official apt repo
     docker:
