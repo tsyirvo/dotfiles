@@ -1,0 +1,18 @@
+{{- if .isDarwin }}
+set -l brew_command
+
+if type -q brew
+    set brew_command (command -s brew)
+else
+    for candidate in /opt/homebrew/bin/brew /usr/local/bin/brew
+        if test -x "$candidate"
+            set brew_command "$candidate"
+            break
+        end
+    end
+end
+
+if set -q brew_command[1]
+    eval ("$brew_command" shellenv)
+end
+{{- end }}

@@ -1,22 +1,29 @@
-!.config
+# ---------------------------------------------------------------------------
+# macOS
+# ---------------------------------------------------------------------------
+.DS_Store
 
-.config/tmux/plugins/
-.config/fish/completions
-.config/fish/fish_variables
-.config/fish/functions/fisher.fish
-.config/fish/functions/wt.fish
-.config/fish/themes
-.config/raycast
-.config/zed/conversations
-.config/zed/prompts
-.config/zed/themes
-.config/goose
-.config/ngrok
-.config/opencode
-.config/mole/purge_paths
-.config/herdr/session.json
-.config/worktrunk/approvals.toml
-.config/worktrunk/approvals.toml.lock
-.serena
-ai-tools/.claude/hooks/rtk-rewrite.sh
-ai-tools/.claude/hooks/.rtk-hook.sha256
+# ---------------------------------------------------------------------------
+# Secrets & keys — last line of defense; gitleaks is the real guard
+# ---------------------------------------------------------------------------
+*.key
+*key.txt
+*.pem
+*.p12
+*.p8
+ngrok.yml
+.npmrc
+.credentials
+*_rsa
+*_ed25519
+
+# ---------------------------------------------------------------------------
+# Logs & runtime state
+# ---------------------------------------------------------------------------
+*.log
+
+# ---------------------------------------------------------------------------
+# Agent/tool state dirs — never managed
+# ---------------------------------------------------------------------------
+.conductor/
+.serena/

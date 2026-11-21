@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+# Update the chezmoi-managed pi executable, its packages and models, then sync
+# tstack's Pi harness to it.
+# Usage: pi-update (override the tstack location with TSTACK_DIR).
+
+set -euo pipefail
+
+if [ "$#" -gt 0 ]; then
+    echo "usage: pi-update" >&2
+    exit 2
+fi
+
+command -v mise >/dev/null 2>&1 || {
+    echo "mise not found on PATH" >&2
+    exit 1
+}
+
+TSTACK_DIR="${TSTACK_DIR:-}"
+# Resolve relative overrides before leaving the caller's directory.
+if [ -n "$TSTACK_DIR" ] && [[ "$TSTACK_DIR" != /* ]]; then
+    TSTACK_DIR="$PWD/$TSTACK_DIR"
+fi
+PI_TOOL="npm:@earendil-works/pi-coding-agent"
+
+# Ignore project-level tool selections; do not rewrite the managed manifest.
+cd "$HOME"
+# Without an override, sync the checkout tstack is installed from (it follows
+# `tstack install --relocate`), else the path 95-tstack clones to.
+if [ -z "$TSTACK_DIR" ]; then
+    TSTACK_DIR="$(tstack root 2>/dev/null || true)"
+    TSTACK_DIR="${TSTACK_DIR:-$HOME/Developer/agentic/tstack}"
+fi
+if ! mise where "$PI_TOOL" >/dev/null 2>&1; then
+    echo "pi is not installed as a mise npm tool; apply the chezmoi mise config and run mise install first." >&2
+    exit 1
+fi
+mise upgrade "$PI_TOOL"
+PI_BIN="$(mise which pi --tool "$PI_TOOL")"
+export PI_BIN
+
+# Use the canonical executable, not an old Node-global pi on PATH.
+# mise exec supplies the global Node runtime even when invoked from a project.
+mise exec -- "$PI_BIN" update --extensions
+mise exec -- "$PI_BIN" update --models
+
+# After the package update, so the subagent tool lists see the new pi-subagents.
+if [ -f "$TSTACK_DIR/package.json" ]; then
+    # tstack's own mise.toml pins the Bun and Node its verify expects.
+    mise -C "$TSTACK_DIR" exec -- bun run --cwd "$TSTACK_DIR" pi:sync
+else
+    echo "skip: tstack Pi harness sync (not found at $TSTACK_DIR; override with TSTACK_DIR)"
+fi
+
+echo ""
+echo "Updated pi. Restart running agents/panes (and Herdr/tmux daemons) to pick it up."
