@@ -41,6 +41,12 @@ Library/**
 .Brewfile
 {{ end }}
 
+# ---- macbook-only: Rex config — Lanes and Float run in the Mac's Rex server,
+# and remote hosts need no copy (their init.lua would fail to find them) -------
+{{ if not .isMacbook }}
+.config/rex/***
+{{ end }}
+
 # ---- Linux-only: systemd user env (mise shims on PATH for user services) -----
 {{ if .isDarwin }}
 .config/environment.d/***

@@ -18,7 +18,7 @@ dir_length = 2
 
 [[session]]
 name = "moth"
-path = "/projects/app-studio/moth"
+path = "~/Developer/app-studio/moth-app"
 startup_command = "wl"
 windows = ["claude"]
 
