@@ -44,13 +44,14 @@ case "$*" in
     upgrade*) exit "${UPGRADE_STATUS:-0}" ;;
     which*) printf '%s\n' "$CANONICAL_PI" ;;
     *pi:sync) exit "${SYNC_STATUS:-0}" ;;
+    *"tstack install") exit "${INSTALL_STATUS:-0}" ;;
 esac
 ''')
         # A stale pi on PATH must never be used, including for extension updates.
         self.mock("pi", 'echo "STALE PI" >> "$CALL_LOG"; exit 99\n')
         self.mock("brew", "exit 1\n")
         for name in ("claude", "droid"):
-            self.mock(name, "exit 0\n")
+            self.mock(name, f'echo "NATIVE {name} $*" >> "$CALL_LOG"\n')
 
     def mock(self, name, body):
         target = self.bin / name
@@ -75,13 +76,14 @@ esac
         result = self.run_updater()
         self.assertEqual(result.returncode, 0, result.stderr)
         calls = self.calls()
-        self.assertEqual(len(calls), 6)
+        self.assertEqual(len(calls), 7)
         self.assertIn(f"|upgrade {TOOL}|", calls[1])
         self.assertIn(f"|which pi --tool {TOOL}|", calls[2])
         self.assertIn("update --extensions", calls[3])
         self.assertIn("update --models", calls[4])
         self.assertIn(f"-C {self.tstack} exec -- bun run --cwd {self.tstack} pi:sync", calls[5])
         self.assertIn(f"PI_BIN={self.env['CANONICAL_PI']}", calls[5])
+        self.assertIn(f"-C {self.tstack} exec -- bun run --cwd {self.tstack} tstack install", calls[6])
         self.assertTrue(all(call.startswith(f"{self.home}|") for call in calls))
         self.assertNotIn("STALE PI", "\n".join(calls))
         self.assertNotIn("pi:update-globals", "\n".join(calls))
@@ -126,6 +128,13 @@ esac
                 self.assertEqual(len(self.calls()), count)
                 self.env.pop(variable)
 
+    def test_install_conflicts_warn_without_failing(self):
+        self.env["INSTALL_STATUS"] = "1"
+        result = self.run_updater()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("tstack install left conflicts", result.stderr)
+        self.assertEqual(len(self.calls()), 7)
+
     def test_arguments_are_rejected_without_updates(self):
         self.assertEqual(self.run_updater("pi-update", "--all").returncode, 2)
         self.assertEqual(self.calls(), [])
@@ -135,9 +144,21 @@ esac
         self.assertEqual(result.returncode, 0, result.stderr)
         calls = "\n".join(self.calls())
         self.assertIn(f"upgrade {TOOL}", calls)
+        for tool in ("claude-code", "npm:@openai/codex", "npm:@opencode/cli", "npm:droid"):
+            self.assertIn(f"|-C {self.home} upgrade {tool}|", calls)
         self.assertIn("pi:sync", calls)
+        self.assertNotIn("NATIVE", calls)
         self.assertNotIn("update --all", calls)
         self.assertNotIn("STALE PI", calls)
+
+    def test_update_ai_tools_self_updates_unmanaged_native_clis(self):
+        self.env["WHERE_STATUS"] = "1"
+        result = self.run_updater("update-ai-tools")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        calls = "\n".join(self.calls())
+        self.assertIn("NATIVE claude update", calls)
+        self.assertIn("NATIVE droid update", calls)
+        self.assertNotIn(" upgrade ", calls)
 
 
 if __name__ == "__main__":

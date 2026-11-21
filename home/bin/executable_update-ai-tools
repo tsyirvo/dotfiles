@@ -2,10 +2,11 @@
 #
 # update-ai-tools — update every AI tool on this machine in one go.
 #
-#   brew casks    : claude, codex, factory, conductor, codexbar, droid
-#   mise tools    : claude-code, herdr, rtk
+#   brew casks    : claude, chatgpt, factory, tinybar (greedy: they self-update)
+#   mise tools    : claude-code, codex, opencode, droid, herdr, rtk
 #   herdr plugins : herdr plugin update
-#   native CLIs   : claude (Claude Code), droid (Factory) — self-update
+#   native CLIs   : claude (Claude Code), droid (Factory) — only when no
+#                   package manager owns them
 #   pi            : pi-update (mise executable, packages, then tstack's Pi harness sync)
 #
 # Tools that aren't installed are skipped with a note, so this is safe to run
@@ -24,6 +25,13 @@ brew_has() {
     brew list "$1" "$2" >/dev/null 2>&1
 }
 
+# mise_has <tool> — true if the global mise config installs the tool.
+# -C "$HOME" ignores the pins of the project this runs from.
+mise_has() {
+    command -v mise >/dev/null 2>&1 || return 1
+    mise -C "$HOME" where "$1" >/dev/null 2>&1
+}
+
 # upgrade_brew <name> — formula first, then cask; skips if not installed.
 upgrade_brew() {
     local name="$1"
@@ -33,7 +41,8 @@ upgrade_brew() {
         ok "$name up to date"
     elif brew_has --cask "$name"; then
         header "Upgrading brew cask: $name"
-        brew upgrade --cask "$name"
+        # Without --greedy, brew skips casks that declare auto_updates.
+        brew upgrade --cask --greedy "$name"
         ok "$name up to date"
     else
         skip "$name (not installed)"
@@ -41,15 +50,16 @@ upgrade_brew() {
 }
 
 # --- brew-managed tools -----------------------------------------------------
-for pkg in claude codex factory conductor codexbar droid; do
+for pkg in claude chatgpt factory tinybar; do
     upgrade_brew "$pkg"
 done
 
 # --- mise-managed tools -----------------------------------------------------
-for tool in claude-code herdr rtk; do
-    if command -v mise >/dev/null 2>&1 && mise where "$tool" >/dev/null 2>&1; then
+# pi is mise-managed too, but pi-update upgrades it (below).
+for tool in claude-code npm:@openai/codex npm:@opencode/cli npm:droid herdr rtk; do
+    if mise_has "$tool"; then
         header "Upgrading mise tool: $tool"
-        mise upgrade "$tool"
+        mise -C "$HOME" upgrade "$tool"
         ok "$tool up to date"
     else
         skip "$tool (not installed by mise)"
@@ -66,10 +76,9 @@ else
 fi
 
 # --- native self-updating CLIs ----------------------------------------------
-# Claude Code installs itself to ~/.local/bin unless managed by mise or Homebrew.
-if command -v claude >/dev/null 2>&1 \
-    && ! brew_has --cask claude-code \
-    && { ! command -v mise >/dev/null 2>&1 || ! mise where claude-code >/dev/null 2>&1; }; then
+# Claude Code and Droid install themselves to ~/.local/bin unless mise or
+# Homebrew manages them. A self-update of a managed copy fights the manager.
+if command -v claude >/dev/null 2>&1 && ! brew_has --cask claude-code && ! mise_has claude-code; then
     header "Updating Claude Code (native install)"
     claude update
     ok "claude up to date"
@@ -77,8 +86,7 @@ else
     skip "claude-code (no native install)"
 fi
 
-# Droid installs itself to ~/.local/bin unless managed as the brew cask.
-if command -v droid >/dev/null 2>&1 && ! brew_has --cask droid; then
+if command -v droid >/dev/null 2>&1 && ! brew_has --cask droid && ! mise_has npm:droid; then
     header "Updating Droid (native install)"
     droid update
     ok "droid up to date"
@@ -87,8 +95,7 @@ else
 fi
 
 # --- pi (mise-managed) --------------------------------------------------------
-if command -v mise >/dev/null 2>&1 \
-    && mise -C "$HOME" where "npm:@earendil-works/pi-coding-agent" >/dev/null 2>&1; then
+if mise_has "npm:@earendil-works/pi-coding-agent"; then
     header "Updating pi and its packages"
     "$(dirname "$0")/pi-update"
     ok "pi up to date"
