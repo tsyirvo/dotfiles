@@ -23,40 +23,7 @@ ngrok.yml
 *.log
 
 # ---------------------------------------------------------------------------
-# Stow → chezmoi transition artifacts (removed at cutover)
-# ---------------------------------------------------------------------------
-.config.stow-backup/
-.stowrc
-.stow-local-ignore
-
-# ---------------------------------------------------------------------------
-# Agent/tool state dirs — never managed — keep out even pre-cutover
+# Agent/tool state dirs — never managed
 # ---------------------------------------------------------------------------
 .conductor/
 .serena/
-.config/chezmoi/chezmoistate.boltdb
-
-# ---------------------------------------------------------------------------
-# Untracked app state inside the old stow tree (~/.config IS the worktree
-# today). Moot once cutover moves ~/.config out of the repo.
-# ---------------------------------------------------------------------------
-.config/mise/config.toml   # legacy duplicate — see home/dot_config/mise/config.toml (chezmoi SOT)
-.config/tmux/plugins/
-.config/fish/completions
-.config/fish/fish_variables
-.config/fish/functions/fisher.fish
-.config/fish/functions/wt.fish
-.config/fish/themes
-.config/raycast
-.config/zed/conversations
-.config/zed/prompts
-.config/zed/themes
-.config/goose
-.config/ngrok
-.config/opencode
-.config/mole/purge_paths
-.config/herdr/session.json
-.config/worktrunk/approvals.toml
-.config/worktrunk/approvals.toml.lock
-ai-tools/.claude/hooks/rtk-rewrite.sh
-ai-tools/.claude/hooks/.rtk-hook.sha256

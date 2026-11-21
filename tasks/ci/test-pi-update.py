@@ -116,30 +116,6 @@ esac
         self.assertEqual(self.run_updater("pi-update", "--all").returncode, 2)
         self.assertEqual(self.calls(), [])
 
-    def use_stow_updater(self):
-        shutil.copyfile(ROOT / "bin/pi-update", self.bin / "pi-update")
-
-    def test_stow_updater_uses_bun_with_node_26_for_both_steps(self):
-        self.use_stow_updater()
-        result = self.run_updater()
-        self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertEqual(self.calls(), [
-            f"{self.harness}|exec node@26 bun -- bun run pi:update-globals|PI_BIN=",
-            f"{self.harness}|exec node@26 bun -- bun run pi:sync|PI_BIN=",
-        ])
-
-    def test_stow_failure_stops_before_sync(self):
-        self.use_stow_updater()
-        self.mock("mise", 'echo "$*" >> "$CALL_LOG"; exit 1\n')
-        self.assertNotEqual(self.run_updater().returncode, 0)
-        self.assertEqual(len(self.calls()), 1)
-
-    def test_stow_missing_harness_stops_without_updates(self):
-        self.use_stow_updater()
-        self.env["PI_HARNESS_DIR"] = str(self.root / "missing")
-        self.assertNotEqual(self.run_updater().returncode, 0)
-        self.assertEqual(self.calls(), [])
-
     def test_update_ai_tools_delegates_to_sibling_updater(self):
         result = self.run_updater("update-ai-tools")
         self.assertEqual(result.returncode, 0, result.stderr)

@@ -95,8 +95,7 @@ Keys it does not list, such as `transcription_recents`, remain unchanged.
 Credentials, history, downloaded models, and runtime state stay outside the repository.
 
 Quit Hex before applying its settings file. OpenCode provider connections must be restored separately.
-While this Mac uses Stow, keep using Hex's CLI for live changes. Copy changes into
-`home/.chezmoidata/hex.json` for the future reinstall.
+To keep a change made in Hex, copy it into `home/.chezmoidata/hex.json`.
 
 Run `python3 tasks/ci/test-hex-settings.py` to test restoration in temporary home directories.
 
@@ -127,8 +126,7 @@ comment of `home/.chezmoidata/packages.yaml`.
 
 Fisher owns the downloaded plugin files and Fish's local installation state; chezmoi manages
 only the plugin manifest and our own Fish configuration. The existing portable Mocha colors
-remain in `conf.d/20-catppuccin-mocha.fish`. While this Mac still uses Stow, do not apply the
-new Fish configuration or installer to it; they are for the future chezmoi migration.
+remain in `conf.d/20-catppuccin-mocha.fish`.
 
 ### Node / global npm rules
 
@@ -150,14 +148,6 @@ The harness defaults to `~/projects/argentic/pi-harness`; override it with
 the updater. Updating the harness can modify its `package.json` and `bun.lock`; review and
 commit those changes in that repository. `chezmoi apply` never runs this sync automatically.
 Restart running agents/panes and Herdr/tmux daemons after updating.
-
-**While this Mac still uses Stow, keep using the existing `bin/pi-update`.** It continues
-updating every Node-global pi installation and syncing the harness using Bun with Node 26.
-The new updater lives only in `home/` until the fresh chezmoi installation;
-do not apply it over the Stow-managed
-command. Once the fresh Mac is verified, retire the Stow updater and pi-harness's
-`pi:update-globals` script. If migrating an existing machine instead, verify the mise-owned
-pi resolves across projects before deliberately removing old Node-global copies.
 
 ## Shortcuts (`mise run …`)
 

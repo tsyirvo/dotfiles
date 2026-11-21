@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # Update the chezmoi-managed pi executable and optionally sync pi-harness's SDK.
-# The Stow updater in bin/pi-update remains separate until the migration is done.
 # Usage: pi-update (override the harness location with PI_HARNESS_DIR).
 
 set -euo pipefail
