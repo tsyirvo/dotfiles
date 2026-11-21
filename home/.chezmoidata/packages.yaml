@@ -164,7 +164,7 @@ packages:
       - coconutbattery
       - aldente # battery charge limiter
       - stats
-      - raycast # launcher
+      - tinycast # launcher
       - thaw # menu bar cleaner
       - nikitabobko/tap/aerospace # tiling WM (tap also declared above)
       # - the-unarchiver
