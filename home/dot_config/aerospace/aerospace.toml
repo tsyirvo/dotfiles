@@ -12,7 +12,7 @@ after-login-command = []
 # 'after-startup-command' is run after 'after-login-command'
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
 after-startup-command = [
-  'exec-and-forget borders active_color=0xc0e2e2e3 inactive_color=0xc02c2e34 background_color=0x302c2e34 width=6 hidpi=off'
+  'exec-and-forget borders active_color=0xc0e2e2e3 inactive_color=0xc02c2e34 background_color=0x302c2e34 width=6 hidpi=off',
 ]
 
 # Start AeroSpace at login
@@ -61,11 +61,11 @@ preset = 'qwerty'
 #                 See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [gaps]
 inner.horizontal = 10
-inner.vertical =   10
-outer.left =       10
-outer.bottom =     10
-outer.top =        10
-outer.right =      10
+inner.vertical = 10
+outer.left = 5
+outer.bottom = 5
+outer.top = 5
+outer.right = 5
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -198,7 +198,10 @@ alt-shift-semicolon = 'mode service'
 [mode.service.binding]
 esc = ['reload-config', 'mode main']
 r = ['flatten-workspace-tree', 'mode main'] # reset layout
-f = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling layout
+f = [
+  'layout floating tiling',
+  'mode main',
+] # Toggle between floating and tiling layout
 backspace = ['close-all-windows-but-current', 'mode main']
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#resize
@@ -219,7 +222,7 @@ alt-shift-l = ['join-with right', 'mode main']
 
 # Workspace 1
 [[on-window-detected]]
-if.app-id = 'com.edisonmail.edisonmail'
+if.app-id = 'com.readdle.SparkDesktop.appstore'
 run = 'move-node-to-workspace 1'
 
 [[on-window-detected]]
@@ -230,36 +233,25 @@ run = 'move-node-to-workspace 1'
 if.app-id = 'com.spotify.client'
 run = 'move-node-to-workspace 1'
 
-
-# Workspace W
-[[on-window-detected]]
-if.app-id = 'com.cron.electron'
-run = 'move-node-to-workspace W'
-
-
 # Workspace Q
 [[on-window-detected]]
 if.app-id = 'md.obsidian'
-run = 'move-node-to-workspace Q'
+run = 'move-node-to-workspace 2'
 
 [[on-window-detected]]
 if.app-id = 'notion.id'
-run = 'move-node-to-workspace Q'
+run = 'move-node-to-workspace 2'
 
 
 # Workspace A
 [[on-window-detected]]
-if.app-id = 'company.thebrowser.Browser'
-run = 'move-node-to-workspace A'
-
-[[on-window-detected]]
-if.app-id = 'company.thebrowser.dia'
+if.app-id = 'app.zen-browser.zen'
 run = 'move-node-to-workspace A'
 
 
 # Workspace X
 [[on-window-detected]]
-if.app-id = 'com.microsoft.VSCode'
+if.app-id = 'dev.zed.Zed'
 run = 'move-node-to-workspace X'
 
 [[on-window-detected]]
@@ -279,7 +271,7 @@ run = 'move-node-to-workspace Z'
 
 # Workspace S
 [[on-window-detected]]
-if.app-id = 'com.googlecode.iterm2'
+if.app-id = 'com.superlogical.rex'
 run = 'move-node-to-workspace S'
 
 [[on-window-detected]]
@@ -295,12 +287,6 @@ run = 'move-node-to-workspace D'
 [[on-window-detected]]
 if.app-id = 'com.tinyspeck.slackmacgap'
 run = 'move-node-to-workspace D'
-
-
-# Workspace V
-[[on-window-detected]]
-if.app-id = 'com.conductor.app'
-run = 'move-node-to-workspace V'
 
 
 # Floating
