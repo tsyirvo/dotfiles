@@ -259,7 +259,7 @@ if.app-id = 'com.todesktop.230313mzl4w4u92'
 run = 'move-node-to-workspace X'
 
 [[on-window-detected]]
-if.app-id = 'com.apple.iphonesimulator'
+if.app-id = 'com.apple.dt.Devices'
 run = ['layout tiling', 'move-node-to-workspace X']
 
 
