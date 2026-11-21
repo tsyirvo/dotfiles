@@ -31,12 +31,7 @@ Then run:
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply tsyirvo
 ```
 
-The chezmoi setup is not on `master` yet. Until it merges, install from its branch.
-To target any other branch, replace `feat/migrateToChezMoi` with that branch name:
-
-```bash
-sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply --branch feat/migrateToChezMoi tsyirvo
-```
+To try a branch before it merges, add `--branch <name>` after `--apply`.
 
 The role (macbook / omarchy / devbox) is inferred from the OS; force it with
 `DOTFILES_ROLE=…` (or `--promptString role=…`) when the OS guess isn't right — CI does this.

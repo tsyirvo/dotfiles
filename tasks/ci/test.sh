@@ -27,7 +27,9 @@ elif command -v pacman >/dev/null 2>&1; then
   # harmless on native amd64 CI runners
   grep -q '^DisableSandboxSyscalls' /etc/pacman.conf \
     || printf 'DisableSandboxSyscalls\n' >> /etc/pacman.conf
-  pacman -Sy --noconfirm --needed git curl sudo >/dev/null 2>&1
+  # -Syu, never -Sy: a sync without the upgrade is a partial upgrade, and new
+  # packages built against newer libs (openssl 4) break the image's old ones
+  pacman -Syu --noconfirm --needed git curl sudo >/dev/null 2>&1
 else
   echo 'test: no apt-get/pacman in image' >&2
   exit 1

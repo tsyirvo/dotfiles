@@ -1,0 +1,14 @@
+# gitleaks config: the default rules, plus allowlists for known false positives.
+# Keep each allowlist as narrow as the false positive (one rule, one file, one shape).
+[extend]
+useDefault = true
+
+# Editor keybindings: `"key": "ctrl+shift+alt+down"` matches generic-api-key.
+# A real secret in this file still fails: only key chords are allowed.
+[[allowlists]]
+description = "Cursor keybinding chords are not API keys"
+condition = "AND"
+targetRules = ["generic-api-key"]
+paths = ['''Cursor/User/keybindings\.json$''']
+regexTarget = "secret"
+regexes = ['''^(?:ctrl|shift|alt|cmd|meta|win)(?:\+[a-z0-9]+)+$''']
