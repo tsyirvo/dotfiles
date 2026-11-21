@@ -8,18 +8,10 @@ alias gs='git status -sb'
 alias gcp="git checkout -"
 alias gcm="git checkout main"
 
-alias grc="git reset --soft HEAD~1"
-alias grs="git reset --soft HEAD ."
 alias gsc='git stash && git stash clear'
 
 alias gp='git push -u origin HEAD'
 alias gpf='git push origin HEAD --force-with-lease --force-if-includes'
-alias gpt='git push --follow-tags'
-alias gft='git fetch --tags'
-
-alias ghide='git update-index --assume-unchanged'
-alias gunhide='git update-index --no-assume-unchanged'
-alias ghidden='! git ls-files -v | grep '^h' | cut -c3-'
 
 alias ghpr="gh pr create --title"
 
@@ -31,9 +23,14 @@ alias fz="fzf --preview=\"bat --color=always {}\" | xargs -r cursor"
 ### Tailscale ###
 alias tssh="tailscale ssh"
 
+### Claude ###
+alias cc="claude"
+
+### Chezmoi ###
+alias cm="chezmoi"
+
 ### Xcode ###
-alias ios="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app"
-alias watchos="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator\\ \\(Watch\\).app"
+alias ios="open -b com.apple.dt.Devices"
 
 ### Tmux ###
 alias t="tmux"
