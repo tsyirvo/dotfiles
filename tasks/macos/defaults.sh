@@ -131,6 +131,10 @@ defaults write com.apple.dock showhidden -bool true
 defaults write com.apple.dock show-recents -bool false
 
 ## Menu bar ---------------------------------------------------------------------
+# Always auto-hide the native bar: SketchyBar shows through. A click on the strip
+# reveals the native bar, so SketchyBar items are for display only.
+defaults write NSGlobalDomain _HIHideMenuBar -bool true
+
 # Clock: day of week + 24-hour time with seconds (date only when space allows).
 # The old DateFormat string is ignored by recent macOS; these booleans replaced it.
 defaults write com.apple.menuextra.clock ShowDayOfWeek -bool true
