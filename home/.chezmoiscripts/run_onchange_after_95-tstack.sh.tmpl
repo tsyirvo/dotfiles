@@ -11,6 +11,13 @@ set -euo pipefail
 # machine it fails until then, and the next `chezmoi apply` retries it.
 # tstack machines are macbook and devbox (tstack.yaml); omarchy gets nothing.
 {{ if not .isOmarchy -}}
+# TSTACK_SKIP=1 skips the agent stack where the private clone can't work (CI
+# containers have no GitHub SSH key). chezmoi then records this script as run,
+# so never set it on a real machine.
+if [ "${TSTACK_SKIP:-}" = 1 ]; then
+  echo "95-tstack: TSTACK_SKIP=1 — skipping the agent stack"
+  exit 0
+fi
 export PATH="$HOME/.local/bin:$HOME/.local/share/mise/shims:/opt/homebrew/bin:/usr/local/bin:$PATH"
 for bin in git mise; do
   command -v "$bin" >/dev/null 2>&1 || { echo "95-tstack: $bin is required — re-run chezmoi apply after installing packages" >&2; exit 1; }

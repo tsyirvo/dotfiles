@@ -41,7 +41,8 @@ echo 'test ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 # runs git without the user's global config, so set it system-wide too.
 su - test -s /bin/bash -c 'git config --global --add safe.directory /dotfiles'
 git config --system --add safe.directory /dotfiles
-su - test -c "DOTFILES_ROLE=$ROLE sh -c \"\$(curl -fsLS get.chezmoi.io)\" -- init --apply --source=/dotfiles"
+# TSTACK_SKIP: the container has no GitHub SSH key for the private tstack clone
+su - test -c "TSTACK_SKIP=1 DOTFILES_ROLE=$ROLE sh -c \"\$(curl -fsLS get.chezmoi.io)\" -- init --apply --source=/dotfiles"
 # assert: fish exists, chezmoi doctor exit 0, mise install reproduces tools
 # (run under bash: the bootstrap's 50-shell chsh'd test's login shell to fish;
 # explicit PATH because /etc/skel adds ~/bin and ~/.local/bin only on debian —
