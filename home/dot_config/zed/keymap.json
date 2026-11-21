@@ -1,0 +1,26 @@
+[
+  {
+    "context": "!ContextEditor > (Editor && mode == full)",
+    "bindings": {
+      "cmd-k": "assistant::InlineAssist",
+    },
+  },
+  {
+    "context": "Editor && (edit_prediction && showing_completions)",
+    "bindings": {
+      "tab": "editor::AcceptEditPrediction",
+    },
+  },
+  {
+    "context": "BufferSearchBar",
+    "bindings": {
+      "cmd-g": "search::SelectNextMatch"
+    }
+  },
+  {
+    "context": "BufferSearchBar",
+    "unbind": {
+      "cmd-f3": "search::SelectNextMatch"
+    }
+  },
+]

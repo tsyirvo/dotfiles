@@ -1,0 +1,4 @@
+theme = "catppuccin-mocha"
+diff_view = "side-by-side"   # or "unified"
+ignore_whitespace = false
+mouse = true

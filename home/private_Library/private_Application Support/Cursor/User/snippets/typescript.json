@@ -1,0 +1,62 @@
+{
+  "Print to console": {
+    "prefix": "log",
+    "body": ["console.log('$1', $2);"],
+    "description": "Log output to console"
+  },
+  "JS arrow function": {
+    "prefix": "af",
+    "body": ["const $1 = ($2) => {", "\t$3", "};"],
+    "description": "Create an empty arrow function"
+  },
+  "Comment separator": {
+    "prefix": "///",
+    "body": ["/* ***** *****  $1  ***** ***** */"],
+    "description": "Add a comment separator"
+  },
+  "Test suite": {
+    "prefix": "describe",
+    "body": [
+      "describe('${TM_FILENAME_BASE}', () => {",
+      "  afterEach(() => {",
+      "    jest.clearAllMocks();",
+      "  });",
+      "",
+      "  it('$1', () => {",
+      "    // Given",
+      "",
+      "    // When",
+      "",
+      "    // Then",
+      "    expect(0).toEqual(0);",
+      "  });",
+      "});"
+    ],
+    "description": "Add a test suite"
+  },
+  "Test block": {
+    "prefix": "it",
+    "body": [
+      "it('$1', () => {",
+      "  // Given",
+      "",
+      "  // When",
+      "",
+      "  // Then",
+      "  expect(0).toEqual(0);",
+      "});"
+    ],
+    "description": "Add a test block"
+  },
+  "New hook": {
+    "prefix": "rHook",
+    "body": [
+      "export const $TM_FILENAME_BASE = () => {",
+      "  $1",
+      "",
+      "  return { }",
+      "}"
+    ],
+    "description": "Create new hook"
+  }
+}

@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -euo pipefail
+# run_onchange_after_ — rebuild bat's cache so the custom themes in
+# ~/.config/bat/themes resolve (BAT_THEME="Catppuccin Mocha"). bat only reads
+# themes from its binary cache, never from the themes dir directly.
+# Runs after 10-install-packages, so bat exists on a fresh boot.
+export PATH="$HOME/.local/bin:$HOME/.local/share/mise/shims:/opt/homebrew/bin:/usr/local/bin:/usr/bin:$PATH"
+# Re-runs when the themes change:
+{{- range (glob (joinPath .chezmoi.sourceDir "dot_config/bat/themes/*")) }}
+#   {{ base . }}: {{ include . | sha256sum }}
+{{- end }}
+bat_bin="$(command -v bat || command -v batcat || true)"
+if [ -z "$bat_bin" ]; then
+  echo "25-bat-cache: bat not installed — skipping" >&2
+  exit 0
+fi
+"$bat_bin" cache --build

@@ -251,30 +251,44 @@ zed = "zed {{ worktree_path }}"
 
 # ── HOOKS: the tmux session lifecycle ────────────────────────
 
-# PRE-START (blocking): Create a tmux session with 3-pane layout
+# PRE-START (blocking): sequential pipeline — one step per [[pre-start]] block,
+# each must succeed before the next runs.
+
+# 1) Copy gitignored files (node_modules, .env.local, mise.toml, .expo, …)
+# from the main worktree so a fresh worktree is ready to work in immediately.
+# Foreground (pre-*) runs at normal priority; skip-existing makes failures retryable.
+[[pre-start]]
+copy = "wt step copy-ignored"
+
+# 2) Create a tmux session with 3-pane layout
 # (left: full height, right: two stacked vertically)
 # This runs BEFORE the --execute command (Claude Code)
 # so the session is ready when Claude starts.
-[pre-start]
-tmux-session = """
-S="{{ repo }}__{{ branch | sanitize }}"
-W="{{ worktree_path }}"
-
-mise trust "$W/mise.toml" 2>/dev/null || true
-mise trust "$W/.mise.toml" 2>/dev/null || true
-
-tmux new-session -d -s "$S" -c "$W" -n agent
-tmux split-window -h -t "$S:agent" -c "$W"
-tmux split-window -v -t "$S:agent.right" -c "$W"
-tmux select-pane -t "$S:agent.left"
-tmux resize-pane -t "$S:agent.left" -x 60%
-
-echo "✓ tmux session '$S' ready"
-"""
+# Trust AFTER the copy (above) so the copied mise.toml files pass.
+# [[pre-start]]
+# tmux-session = """
+# S="{{ repo }}__{{ branch | sanitize }}"
+# W="{{ worktree_path }}"
+#
+# mise trust "$W/mise.toml" "$W/.mise.toml" "$W/mobile/mise.toml" 2>/dev/null || true
+#
+# tmux new-session -d -s "$S" -c "$W" -n agent
+# tmux split-window -h -t "$S:agent" -c "$W"
+# tmux split-window -v -t "$S:agent.right" -c "$W"
+# tmux select-pane -t "$S:agent.left"
+# tmux resize-pane -t "$S:agent.left" -x 60%
+#
+# echo "✓ tmux session '$S' ready"
+# """
 
 # PRE-REMOVE (blocking): kill the tmux session before removing worktree
-[pre-remove]
-tmux-kill = """
-S="{{ repo }}__{{ branch | sanitize }}"
-tmux kill-session -t "$S" 2>/dev/null || true
-"""
+# [pre-remove]
+# tmux-kill = """
+# S="{{ repo }}__{{ branch | sanitize }}"
+# tmux kill-session -t "$S" 2>/dev/null || true
+# """
+
+# Skip heavyweight explorations/website ignored files when copy-ignored runs,
+# regardless of which worktree's cwd it resolves its config from.
+[step.copy-ignored]
+exclude = ["mobile-explorations/**", "website/**", "mobile/ios", "mobile/android"]

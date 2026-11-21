@@ -1,0 +1,24 @@
+# OS/editor detritus
+.DS_Store
+.AppleDouble
+._*
+Thumbs.db
+Desktop.ini
+*~
+*.swp
+
+# Personal credentials and local overrides
+.env
+.env.local
+.env.*.local
+.npmrc
+.credentials
+ngrok.yml
+id_rsa
+id_ed25519
+*.pem
+*.p12
+*.p8
+
+# Intentionally machine-local Claude setting
+**/.claude/settings.local.json

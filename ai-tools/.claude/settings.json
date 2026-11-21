@@ -1,8 +1,8 @@
 {
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "env": {
-    "CLAUDE_AUTOCOMPACT_PCT_OVERRIDE": "70",
     "CLAUDE_CODE_SUBAGENT_MODEL": "sonnet",
-    "ENABLE_CLAUDEAI_MCP_SERVERS": "false"
+    "CLAUDE_CODE_DISABLE_TERMINAL_TITLE": "1"
   },
   "attribution": {
     "commit": "",
@@ -12,174 +12,94 @@
     "allow": [
       "WebSearch",
       "WebFetch",
-      "Write",
-      "Edit",
-      "Bash(grep:*)",
-      "Bash(ls:*)",
-      "Bash(source:*)",
-      "Bash(find:*)",
-      "Bash(sort:*)",
-      "Bash(mv:*)",
-      "Bash(mkdir:*)",
-      "Bash(tree:*)",
-      "Bash(touch:*)",
-      "Bash(cat:*)",
-      "Bash(cp:*)",
-      "Bash(npm:*)",
-      "Bash(pnpm:*)",
-      "Bash(yarn:*)",
-      "Bash(echo:*)",
-      "Bash(lsof:*)",
-      "Bash(test:*)",
-      "Bash(chmod:*)",
-      "Bash(claude mcp:*)",
-      "Bash(git status:*)",
-      "Bash(git diff:*)",
-      "Bash(git log:*)",
-      "Bash(git fetch:*)",
-      "Bash(git rm:*)",
-      "Bash(git branch:*)",
-      "Bash(git rev-parse:*)",
-      "Bash(git add:*)",
-      "Bash(git mv:*)",
-      "Bash(git show:*)",
-      "Bash(gh api:*)",
-      "Bash(rtk:*)",
-      "Bash(mise:*)",
-      "Bash(npm view:*)",
-      "Bash(yarn why:*)",
-      "Bash(yarn list:*)",
-      "Bash(yarn info:*)",
-      "Bash(npx lefthook:*)",
-      "Bash(npx @biomejs/biome:*)",
-      "Bash(npx biome:*)",
-      "Bash(npx eslint:*)",
-      "Bash(npx prettier:*)",
-      "Bash(npx vitest:*)",
-      "Bash(npx jest:*)",
-      "Bash(npx tsc:*)",
-      "Bash(npx turbo:*)",
-      "Bash(npx tsc-files:*)",
-      "Bash(npx expo:*)",
-      "Bash(coderabbit:*)",
-      "Bash(rozenite agent:*)",
-      "Bash(.specify/scripts/bash/check-prerequisites.sh:*)",
-      "Bash(.specify/scripts/bash/common.sh:*)",
-      "Bash(.specify/scripts/bash/create-new-feature.sh:*)",
-      "Bash(.specify/scripts/bash/setup-plan.sh:*)",
-      "Bash(.specify/scripts/bash/update-agent-context.sh:*)",
-      "Skill(claude-developer-platform:*)",
-      "Skill(frontend-design:frontend-design)",
-      "mcp__plugin_claude-mem_mcp-search__*",
-      "mcp__plugin_context7_context7__*",
-      "mcp__figma-dev-mode-mcp-server",
+      "Bash(lsof *)",
+      "Bash(mkdir *)",
+      "Bash(touch *)",
+      "Bash(rtk *)",
+      "Bash(mise *)",
+      "Bash(gh *)",
+      "Bash(claude mcp list *)",
+      "Bash(claude mcp get *)",
+      "Bash(npx @biomejs/biome *)",
+      "Bash(npx biome *)",
+      "Bash(npx eslint *)",
+      "Bash(npx prettier *)",
+      "Bash(npx vitest *)",
+      "Bash(npx jest *)",
+      "Bash(npx tsc *)",
+      "Bash(npx tsc-files *)",
+      "Bash(npx turbo *)",
+      "Bash(npx expo *)",
+      "Bash(coderabbit *)",
       "mcp__ide__*",
-      "mcp__context7__*",
-      "mcp__grepai__*",
-      "mcp__supabase__get_logs",
-      "mcp__supabase__search_docs",
-      "mcp__supabase__list_tables",
-      "mcp__supabase__get_advisors",
-      "mcp__supabase__list_migrations",
-      "mcp__supabase__list_projects",
-      "mcp__supabase__get_project_url",
-      "mcp__supabase__list_edge_functions",
-      "mcp__supabase__list_extensions",
+      "mcp__pencil__*",
       "mcp__sentry__get_issue_details",
       "mcp__sentry__search_events",
       "mcp__sentry__search_issues",
       "mcp__sentry__find_organizations",
       "mcp__sentry__search_issue_events",
-      "mcp__pencil__*",
       "mcp__convex__status",
       "mcp__convex__data",
-      "mcp__convex__tables",
-      "mcp__pencil"
+      "mcp__convex__tables"
     ],
-    "deny": [],
+    "deny": [
+      "Read(.env)",
+      "Read(.env.*)",
+      "Read(.dev.vars)",
+      "Read(.dev.vars.*)",
+      "Read(!*.example)",
+      "Edit(.env)",
+      "Edit(.env.*)",
+      "Edit(.dev.vars)",
+      "Edit(.dev.vars.*)",
+      "Edit(!*.example)",
+      "Edit(package-lock.json)",
+      "Edit(pnpm-lock.yaml)",
+      "Edit(yarn.lock)",
+      "Edit(bun.lock)",
+      "Bash(gh repo delete *)",
+      "Bash(gh repo archive *)",
+      "Bash(gh repo rename *)",
+      "Bash(gh repo edit *--visibility*)",
+      "Bash(gh run delete *)",
+      "Bash(gh cache delete *)",
+      "Bash(gh secret *)",
+      "Bash(gh project delete *)",
+      "Bash(gh ssh-key delete *)",
+      "Bash(gh gpg-key delete *)",
+      "Bash(gh auth *)",
+      "Bash(gh api *)"
+    ],
     "defaultMode": "auto"
   },
+  "autoMode": {
+    "environment": [
+      "$defaults",
+      "Organization: personal developer machine (macOS). Primary use: software development (TypeScript, React Native / Expo, web)",
+      "Source control: github.com/tsyirvo and all repos under it",
+      "Key services: Sentry, Convex"
+    ]
+  },
   "hooks": {
-    "Notification": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash $HOME/.claude/hooks/notify.sh \"Claude Code\" \"An input is needed from you\""
-          }
-        ]
-      }
-    ],
-    "PermissionRequest": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "[ -n \"$SUPERSET_HOME_DIR\" ] && [ -x \"$SUPERSET_HOME_DIR/hooks/notify.sh\" ] && \"$SUPERSET_HOME_DIR/hooks/notify.sh\" || true"
-          }
-        ]
-      }
-    ],
     "PreToolUse": [
-      {
-        "matcher": "Edit|Write|Read",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash $HOME/.claude/hooks/guard-protected-files.sh"
-          }
-        ]
-      },
       {
         "matcher": "Bash",
         "hooks": [
           {
             "type": "command",
-            "command": "/Users/tsyirvo/.claude/hooks/rtk-rewrite.sh"
+            "command": "rtk hook claude"
           }
         ]
       }
     ],
-    "Stop": [
+    "SessionStart": [
       {
+        "matcher": "^(startup|resume|clear|compact|fork)$",
         "hooks": [
           {
             "type": "command",
-            "command": "[ -n \"$SUPERSET_HOME_DIR\" ] && [ -x \"$SUPERSET_HOME_DIR/hooks/notify.sh\" ] && \"$SUPERSET_HOME_DIR/hooks/notify.sh\" || true"
-          }
-        ]
-      }
-    ],
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "[ -n \"$SUPERSET_HOME_DIR\" ] && [ -x \"$SUPERSET_HOME_DIR/hooks/notify.sh\" ] && \"$SUPERSET_HOME_DIR/hooks/notify.sh\" || true"
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "[ -n \"$SUPERSET_HOME_DIR\" ] && [ -x \"$SUPERSET_HOME_DIR/hooks/notify.sh\" ] && \"$SUPERSET_HOME_DIR/hooks/notify.sh\" || true"
-          }
-        ]
-      }
-    ],
-    "PostToolUseFailure": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "[ -n \"$SUPERSET_HOME_DIR\" ] && [ -x \"$SUPERSET_HOME_DIR/hooks/notify.sh\" ] && \"$SUPERSET_HOME_DIR/hooks/notify.sh\" || true"
+            "command": "bash \"$HOME/.claude/hooks/herdr-agent-state.sh\" session",
+            "timeout": 10
           }
         ]
       }
@@ -187,48 +107,34 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "bash $HOME/.claude/statusline-ccusage.sh",
-    "padding": 0
+    "command": "$HOME/.claude/statusline.sh",
+    "padding": 0,
+    "refreshInterval": 30
   },
   "enabledPlugins": {
-    "agent-sdk-dev@claude-plugins-official": false,
     "claude-code-wakatime@wakatime": true,
     "claude-md-management@claude-plugins-official": true,
-    "code-simplifier@claude-plugins-official": false,
-    "context7@claude-plugins-official": false,
-    "explanatory-output-style@claude-plugins-official": false,
-    "figma@claude-plugins-official": false,
-    "frontend-design@claude-plugins-official": false,
-    "learning-output-style@claude-plugins-official": false,
-    "postgres-best-practices@supabase-agent-skills": false,
-    "react-native-best-practices@callstack-agent-skills": false,
-    "security-guidance@claude-plugins-official": true,
-    "skill-creator@claude-plugins-official": false,
-    "skills@swmansion": false,
-    "supabase@claude-plugins-official": false,
-    "swift-lsp@claude-plugins-official": false,
-    "typescript-lsp@claude-plugins-official": true,
-    "ui-ux-pro-max@ui-ux-pro-max-skill": false
+    "typescript-lsp@claude-plugins-official": true
   },
-  "extraKnownMarketplaces": {
-    "agricidaniel-seo": {
-      "source": {
-        "source": "github",
-        "repo": "AgriciDaniel/claude-seo"
-      }
+  "model": "opus",
+  "fallbackModel": ["sonnet", "haiku"],
+  "effortLevel": "medium",
+  "modelSettings": {
+    "claude-fable-5-1": {
+      "effortLevel": "high"
     },
-    "swmansion": {
-      "source": {
-        "source": "github",
-        "repo": "software-mansion-labs/skills"
-      }
+    "claude-opus-5-5": {
+      "effortLevel": "medium"
+    },
+    "claude-sonnet-5-5": {
+      "effortLevel": "medium"
     }
   },
-  "effortLevel": "medium",
+  "autoCompactWindow": 400000,
+  "promptCacheTtl": "1h",
+  "disableClaudeAiConnectors": true,
   "tui": "fullscreen",
   "remoteControlAtStartup": false,
-  "agentPushNotifEnabled": true,
-  "skipAutoPermissionPrompt": true,
-  "voiceEnabled": false,
-  "model": "opus"
+  "agentPushNotifEnabled": false,
+  "skipAutoPermissionPrompt": true
 }
