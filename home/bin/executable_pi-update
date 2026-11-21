@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Update the chezmoi-managed pi executable, its packages and models, then sync
-# tstack's Pi harness to it.
+# Update the chezmoi-managed pi executable, its packages and models, sync
+# tstack's Pi harness to it, then install the synced settings.
 # Usage: pi-update (override the tstack location with TSTACK_DIR).
 
 set -euo pipefail
@@ -47,9 +47,19 @@ mise exec -- "$PI_BIN" update --models
 if [ -f "$TSTACK_DIR/package.json" ]; then
     # tstack's own mise.toml pins the Bun and Node its verify expects.
     mise -C "$TSTACK_DIR" exec -- bun run --cwd "$TSTACK_DIR" pi:sync
+    # pi:sync writes the repo copy of the Pi settings. tstack install merges it
+    # into ~/.pi/agent/settings.json. Conflicts are a human call: report only.
+    if ! mise -C "$TSTACK_DIR" exec -- bun run --cwd "$TSTACK_DIR" tstack install; then
+        echo "warning: tstack install left conflicts; inspect with 'tstack doctor'" >&2
+    fi
 else
     echo "skip: tstack Pi harness sync (not found at $TSTACK_DIR; override with TSTACK_DIR)"
 fi
+
+# rtk and Worktrunk own their Pi extensions (tstack ADR 0012). Refresh them
+# for the installed tool versions. Both rewrite only their own file.
+if command -v rtk >/dev/null 2>&1; then rtk init -g --agent pi --auto-patch >/dev/null; fi
+if command -v wt >/dev/null 2>&1; then wt config plugins pi install --yes >/dev/null; fi
 
 echo ""
 echo "Updated pi. Restart running agents/panes (and Herdr/tmux daemons) to pick it up."

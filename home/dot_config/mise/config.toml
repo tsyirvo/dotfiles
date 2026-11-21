@@ -34,7 +34,7 @@ ctop = "latest"
 "npm:ctx7" = "latest"
 "npm:eas-cli" = "latest"
 "npm:@openai/codex" = "latest"
-"npm:@opencode/cli" = "latest"
+"npm:@opencode/cli" = { version = "latest", allow_builds = ["@opencode/cli"] } # postinstall links the platform binary
 "npm:droid" = "latest"
 "npm:agent-device" = "latest"
 "npm:typescript-language-server" = "latest"
