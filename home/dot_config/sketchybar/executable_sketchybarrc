@@ -1,0 +1,24 @@
+#!/usr/bin/env lua
+-- SketchyBar entry point (Lua / SbarLua).
+-- Needs: `brew install lua` and SbarLua (see README.md).
+
+local home = os.getenv("HOME")
+local config_dir = os.getenv("CONFIG_DIR") or (home .. "/.config/sketchybar")
+
+-- SbarLua installs its native module here (not on the default cpath).
+package.cpath = package.cpath .. ";" .. home .. "/.local/share/sketchybar_lua/?.so"
+-- Make `require("items.clock")` etc. work regardless of the working directory.
+package.path = config_dir .. "/?.lua;" .. config_dir .. "/?/init.lua;" .. package.path
+
+sbar = require("sketchybar")
+
+-- Bundle the whole initial configuration into one message (much faster startup).
+sbar.begin_config()
+require("bar")
+require("default")
+require("items")
+sbar.hotload(true) -- reload automatically when a file in this folder changes
+sbar.end_config()
+
+-- Without the event loop, no Lua callback (subscribe, exec, delay) ever runs.
+sbar.event_loop()
