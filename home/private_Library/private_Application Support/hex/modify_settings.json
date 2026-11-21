@@ -1,3 +1,7 @@
 {{- /* chezmoi:modify-template */ -}}
 {{- $settings := default "{}" .chezmoi.stdin | fromJson -}}
-{{ $settings | setValueAtPath "dictation_processing" .hex.dictation_processing | setValueAtPath "vocabulary" .hex.vocabulary | toPrettyJson }}
+{{- $migrations := concat (get $settings "migrations" | default (list)) .hex.settings.migrations | uniq -}}
+{{- range $key, $value := .hex.settings -}}
+{{-   $settings = setValueAtPath $key $value $settings -}}
+{{- end -}}
+{{ $settings | setValueAtPath "migrations" $migrations | toPrettyJson }}

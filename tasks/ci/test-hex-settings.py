@@ -27,7 +27,7 @@ class HexSettingsTests(unittest.TestCase):
             shutil.copyfile(ROOT / "home" / relative, target)
         self.expected = json.loads(
             (self.source / ".chezmoidata/hex.json").read_text()
-        )["hex"]
+        )["hex"]["settings"]
         self.target = self.home / TARGET
         self.config = self.root / "chezmoi.toml"
         self.set_role("macbook")
@@ -59,7 +59,7 @@ class HexSettingsTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         return result.stdout
 
-    def test_fresh_install_restores_modes_and_vocabulary(self):
+    def test_fresh_install_restores_settings(self):
         self.chezmoi("apply", "--parent-dirs", str(self.target))
         self.assertEqual(json.loads(self.target.read_text()), self.expected)
         self.chezmoi("verify", str(self.target))
@@ -67,19 +67,20 @@ class HexSettingsTests(unittest.TestCase):
         self.chezmoi("apply", str(self.target))
         self.assertEqual(self.target.read_bytes(), first)
 
-    def test_existing_preferences_and_state_survive(self):
+    def test_settings_win_and_runtime_state_survives(self):
         existing = {
-            "sound_effects": False,
-            "microphone": "My microphone",
-            "capture": {"enabled": False, "routing": {"delivery": "steer"}},
+            "sound_effects": not self.expected["sound_effects"],
+            "transcription_recents": [{"model": "parakeet", "language": "en"}],
             "migrations": ["existing-migration"],
-            "dictation_processing": {"modes": []},
             "vocabulary": ["Old term"],
         }
         self.target.parent.mkdir(parents=True)
         self.target.write_text(json.dumps(existing))
         rendered = json.loads(self.chezmoi("cat", str(self.target)))
-        self.assertEqual(rendered, {**existing, **self.expected})
+        migrations = ["existing-migration", *self.expected["migrations"]]
+        self.assertEqual(rendered, {
+            **existing, **self.expected, "migrations": migrations,
+        })
         self.chezmoi("apply", str(self.target))
         self.assertEqual(json.loads(self.target.read_text()), rendered)
         self.chezmoi("verify", str(self.target))
