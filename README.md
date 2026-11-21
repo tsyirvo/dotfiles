@@ -62,6 +62,13 @@ The bootstrap then runs automatically, in order:
    `docker` group (sudo-less containers for agents). The group only reaches new sessions: after
    the first apply, run `tmux kill-server`, restart herdr and reconnect — or reboot.
 4. **Pre-commit hook** — gitleaks guards the repo against secret leaks.
+5. **Agent stack** (macbook, devbox) — clones [tstack](https://github.com/tsyirvo/tstack) to
+   `~/Developer/agentic/tstack` and runs `tstack install`: skills, the generated
+   `~/.claude/CLAUDE.md` and `~/.pi/agent/AGENTS.md`, Claude Code and Pi settings, and the
+   statusline. It then installs rtk's and Worktrunk's own Pi extensions. The clone needs the SSH
+   key, so on a fresh machine this step fails until the secrets step below; `chezmoi apply` again
+   then.
+   Conflicts are reported, never forced: `tstack doctor`, then `tstack install --backup`.
 
 Last, the **secrets step** (2 minutes, once per machine): SSH keys are
 deliberately **not** in this repo — copy them from your Mac / 1Password per
@@ -138,16 +145,18 @@ remain in `conf.d/20-catppuccin-mocha.fish`.
 ### Updating pi
 
 On a chezmoi-managed machine, run `pi-update`, or `update-ai-tools` to update all AI tools.
-The updater upgrades pi through mise using the global tool selection, then synchronizes
-pi-harness's SDK devDependencies to that exact executable using Bun with Node 26 and runs its
-install/typecheck workflow. Extension packages and model catalogs are refreshed separately;
-pi does not self-update the mise-owned executable.
+The updater upgrades pi through mise using the global tool selection, so every project runs the
+same pi whatever its Node version. It then refreshes pi's extension packages and model catalogs,
+and last runs `bun run pi:sync` in tstack with tstack's own mise tools. That pins the harness's
+SDK devDependencies to the exact executable, regenerates the subagent tool lists from the updated
+packages, and runs tstack's `verify`. pi does not self-update the mise-owned executable.
 
-The harness defaults to `~/projects/argentic/pi-harness`; override it with
-`PI_HARNESS_DIR`. If absent, SDK sync is explicitly skipped. A sync/typecheck failure stops
-the updater. Updating the harness can modify its `package.json` and `bun.lock`; review and
-commit those changes in that repository. `chezmoi apply` never runs this sync automatically.
-Restart running agents/panes and Herdr/tmux daemons after updating.
+The updater syncs the checkout `tstack root` reports, else `~/Developer/agentic/tstack`; override
+it with `TSTACK_DIR`. If absent, the harness sync is explicitly skipped. A sync/verify failure
+stops the updater. The sync can modify
+tstack's `package.json`, `bun.lock` and `harnesses/pi/settings.json`; review and commit those
+changes there. `chezmoi apply` never runs this sync automatically. Restart running agents/panes and
+Herdr/tmux daemons after updating.
 
 ## Shortcuts (`mise run …`)
 
