@@ -15,10 +15,13 @@ set -euo pipefail
 export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
 
 {{ if .isDarwin -}}
-# --- macOS: app (cask) is the tailnet client; link its bundled CLI into PATH ---------
+# --- macOS: app (cask) is the tailnet client; wrap its bundled CLI into PATH ---------
 APP_BIN="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 if [ -x "$APP_BIN" ]; then
-  ln -sfn "$APP_BIN" "$HOME/.local/bin/tailscale"
+  # The app binary reads its bundle ID from argv[0]. A symlink breaks that lookup, so use a wrapper.
+  rm -f "$HOME/.local/bin/tailscale"
+  printf '#!/bin/sh\nexec "%s" "$@"\n' "$APP_BIN" >"$HOME/.local/bin/tailscale"
+  chmod +x "$HOME/.local/bin/tailscale"
   if ! tailscale status >/dev/null 2>&1; then
     echo "12-tailscale: app installed but tailnet not up yet — open Tailscale and sign in" >&2
   fi
