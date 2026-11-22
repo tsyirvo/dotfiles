@@ -1,4 +1,4 @@
--- Menu bar apps island: [tinybar] [lookaway] [tailscale]   (added right-to-left)
+-- Menu bar apps island: [tinybar] [lookaway] [claude] [openai] [tailscale]   (added right-to-left)
 --
 -- Tailscale is drawn natively from its CLI (status colour, peer count, peer popup).
 -- Tinybar and LookAway have no usable CLI, so their real menu bar items are
@@ -12,6 +12,10 @@ local members = {}
 if settings.enable_native_tailscale then
   local tailscale = require("items.widgets.tailscale")
   table.insert(members, tailscale.name)
+end
+
+if settings.ai_limits.enabled then
+  for _, name in ipairs(require("items.widgets.ai_limits")) do table.insert(members, name) end
 end
 
 -- Clicking an alias does nothing by itself: forward the click to the real menu

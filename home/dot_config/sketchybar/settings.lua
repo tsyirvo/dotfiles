@@ -69,6 +69,13 @@ return {
     show_peer_count = false,
   },
 
+  -- AI session limits --------------------------------------------------------------
+  -- Remaining 5-hour limit of Claude and OpenAI, read with the Claude Code and Codex logins.
+  ai_limits = {
+    enabled = true,
+    poll_seconds = 300, -- the Claude usage endpoint rejects frequent polls
+  },
+
   -- Menu bar apps mirrored with SketchyBar aliases ----------------------------------
   -- On macOS 26+ every third-party item is reported as owned by "Control Center",
   -- so you need the indexed name. Run `scripts/find-menu-items.sh`, then paste the
