@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+set -euo pipefail
+# Builds SbarLua (the Lua module that dot_config/sketchybar requires) and starts
+# SketchyBar as a brew service. SbarLua has no releases, so it is pinned to a
+# commit. Its bundled Lua must match the `lua` formula minor version (5.5).
+# Re-runs when the pin below changes.
+export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
+
+{{ if .isDarwin -}}
+sbarlua_commit="dba9cc421b868c918d5c23c408544a28aadf2f2f"
+install_dir="$HOME/.local/share/sketchybar_lua"
+version_file="$install_dir/.commit"
+
+if [ ! -f "$install_dir/sketchybar.so" ] || [ "$(cat "$version_file" 2>/dev/null || true)" != "$sbarlua_commit" ]; then
+  build_dir="$(mktemp -d)"
+  trap 'rm -rf "$build_dir"' EXIT
+  git -C "$build_dir" init --quiet
+  git -C "$build_dir" fetch --quiet --depth 1 https://github.com/FelixKratz/SbarLua.git "$sbarlua_commit"
+  git -C "$build_dir" checkout --quiet FETCH_HEAD
+  make -C "$build_dir" install
+  printf '%s\n' "$sbarlua_commit" > "$version_file"
+fi
+
+if ! command -v sketchybar >/dev/null 2>&1; then
+  echo "16-sketchybar: sketchybar missing (10-install-packages pending?) — re-run apply" >&2
+  exit 0
+fi
+if ! brew services info sketchybar --json | grep -q '"running": true'; then
+  brew services start sketchybar
+fi
+{{ end -}}

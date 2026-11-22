@@ -6,7 +6,7 @@ Personal dotfiles managed with [chezmoi](https://www.chezmoi.io). One repository
 
 | Class           | OS                                 | role      | Packages from                                                                                       |
 | --------------- | ---------------------------------- | --------- | --------------------------------------------------------------------------------------------------- |
-| MacBook Pro     | macOS (Apple Silicon)              | `macbook` | Homebrew (+ casks, + Mac App Store, + Nerd Fonts, + vendored DMGs); Cursor user config + extensions; Hex settings; Rex config (Lanes + Float links to `~/Developer/open-source`) |
+| MacBook Pro     | macOS (Apple Silicon)              | `macbook` | Homebrew (+ casks, + Mac App Store, + Nerd Fonts, + vendored DMGs); Cursor user config + extensions; Hex settings; Rex config (Lanes + Float links to `~/Developer/open-source`); AeroSpace + SketchyBar |
 | Omarchy desktop | Arch Linux + Hyprland              | `omarchy` | pacman + Omarchy's built-in package manager; shared Nerd Font; systemd user env (mise shims)        |
 | Dev box         | Debian/Ubuntu, headless (VM / VPS) | `devbox`  | apt + mise for modern CLIs; shared Nerd Font; `bat`/`fd` symlinks; systemd user env (mise shims)    |
 
@@ -121,6 +121,7 @@ comment of `home/.chezmoidata/packages.yaml`.
 | Cross-platform CLIs, runtimes, global npm tools            | `home/dot_config/mise/config.toml`     | `mise install` (auto, on apply)                                               |
 | tmux plugins (8 via tpm; tpm itself an external)           | tmux.conf `@plugin` lines              | `20-install-tmux-plugins` script (auto, on apply)                             |
 | Fish plugins (including Fisher itself)                     | `home/dot_config/fish/fish_plugins`    | `21-install-fish-plugins` script (on first apply and manifest changes)        |
+| SbarLua (SketchyBar Lua module, pinned commit)             | `16-sketchybar` script                 | `16-sketchybar` script (auto, on apply; also starts the brew service)         |
 
 - **Add:** one commented line in the right manifest → `chezmoi apply` installs it.
 - **Remove:** delete the line → `chezmoi apply`, then uninstall from the OS

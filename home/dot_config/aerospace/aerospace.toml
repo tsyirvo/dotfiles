@@ -12,8 +12,21 @@ after-login-command = []
 # 'after-startup-command' is run after 'after-login-command'
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
 after-startup-command = [
-  'exec-and-forget borders active_color=0xc0e2e2e3 inactive_color=0xc02c2e34 background_color=0x302c2e34 width=6 hidpi=off',
+  'exec-and-forget borders active_color=0xffcba6f7 inactive_color=0xff313244 background_color=0x00000000 width=6 hidpi=off',
 ]
+
+# SketchyBar runs as a brew service. These hooks keep its workspace pills current.
+exec-on-workspace-change = [
+  '/bin/bash',
+  '-c',
+  'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE PREV_WORKSPACE=$AEROSPACE_PREV_WORKSPACE',
+]
+on-focus-changed = [
+  'exec-and-forget sketchybar --trigger aerospace_focus_change',
+]
+
+# SketchyBar reads this list at startup. Keep it in sync with the workspace bindings.
+persistent-workspaces = ['1', '2', '3', 'A', 'S', 'X']
 
 # Start AeroSpace at login
 start-at-login = true
@@ -64,7 +77,8 @@ inner.horizontal = 10
 inner.vertical = 10
 outer.left = 5
 outer.bottom = 5
-outer.top = 5
+# The notched built-in display keeps its menu bar strip; other monitors need room for SketchyBar.
+outer.top = [{ monitor."built-in" = 0 }, 42]
 outer.right = 5
 
 # 'main' binding mode declaration
@@ -130,7 +144,7 @@ alt-3 = 'workspace 3'
 alt-a = 'workspace A'
 # alt-b = 'workspace B'
 # alt-c = 'workspace C'
-alt-d = 'workspace D'
+# alt-d = 'workspace D'
 # alt-e = 'workspace E'
 # alt-f = 'workspace F'
 # alt-g = 'workspace G'
@@ -139,16 +153,16 @@ alt-d = 'workspace D'
 # alt-n = 'workspace N'
 # alt-o = 'workspace O'
 # alt-p = 'workspace P'
-alt-q = 'workspace Q'
+# alt-q = 'workspace Q'
 # alt-r = 'workspace R'
 alt-s = 'workspace S'
 # alt-t = 'workspace T'
 # alt-u = 'workspace U'
-alt-v = 'workspace V'
-alt-w = 'workspace W'
+# alt-v = 'workspace V'
+# alt-w = 'workspace W'
 alt-x = 'workspace X'
 # alt-y = 'workspace Y'
-alt-z = 'workspace Z'
+# alt-z = 'workspace Z'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
 alt-shift-1 = 'move-node-to-workspace 1'
@@ -163,7 +177,7 @@ alt-shift-3 = 'move-node-to-workspace 3'
 alt-shift-a = 'move-node-to-workspace A'
 # alt-shift-b = 'move-node-to-workspace B'
 # alt-shift-c = 'move-node-to-workspace C'
-alt-shift-d = 'move-node-to-workspace D'
+# alt-shift-d = 'move-node-to-workspace D'
 # alt-shift-e = 'move-node-to-workspace E'
 # alt-shift-f = 'move-node-to-workspace F'
 # alt-shift-g = 'move-node-to-workspace G'
@@ -172,16 +186,16 @@ alt-shift-d = 'move-node-to-workspace D'
 # alt-shift-n = 'move-node-to-workspace N'
 # alt-shift-o = 'move-node-to-workspace O'
 # alt-shift-p = 'move-node-to-workspace P'
-alt-shift-q = 'move-node-to-workspace Q'
+# alt-shift-q = 'move-node-to-workspace Q'
 # alt-shift-r = 'move-node-to-workspace R'
 alt-shift-s = 'move-node-to-workspace S'
 # alt-shift-t = 'move-node-to-workspace T'
 # alt-shift-u = 'move-node-to-workspace U'
-alt-shift-v = 'move-node-to-workspace V'
-alt-shift-w = 'move-node-to-workspace W'
+# alt-shift-v = 'move-node-to-workspace V'
+# alt-shift-w = 'move-node-to-workspace W'
 alt-shift-x = 'move-node-to-workspace X'
 # alt-shift-y = 'move-node-to-workspace Y'
-alt-shift-z = 'move-node-to-workspace Z'
+# alt-shift-z = 'move-node-to-workspace Z'
 
 alt-f = 'fullscreen'
 
@@ -191,18 +205,34 @@ alt-tab = 'workspace-back-and-forth'
 alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#mode
-alt-shift-semicolon = 'mode service'
+alt-shift-semicolon = [
+  'mode service',
+  'exec-and-forget sketchybar --trigger aerospace_mode_change MODE=service',
+]
 
 # 'service' binding mode declaration.
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
 [mode.service.binding]
-esc = ['reload-config', 'mode main']
-r = ['flatten-workspace-tree', 'mode main'] # reset layout
+esc = [
+  'reload-config',
+  'mode main',
+  'exec-and-forget sketchybar --trigger aerospace_mode_change MODE=main',
+]
+r = [
+  'flatten-workspace-tree',
+  'mode main',
+  'exec-and-forget sketchybar --trigger aerospace_mode_change MODE=main',
+] # reset layout
 f = [
   'layout floating tiling',
   'mode main',
+  'exec-and-forget sketchybar --trigger aerospace_mode_change MODE=main',
 ] # Toggle between floating and tiling layout
-backspace = ['close-all-windows-but-current', 'mode main']
+backspace = [
+  'close-all-windows-but-current',
+  'mode main',
+  'exec-and-forget sketchybar --trigger aerospace_mode_change MODE=main',
+]
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#resize
 alt-shift-minus = 'resize smart -50'
@@ -211,10 +241,26 @@ alt-shift-equal = 'resize smart +50'
 # sticky is not yet supported https://github.com/nikitabobko/AeroSpace/issues/2
 #s = ['layout sticky tiling', 'mode main']
 
-alt-shift-h = ['join-with left', 'mode main']
-alt-shift-j = ['join-with down', 'mode main']
-alt-shift-k = ['join-with up', 'mode main']
-alt-shift-l = ['join-with right', 'mode main']
+alt-shift-h = [
+  'join-with left',
+  'mode main',
+  'exec-and-forget sketchybar --trigger aerospace_mode_change MODE=main',
+]
+alt-shift-j = [
+  'join-with down',
+  'mode main',
+  'exec-and-forget sketchybar --trigger aerospace_mode_change MODE=main',
+]
+alt-shift-k = [
+  'join-with up',
+  'mode main',
+  'exec-and-forget sketchybar --trigger aerospace_mode_change MODE=main',
+]
+alt-shift-l = [
+  'join-with right',
+  'mode main',
+  'exec-and-forget sketchybar --trigger aerospace_mode_change MODE=main',
+]
 
 # down = 'volume down'
 # up = 'volume up'
@@ -233,7 +279,7 @@ run = 'move-node-to-workspace 1'
 if.app-id = 'com.spotify.client'
 run = 'move-node-to-workspace 1'
 
-# Workspace Q
+# Workspace 2
 [[on-window-detected]]
 if.app-id = 'md.obsidian'
 run = 'move-node-to-workspace 2'
@@ -242,11 +288,35 @@ run = 'move-node-to-workspace 2'
 if.app-id = 'notion.id'
 run = 'move-node-to-workspace 2'
 
+[[on-window-detected]]
+if.app-id = 'com.linear'
+run = 'move-node-to-workspace 2'
+
+
+# Workspace 3
+[[on-window-detected]]
+if.app-id = 'com.microsoft.teams2'
+run = 'move-node-to-workspace 3'
+
+[[on-window-detected]]
+if.app-id = 'com.tinyspeck.slackmacgap'
+run = 'move-node-to-workspace 3'
+
 
 # Workspace A
 [[on-window-detected]]
 if.app-id = 'app.zen-browser.zen'
 run = 'move-node-to-workspace A'
+
+
+# Workspace S
+[[on-window-detected]]
+if.app-id = 'com.superlogical.rex'
+run = 'move-node-to-workspace S'
+
+[[on-window-detected]]
+if.app-id = 'com.mitchellh.ghostty'
+run = 'move-node-to-workspace S'
 
 
 # Workspace X
@@ -261,32 +331,6 @@ run = 'move-node-to-workspace X'
 [[on-window-detected]]
 if.app-id = 'com.apple.dt.Devices'
 run = ['layout tiling', 'move-node-to-workspace X']
-
-
-# Workspace Z
-[[on-window-detected]]
-if.app-id = 'com.linear'
-run = 'move-node-to-workspace Z'
-
-
-# Workspace S
-[[on-window-detected]]
-if.app-id = 'com.superlogical.rex'
-run = 'move-node-to-workspace S'
-
-[[on-window-detected]]
-if.app-id = 'com.mitchellh.ghostty'
-run = 'move-node-to-workspace S'
-
-
-# Workspace D
-[[on-window-detected]]
-if.app-id = 'com.microsoft.teams2'
-run = 'move-node-to-workspace D'
-
-[[on-window-detected]]
-if.app-id = 'com.tinyspeck.slackmacgap'
-run = 'move-node-to-workspace D'
 
 
 # Floating

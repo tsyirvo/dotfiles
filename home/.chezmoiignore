@@ -35,9 +35,10 @@ Library/**
 !Library/Application Support/hex/settings.json
 {{ end }}
 
-# ---- macbook-only (aerospace is a macOS cask) --------------------------------
+# ---- macbook-only (aerospace is a macOS cask, sketchybar a macOS-only brew) --
 {{ if not .isDarwin }}
 .config/aerospace/**
+.config/sketchybar/**
 .Brewfile
 {{ end }}
 

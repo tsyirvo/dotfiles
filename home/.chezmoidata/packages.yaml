@@ -49,6 +49,9 @@ packages:
       # Misc
       - mas # Mac App Store CLI (drives the mas section
       - borders # JankyBorders — window border for Aerospace
+      - sketchybar # custom menu bar (config in dot_config/sketchybar)
+      - lua # runs sketchybarrc; SbarLua is built by 16-sketchybar
+      - joncrangle/tap/sketchybar-system-stats # stats_provider: SketchyBar CPU/RAM events
       - btop # system monitor
       - mole # Mole — local ORM (dev tool)
       - mactop # mac silicon stats (macOS only)
@@ -182,6 +185,7 @@ packages:
     fonts_casks:
       - font-fira-code-nerd-font
       - font-jetbrains-mono-nerd-font
+      - font-sketchybar-app-font # app icons in SketchyBar workspaces
 
     ## Mac App Store (mas) — id: name ------------------------------------------
     mas:
