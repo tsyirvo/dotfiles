@@ -73,6 +73,7 @@ return {
   ai_limits = {
     enabled = true,
     poll_seconds = 300, -- the Claude usage endpoint rejects frequent polls
+    stale_seconds = 1200, -- older readings turn grey (a token expires when Claude Code is not used)
   },
 
   -- Menu bar apps mirrored with SketchyBar aliases ----------------------------------

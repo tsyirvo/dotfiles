@@ -29,13 +29,24 @@ local openai = add("openai", ":openai:")
 local claude = add("claude", ":claude:")
 claude:set({ update_freq = cfg.poll_seconds, updates = true })
 
+-- The Claude usage endpoint often answers 429, because Tinybar polls it with the
+-- same login. A failed read keeps the last value. It turns grey once it is stale.
+local last = {}
+
 local function render(item, used)
-  if type(used) ~= "number" then
+  if type(used) == "number" then
+    last[item.name] = { used = used, at = os.time() }
+  end
+  local reading = last[item.name]
+  if not reading then
     item:set({ label = { string = "–", color = colors.state.muted } })
     return
   end
-  local remaining = math.max(0, 100 - math.floor(used + 0.5))
-  item:set({ label = { string = remaining .. "%", color = util.load_color(used) } })
+  local stale = os.time() - reading.at > cfg.stale_seconds
+  local remaining = math.max(0, 100 - math.floor(reading.used + 0.5))
+  item:set({
+    label = { string = remaining .. "%", color = stale and colors.state.muted or util.load_color(reading.used) },
+  })
 end
 
 local function update()
