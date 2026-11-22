@@ -382,6 +382,14 @@ sudo mdutil -i on / > /dev/null
 sudo mdutil -E / > /dev/null
 
 ## Other apps ------------------------------------------------------------------
+# noTunes: Play/Pause with no player open launches Apple Music. noTunes stops it
+# and opens Spotify instead. It does not add itself to Open at Login.
+defaults write digital.twisted.noTunes replacement -string "/Applications/Spotify.app"
+defaults write digital.twisted.noTunes hideIcon -bool true
+if ! osascript -e 'tell application "System Events" to get the name of every login item' | grep -q noTunes; then
+  osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/noTunes.app", hidden:true}' >/dev/null
+fi
+
 # Time Machine: don't offer new disks as backup
 defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
 
