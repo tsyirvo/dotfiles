@@ -3,11 +3,8 @@
 
 return {
   calendar = "\u{F00ED}",     -- nf-md-calendar
-  cpu = "\u{F061A}",          -- nf-md-chip
+  cpu = "\u{F0EE0}",          -- nf-md-cpu_64_bit
   memory = "\u{F035B}",       -- nf-md-memory
-  mic = "\u{F036C}",          -- nf-md-microphone
-  mic_off = "\u{F036D}",      -- nf-md-microphone_off
-  mic_unknown = "\u{F036E}",  -- nf-md-microphone_outline
   vpn = "\u{F0582}",          -- nf-md-vpn
   vpn_off = "\u{F099C}",      -- nf-md-shield_off_outline
   exit_node = "\u{F01E7}",    -- nf-md-earth
@@ -22,6 +19,12 @@ return {
   play_pause = "\u{F040E}",   -- nf-md-play_pause
   -- Equaliser frames (Unicode block elements, present in JetBrains Mono)
   eq_frames = { "▂▅▃▇", "▅▃▇▂", "▃▇▂▅", "▇▂▅▃", "▄▆▂▅", "▆▂▅▄" },
+  volume = {
+    high = "\u{F057E}",      -- nf-md-volume_high
+    medium = "\u{F0580}",    -- nf-md-volume_medium
+    low = "\u{F057F}",       -- nf-md-volume_low
+    off = "\u{F0581}",       -- nf-md-volume_off (muted or 0 %)
+  },
   battery = {
     charging = "\u{F0084}",   -- nf-md-battery_charging
     plugged = "\u{F06A5}",    -- nf-md-power_plug (AC, not charging: e.g. AlDente holding)

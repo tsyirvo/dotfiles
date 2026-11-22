@@ -44,18 +44,15 @@ return {
   -- Battery ----------------------------------------------------------------------
   battery_click_app = "AlDente", -- set to nil to only toggle the details popup
 
-  -- Microphone -------------------------------------------------------------------
-  mic = {
-    poll_seconds = 5,
+  -- Volume -----------------------------------------------------------------------
+  volume = {
     scroll_step = 5,       -- % per scroll tick
-    unmute_volume = 75,    -- used when unmuting and no previous level is known
-    show_device = false,   -- true = "Wave:3 75%" instead of "75%"
   },
 
-  -- CPU ----------------------------------------------------------------------------
-  cpu = {
+  -- CPU and RAM --------------------------------------------------------------------
+  usage = {
     interval = 2,          -- seconds between stats_provider samples
-    graph_width = 42,
+    label_width = 31,      -- fits "99%", so 1 and 2 digits take the same room
     click_app = "Activity Monitor",
   },
 
