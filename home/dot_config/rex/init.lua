@@ -2,6 +2,7 @@
 -- Agents are left out, so Lanes offers the ones Rex supports that are on PATH.
 require("lanes").setup {
   layouts = require("lanes-layouts"),
+  open = "tab",
 }
 
 rex.bind("cmd+alt+n", "lanes_new")
