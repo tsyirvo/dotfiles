@@ -19,6 +19,10 @@ return {
   play_pause = "\u{F040E}",   -- nf-md-play_pause
   -- Equaliser frames (Unicode block elements, present in JetBrains Mono)
   eq_frames = { "▂▅▃▇", "▅▃▇▂", "▃▇▂▅", "▇▂▅▃", "▄▆▂▅", "▆▂▅▄" },
+  wifi = {
+    on = "\u{F05A9}",        -- nf-md-wifi
+    off = "\u{F05AA}",       -- nf-md-wifi_off
+  },
   volume = {
     high = "\u{F057E}",      -- nf-md-volume_high
     medium = "\u{F0580}",    -- nf-md-volume_medium
