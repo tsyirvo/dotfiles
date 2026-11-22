@@ -3,8 +3,8 @@
 
 return {
   calendar = "\u{F00ED}",     -- nf-md-calendar
-  cpu = "\u{F0EE0}",          -- nf-md-cpu_64_bit
-  memory = "\u{F035B}",       -- nf-md-memory
+  cpu = "\u{F2DB}",           -- nf-fa-microchip
+  memory = "\u{EFC5}",        -- nf-fa-memory (a RAM stick)
   vpn = "\u{F0582}",          -- nf-md-vpn
   vpn_off = "\u{F099C}",      -- nf-md-shield_off_outline
   exit_node = "\u{F01E7}",    -- nf-md-earth
