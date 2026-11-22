@@ -38,6 +38,8 @@ return {
   -- Clock ----------------------------------------------------------------------
   -- Lua os.date format. Day-of-week + 24h with seconds, like your current defaults.sh.
   clock_format = "%a %d %b  %H:%M:%S",
+  -- Fixed label width: the seconds otherwise move the bar by 1 px. Change it with clock_format.
+  clock_label_width = 169,
   -- locale = "fr_FR.UTF-8",  -- uncomment for "sam. 21 nov."
   calendar_app = "Notion Calendar",
 

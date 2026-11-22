@@ -13,6 +13,8 @@ local clock = sbar.add("item", "widgets.clock", {
   label = {
     font = { family = settings.font.numbers, style = "Bold", size = 13.0 },
     padding_right = 10,
+    width = settings.clock_label_width,
+    align = "left",
   },
   background = {
     color = colors.island.bg,
