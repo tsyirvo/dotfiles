@@ -140,7 +140,7 @@ packages:
       - vlc
       - spotify
       - steam
-      - reflex-app
+      - notunes # Play/Pause opens Spotify, never Apple Music
       - soulseek
       - calibre # ebook manager
       # AI
