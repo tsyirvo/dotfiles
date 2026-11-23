@@ -78,7 +78,7 @@ inner.vertical = 10
 outer.left = 5
 outer.bottom = 5
 # The notched built-in display keeps its menu bar strip; other monitors need room for SketchyBar.
-outer.top = [{ monitor."built-in" = 0 }, 42]
+outer.top = [{ monitor."built-in" = 0 }, 38]
 outer.right = 5
 
 # 'main' binding mode declaration
