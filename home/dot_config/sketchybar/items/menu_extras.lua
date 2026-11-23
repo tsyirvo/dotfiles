@@ -1,8 +1,8 @@
--- Menu bar apps island: [tinybar] [lookaway] [claude] [openai] [tailscale]   (added right-to-left)
+-- Menu bar apps island: [claude] [openai] [tailscale]   (added right-to-left)
 --
 -- Tailscale is drawn natively from its CLI (status colour, peer count, peer popup).
--- Tinybar and LookAway have no usable CLI, so their real menu bar items are
--- mirrored with SketchyBar *aliases* (needs Screen Recording permission).
+-- Apps listed in settings.menu_extras are mirrored with SketchyBar *aliases*
+-- (needs Screen Recording permission).
 local colors = require("colors")
 local settings = require("settings")
 local util = require("helpers.util")
@@ -34,7 +34,7 @@ for i = #settings.menu_extras, 1, -1 do -- reverse: config order = left-to-right
       alias = {
         color = extra.tint and colors.text or nil,
         scale = extra.scale or 1.0,
-        update_freq = extra.update_freq or 1, -- LookAway's countdown needs 1 s
+        update_freq = extra.update_freq or 1,
       },
       icon = { drawing = false },
       label = { drawing = false },

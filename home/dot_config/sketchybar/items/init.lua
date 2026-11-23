@@ -9,7 +9,7 @@ if settings.spotify.enabled then require("items.spotify") end
 if settings.show_front_app then require("items.front_app") end
 
 -- Right side: the first one added is the right-most -----------------------------------
---   [tinybar lookaway claude openai tailscale]  [cpu ram]  [wifi volume battery]  [clock]
+--   [claude openai tailscale]  [cpu ram]  [wifi volume battery]  [clock]
 require("items.clock")
 require("items.system")       -- wifi, volume, battery island
 require("items.usage")        -- cpu, ram island
