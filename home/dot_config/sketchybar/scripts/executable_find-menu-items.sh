@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Lists every menu bar item SketchyBar can mirror, and previews each one in the
-# bar next to its number so you can tell which is Tinybar / LookAway / Tailscale.
+# bar next to its number so you can tell which app is which.
 #
 # On macOS 26+ third-party items are all reported as "Control Center,Item-0(N)";
 # N is the item's position counted from the right edge of the native menu bar.
@@ -62,6 +62,6 @@ done
 
 echo
 echo "Previewing for ${PREVIEW_SECONDS}s on the left of the bar (red number = line above)."
-echo "Tip: drag Tinybar/LookAway/Tailscale next to Control Center (Cmd-drag) BEFORE"
+echo "Tip: drag the apps you mirror next to Control Center (Cmd-drag) BEFORE"
 echo "running this, so new apps launching later don't shift their numbers."
 sleep "$PREVIEW_SECONDS"

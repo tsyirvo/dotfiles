@@ -1,10 +1,11 @@
--- Remaining 5-hour session limit of Claude and OpenAI (Codex), from scripts/ai-limits.sh.
+-- Remaining 5-hour session limit of Claude and OpenAI (Codex), from Pupitre's
+-- `agent-usage` CLI. It reads a cache shared with the Stream Deck, and it calls
+-- the APIs at most once per 5 minutes, whoever asks. So this item polls often.
 local colors = require("colors")
 local settings = require("settings")
 local util = require("helpers.util")
 
 local cfg = settings.ai_limits
-local script = os.getenv("HOME") .. "/.config/sketchybar/scripts/ai-limits.sh"
 
 local function add(key, icon)
   return sbar.add("item", "widgets.ai." .. key, {
@@ -29,31 +30,35 @@ local openai = add("openai", ":openai:")
 local claude = add("claude", ":claude:")
 claude:set({ update_freq = cfg.poll_seconds, updates = true })
 
--- The Claude usage endpoint often answers 429, because Tinybar polls it with the
--- same login. A failed read keeps the last value. It turns grey once it is stale.
-local last = {}
-
-local function render(item, used)
-  if type(used) == "number" then
-    last[item.name] = { used = used, at = os.time() }
+-- `agent-usage --format env` prints NAME=value lines, e.g. CLAUDE_5H=42 and CLAUDE_STALE=0.
+local function parse_env(output)
+  local vars = {}
+  for name, value in tostring(output):gmatch("([%u_][%u%d_]*)=([^\n]*)") do
+    vars[name] = value:match("^'(.*)'$") or value
   end
-  local reading = last[item.name]
-  if not reading then
+  return vars
+end
+
+local function render(item, vars, prefix)
+  local used = tonumber(vars[prefix .. "_5H"])
+  if not used then
     item:set({ label = { string = "–", color = colors.state.muted } })
     return
   end
-  local stale = os.time() - reading.at > cfg.stale_seconds
-  local remaining = math.max(0, 100 - math.floor(reading.used + 0.5))
+  local stale = vars[prefix .. "_STALE"] ~= "0"
   item:set({
-    label = { string = remaining .. "%", color = stale and colors.state.muted or util.load_color(reading.used) },
+    label = {
+      string = math.max(0, 100 - math.floor(used + 0.5)) .. "%",
+      color = stale and colors.state.muted or util.load_color(used),
+    },
   })
 end
 
 local function update()
-  util.exec(script, function(result)
-    local data = type(result) == "table" and result or {}
-    render(claude, data.claude)
-    render(openai, data.codex)
+  util.exec("agent-usage --format env", function(output)
+    local vars = parse_env(output)
+    render(claude, vars, "CLAUDE")
+    render(openai, vars, "CODEX")
   end)
 end
 

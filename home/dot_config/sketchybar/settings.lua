@@ -69,23 +69,21 @@ return {
   },
 
   -- AI session limits --------------------------------------------------------------
-  -- Remaining 5-hour limit of Claude and OpenAI, read with the Claude Code and Codex logins.
+  -- Remaining 5-hour limit of Claude and OpenAI, from Pupitre's `agent-usage` CLI.
+  -- Its shared cache calls the APIs at most once per 5 minutes, so polling often is free.
   ai_limits = {
     enabled = true,
-    poll_seconds = 300, -- the Claude usage endpoint rejects frequent polls
-    stale_seconds = 1200, -- older readings turn grey (a token expires when Claude Code is not used)
+    poll_seconds = 60,
   },
 
   -- Menu bar apps mirrored with SketchyBar aliases ----------------------------------
   -- On macOS 26+ every third-party item is reported as owned by "Control Center",
   -- so you need the indexed name. Run `scripts/find-menu-items.sh`, then paste the
   -- entries here, e.g. alias = "Control Center,Item-0(9)".
-  -- On macOS 15 and earlier the plain form works: alias = "LookAway,Item-0".
+  -- On macOS 15 and earlier the plain form works: alias = "AppName,Item-0".
   -- `process` is the app's process name, used to open its real menu on click.
   -- `tint` recolours a monochrome template icon in Catppuccin text colour.
   menu_extras = {
-    { key = "tinybar", alias = nil, process = "Tinybar", tint = false },
-    { key = "lookaway", alias = nil, process = "LookAway", tint = true },
     -- Prefer the native Tailscale widget (items/tailscale.lua). If you'd rather
     -- mirror the real icon, add it here and set enable_native_tailscale = false.
     -- { key = "tailscale", alias = nil, process = "Tailscale", tint = true },

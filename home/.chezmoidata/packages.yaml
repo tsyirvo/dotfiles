@@ -150,7 +150,6 @@ packages:
       - thiloreintjes/tinybar/tinybar # AI sub usage
       # Keyboards & Peripherals
       - openlogi
-      - logitech-g-hub
       - homerow # keyboard shortcuts
       - hyperkey # ctrl/cmd remap
       # 3D Tooling
