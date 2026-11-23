@@ -69,11 +69,11 @@ return {
   },
 
   -- AI session limits --------------------------------------------------------------
-  -- Remaining 5-hour limit of Claude and OpenAI, read with the Claude Code and Codex logins.
+  -- Remaining 5-hour limit of Claude and OpenAI, from Pupitre's `agent-usage` CLI.
+  -- Its shared cache calls the APIs at most once per 5 minutes, so polling often is free.
   ai_limits = {
     enabled = true,
-    poll_seconds = 300, -- the Claude usage endpoint rejects frequent polls
-    stale_seconds = 1200, -- older readings turn grey (a token expires when Claude Code is not used)
+    poll_seconds = 60,
   },
 
   -- Menu bar apps mirrored with SketchyBar aliases ----------------------------------
