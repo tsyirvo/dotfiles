@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+set -euo pipefail
+# run_onchange_after_ — clone Pupitre and install its `agent-usage` CLI to
+# ~/.local/bin. SketchyBar's AI limits item reads it; the Stream Deck plugin
+# shares its cache. Updates are `git pull` + `bun run install-cli` in the clone.
+# The Stream Deck plugin itself stays a manual step (README → Install).
+#
+# Runs after 95-tstack: the clone needs the SSH key from the secrets step, so on
+# a fresh machine it fails until then, and the next `chezmoi apply` retries it.
+{{ if .isDarwin -}}
+export PATH="$HOME/.local/bin:$HOME/.local/share/mise/shims:/opt/homebrew/bin:/usr/local/bin:$PATH"
+for bin in git mise; do
+  command -v "$bin" >/dev/null 2>&1 || { echo "96-pupitre: $bin is required — re-run chezmoi apply after installing packages" >&2; exit 1; }
+done
+
+repo="$HOME/Developer/open-source/pupitre"
+remote="git@github.com:tsyirvo/pupitre.git"
+
+if [ ! -d "$repo/.git" ]; then
+  mkdir -p "$(dirname "$repo")"
+  git clone --quiet "$remote" "$repo" || {
+    echo "96-pupitre: cannot clone $remote — finish the secrets step (SSH key), then re-run chezmoi apply" >&2
+    exit 1
+  }
+fi
+
+cd "$repo"
+mise trust --quiet
+mise install --quiet
+mise exec -- bun install --frozen-lockfile
+mise exec -- bun run install-cli
+{{ end -}}

@@ -64,6 +64,10 @@ The bootstrap then runs automatically, in order:
    key, so on a fresh machine this step fails until the secrets step below; `chezmoi apply` again
    then.
    Conflicts are reported, never forced: `tstack doctor`, then `tstack install --backup`.
+6. **Pupitre** (macbook) — clones [Pupitre](https://github.com/tsyirvo/pupitre) to
+   `~/Developer/open-source/pupitre` and installs its `agent-usage` CLI in `~/.local/bin`.
+   SketchyBar's AI limits item reads it. Like tstack, the clone waits for the SSH key. The Stream
+   Deck plugin stays a manual step (Pupitre's README).
 
 Last, the **secrets step** (2 minutes, once per machine): SSH keys are
 deliberately **not** in this repo — copy them from your Mac / 1Password per
@@ -122,6 +126,7 @@ comment of `home/.chezmoidata/packages.yaml`.
 | tmux plugins (8 via tpm; tpm itself an external)           | tmux.conf `@plugin` lines              | `20-install-tmux-plugins` script (auto, on apply)                             |
 | Fish plugins (including Fisher itself)                     | `home/dot_config/fish/fish_plugins`    | `21-install-fish-plugins` script (on first apply and manifest changes)        |
 | SbarLua (SketchyBar Lua module, pinned commit)             | `16-sketchybar` script                 | `16-sketchybar` script (auto, on apply; also starts the brew service)         |
+| `agent-usage` CLI (Claude + Codex limits, shared cache)     | `tsyirvo/pupitre` repo                 | `96-pupitre` script (on first apply; update: `bun run install-cli` in clone)  |
 
 - **Add:** one commented line in the right manifest → `chezmoi apply` installs it.
 - **Remove:** delete the line → `chezmoi apply`, then uninstall from the OS
