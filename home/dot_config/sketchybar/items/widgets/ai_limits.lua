@@ -139,18 +139,28 @@ end
 
 claude:subscribe({ "routine", "forced", "system_woke" }, update)
 
+-- Each open gets a new number. A timer from an earlier open must not close a newer one.
+local popup_opened = 0
+
+local function hide_popup()
+  openai:set({ popup = { drawing = false } })
+end
+
 for _, item in ipairs({ claude, openai }) do
   item:subscribe("mouse.clicked", function()
     if openai:query().popup.drawing == "on" then
-      openai:set({ popup = { drawing = false } })
+      hide_popup()
       return
     end
     update()
     openai:set({ popup = { drawing = true } })
+    popup_opened = popup_opened + 1
+    local this_open = popup_opened
+    sbar.delay(cfg.popup_seconds, function()
+      if this_open == popup_opened then hide_popup() end
+    end)
   end)
-  item:subscribe("mouse.exited.global", function()
-    openai:set({ popup = { drawing = false } })
-  end)
+  item:subscribe("mouse.exited.global", hide_popup)
 end
 
 return { claude.name, openai.name }
