@@ -24,7 +24,7 @@ Does nothing destructive; keys are only copied, never committed.
 
 ## Guards
 
-- `gitleaks protect --staged` runs on every commit (pre-commit hook installed by
-  `90-gitleaks` chezmoi script) and `gitleaks git` runs in CI.
+- `gitleaks protect --staged` runs on every commit (the global pre-commit hook in
+  `home/dot_config/git/exact_hooks`) and `gitleaks git` runs in CI.
 - `.gitignore` carries `*.key`, `*key.txt`, `*.pem`, `ngrok.yml`, `.npmrc` as a last line
   of defense — gitleaks is the real guard.

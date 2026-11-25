@@ -9,7 +9,8 @@
 	excludesfile = ~/.gitignore_global
 	editor = nano
 	ignorecase = false
-	# gitleaks pre-commit hook, installed by the 90-gitleaks script
+	# Global gitleaks hook. chezmoi owns the folder as exact_hooks,
+	# so apply removes hooks that other tools write there (lefthook install).
 	hooksPath = ~/.config/git/hooks
 
 [credential]
