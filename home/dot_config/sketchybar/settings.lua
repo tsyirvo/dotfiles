@@ -74,6 +74,7 @@ return {
   ai_limits = {
     enabled = true,
     poll_seconds = 60,
+    popup_seconds = 15,    -- the popup hides by itself after this delay
   },
 
   -- Menu bar apps mirrored with SketchyBar aliases ----------------------------------
