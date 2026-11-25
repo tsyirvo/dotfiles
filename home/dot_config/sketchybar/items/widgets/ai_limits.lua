@@ -8,13 +8,16 @@ local util = require("helpers.util")
 
 local cfg = settings.ai_limits
 
+-- Same rule as Pupitre: an error, or a snapshot older than 15 minutes, is stale.
+local STALE_AFTER_SECONDS = 15 * 60
+
 local PROVIDERS = {
-  { prefix = "CLAUDE", title = "Anthropic", icon = ":claude:" },
-  { prefix = "CODEX", title = "OpenAI", icon = ":openai:" },
+  { key = "claude", title = "Anthropic", icon = ":claude:" },
+  { key = "codex", title = "OpenAI", icon = ":openai:" },
 }
 local WINDOWS = {
-  { suffix = "5H", title = "5 hours" },
-  { suffix = "7D", title = "Weekly" },
+  { key = "fiveHour", title = "5 hours" },
+  { key = "weekly", title = "Weekly" },
 }
 
 local function add(key, icon)
@@ -41,10 +44,11 @@ local claude = add("claude", ":claude:")
 claude:set({ update_freq = cfg.poll_seconds, updates = true })
 openai:set({ popup = { align = "right" } })
 
+local bar_items = { claude = claude, codex = openai }
+
 local rows = {}
 for _, provider in ipairs(PROVIDERS) do
-  local key = provider.prefix:lower()
-  rows[provider.prefix] = sbar.add("item", "widgets.ai.popup." .. key, {
+  rows[provider.key] = sbar.add("item", "widgets.ai.popup." .. provider.key, {
     position = "popup." .. openai.name,
     icon = {
       string = provider.icon,
@@ -54,7 +58,7 @@ for _, provider in ipairs(PROVIDERS) do
     label = { string = provider.title, font = { family = settings.font.text, style = "Bold", size = 12.0 } },
   })
   for _, window in ipairs(WINDOWS) do
-    rows[provider.prefix .. "_" .. window.suffix] = sbar.add("item", "widgets.ai.popup." .. key .. "." .. window.suffix:lower(), {
+    rows[provider.key .. "." .. window.key] = sbar.add("item", "widgets.ai.popup." .. provider.key .. "." .. window.key, {
       position = "popup." .. openai.name,
       icon = {
         string = window.title,
@@ -69,66 +73,67 @@ for _, provider in ipairs(PROVIDERS) do
   end
 end
 
--- `agent-usage --format env` prints NAME=value lines, e.g. CLAUDE_5H=42 and CLAUDE_STALE=0.
-local function parse_env(output)
-  local vars = {}
-  for name, value in tostring(output):gmatch("([%u_][%u%d_]*)=([^\n]*)") do
-    vars[name] = value:match("^'(.*)'$") or value
-  end
-  return vars
-end
-
 local function remaining(used)
   return math.max(0, 100 - math.floor(used + 0.5))
 end
 
-local function render(item, vars, prefix)
-  local used = tonumber(vars[prefix .. "_5H"])
-  if not used then
-    item:set({ label = { string = "–", color = colors.state.muted } })
-    return
-  end
-  local stale = vars[prefix .. "_STALE"] ~= "0"
-  item:set({
-    label = {
-      string = remaining(used) .. "%",
-      color = stale and colors.state.muted or util.load_color(used),
-    },
-  })
+-- "42m", "4h43", "17h", "5 days (Mon 16:00)"
+local function format_reset(resets_at_ms)
+  local at = math.floor(resets_at_ms / 1000)
+  local left = math.max(0, at - os.time())
+  local hours = left // 3600
+  local minutes = (left % 3600) // 60
+  if hours < 1 then return minutes .. "m" end
+  if hours < 6 then return string.format("%dh%02d", hours, minutes) end
+  if hours < 24 then return hours .. "h" end
+  local days = math.floor(left / 86400 + 0.5)
+  return string.format("%d %s (%s)", days, days == 1 and "day" or "days", os.date("%a %H:%M", at))
 end
 
-local function render_popup(vars)
-  for _, provider in ipairs(PROVIDERS) do
-    local stale = vars[provider.prefix .. "_STALE"] ~= "0"
-    local error = vars[provider.prefix .. "_ERROR"] or ""
-    rows[provider.prefix]:set({
-      label = {
-        string = error ~= "" and (provider.title .. " · " .. error) or provider.title,
-        color = stale and colors.state.muted or colors.text,
-      },
-    })
-    for _, window in ipairs(WINDOWS) do
-      local name = provider.prefix .. "_" .. window.suffix
-      local used = tonumber(vars[name])
-      local reset = vars[name .. "_RESET"] or ""
-      local text = "–"
-      if used then
-        text = string.format("%3d%% left", remaining(used))
-        if reset ~= "" then text = text .. " · resets " .. reset end
-      end
-      rows[name]:set({
-        label = { string = text, color = (stale or not used) and colors.state.muted or util.load_color(used) },
-      })
+local function is_stale(entry)
+  local snapshot = entry and entry.snapshot
+  if not snapshot or entry.error then return true end
+  return os.time() - snapshot.asOf / 1000 > STALE_AFTER_SECONDS
+end
+
+local function render(provider, entry)
+  local snapshot = entry and entry.snapshot or {}
+  local stale = is_stale(entry)
+  local error = entry and entry.error
+
+  local five_hour = snapshot.fiveHour
+  bar_items[provider.key]:set({
+    label = {
+      string = five_hour and (remaining(five_hour.usedPercent) .. "%") or "–",
+      color = (stale or not five_hour) and colors.state.muted or util.load_color(five_hour.usedPercent),
+    },
+  })
+
+  rows[provider.key]:set({
+    label = {
+      string = error and (provider.title .. " · " .. error) or provider.title,
+      color = stale and colors.state.muted or colors.text,
+    },
+  })
+  for _, window in ipairs(WINDOWS) do
+    local limit = snapshot[window.key]
+    local text = "–"
+    if limit then
+      text = string.format("%3d%% left", remaining(limit.usedPercent))
+      if limit.resetsAt then text = text .. " · resets in " .. format_reset(limit.resetsAt) end
     end
+    rows[provider.key .. "." .. window.key]:set({
+      label = { string = text, color = (stale or not limit) and colors.state.muted or util.load_color(limit.usedPercent) },
+    })
   end
 end
 
 local function update()
-  util.exec("agent-usage --format env", function(output)
-    local vars = parse_env(output)
-    render(claude, vars, "CLAUDE")
-    render(openai, vars, "CODEX")
-    render_popup(vars)
+  util.exec("agent-usage --format json", function(cache)
+    local providers = type(cache) == "table" and cache.providers or {}
+    for _, provider in ipairs(PROVIDERS) do
+      render(provider, providers[provider.key])
+    end
   end)
 end
 
