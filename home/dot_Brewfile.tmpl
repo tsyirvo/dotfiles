@@ -4,6 +4,8 @@ tap 'FelixKratz/formulae', trusted: true   # JankyBorders
 tap 'nikitabobko/tap', trusted: true       # aerospace
 tap 'mobai-app/tap', trusted: true         # simslim
 tap 'joncrangle/tap', trusted: true        # sketchybar-system-stats
+tap 'thiloreintjes/tinybar', trusted: true # tinybar
+tap 'anomalyco/tap', trusted: true         # hex
 cask_args appdir: '/Applications'
 {{ range .packages.darwin.brews -}}
 brew {{ . | quote }}
